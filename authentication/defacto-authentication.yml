@@ -1,0 +1,15 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/defacto-openapi-original.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: Bearer
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/defacto-openapi-original.json
