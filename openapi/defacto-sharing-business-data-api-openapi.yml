@@ -1,0 +1,872 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Sharing business data API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Sharing business data
+paths:
+  /business/data/account-transactions:
+    post:
+      description: '
+
+        Upload bank account transactions into our platform to refine borrower
+
+        credit line allowance.
+
+
+        This endpoint doesn''t support updates on data already uploaded.
+
+
+        The <code>account</code> field of the transactions should match the <code>id</code> field of the
+
+        accounts you share with the POST /business/data/accounts endpoint.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIPartnerAccountTransactions'
+      responses:
+        '204':
+          description: ''
+          content:
+            '*/*':
+              schema: {}
+      security:
+      - Bearer: []
+      tags:
+      - Sharing business data
+      operationId: post_business-data-account-transactions
+      summary: /business/data/account-transactions
+  /business/data/accounts:
+    post:
+      description: '
+
+        Upload bank account balances into our platform to refine borrower credit
+
+        line allowance.
+
+
+        This endpoint doesn''t support updates on data already uploaded.
+
+
+        The <code>id</code> field of the accounts should match the <code>account</code> field of the
+
+        transactions you share with the POST /business/data/account-transactions endpoint. If you only
+
+        have the IBAN of the account, the IBAN being a unique identifier, you can use the IBAN in both
+
+        <code>id</code> and <code>account_number</code>.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIPartnerBusinessAccounts'
+      responses:
+        '204':
+          description: ''
+          content:
+            '*/*':
+              schema: {}
+      security:
+      - Bearer: []
+      tags:
+      - Sharing business data
+      operationId: post_business-data-accounts
+      summary: /business/data/accounts
+  /business/data/batch-upload/{batch_id}/close:
+    post:
+      description: '
+
+        Close a batch of upload started with POST /business/data/batch-upload.
+
+
+        This operation is a required one. Otherwise no data of the batch will be used.
+
+        '
+      parameters:
+      - in: path
+        name: batch_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIBatchUpload'
+      security:
+      - Bearer: []
+      tags:
+      - Sharing business data
+      operationId: post_business-data-batch-upload-batch-id-close
+      summary: /business/data/batch-upload/{batch_id}/close
+  /business/data/batch-upload:
+    post:
+      description: '
+
+        Create a batch to upload data about a particular business.
+
+
+        This endpoint returns an <code>id</code> that should be put into all /business/data/XXX endpoints.
+
+
+        **Why use batch?**
+
+        - with the batch, you can send accounts transactions in chunks instead of sending them all in a single API call
+
+        - with the batch, you can share more <code>context</code> (see parameter below) with us which enables us to update credit lines more accurately
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APICreateBatchUpload'
+      responses:
+        '201':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIBatchUpload'
+      security:
+      - Bearer: []
+      tags:
+      - Sharing business data
+      operationId: post_business-data-batch-upload
+      summary: /business/data/batch-upload
+  /business/data/invoices:
+    post:
+      description: '
+
+        Upload business invoices into our platform to refine borrower credit
+
+        line allowance.
+
+
+        This endpoint doesn''t support updates on data already uploaded.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIPartnerBusinessInvoices'
+      responses:
+        '204':
+          description: ''
+          content:
+            '*/*':
+              schema: {}
+      security:
+      - Bearer: []
+      tags:
+      - Sharing business data
+      operationId: post_business-data-invoices
+      summary: /business/data/invoices
+components:
+  schemas:
+    APIPartnerAccountTransactions:
+      properties:
+        batch_id:
+          default: null
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
+          type: string
+          nullable: true
+        end_date:
+          default: null
+          description: End date of the financials you're sending.
+          format: date-time
+          type: string
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        start_date:
+          default: '0001-01-01T00:00:00'
+          description: Start date of the financials you're sending.
+          format: date-time
+          type: string
+          nullable: true
+        transactions:
+          description: List of account transactions of the business.
+          items:
+            $ref: '#/components/schemas/APIPartnerAccountTransaction'
+          type: array
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    BatchUploadContent:
+      properties:
+        account_transactions:
+          default: null
+          nullable: true
+        accounts:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentAccounts'
+          default: null
+          nullable: true
+        invoices:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentInvoices'
+          default: null
+          nullable: true
+        shared_data_types:
+          items:
+            enum:
+            - account_transactions
+            - accounts
+            - invoices
+            type: string
+          type: array
+      type: object
+    BatchUploadContentAccounts:
+      properties:
+        total_count:
+          type: integer
+      required:
+      - total_count
+      type: object
+    BatchUploadContentAccountTransactionsOneAccount:
+      properties:
+        account:
+          type: string
+        end_date:
+          format: date-time
+          type: string
+        start_date:
+          format: date-time
+          type: string
+      required:
+      - account
+      - end_date
+      - start_date
+      type: object
+    APIPartnerBusinessInvoice:
+      properties:
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/BuyerBusinessIdentifier'
+          description: Name or business identifier of the buyer (the billed business)
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
+          enum:
+          - AED
+          - AUD
+          - BGN
+          - BHD
+          - BRL
+          - BZD
+          - CAD
+          - CHF
+          - CLP
+          - CNY
+          - COP
+          - CUC
+          - CYP
+          - CZK
+          - DJF
+          - DKK
+          - EEK
+          - EGP
+          - ERN
+          - EUR
+          - GBP
+          - HKD
+          - HRK
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - ISK
+          - JOD
+          - JPY
+          - KMF
+          - KRW
+          - LBP
+          - LTL
+          - LVL
+          - MAD
+          - MTL
+          - MUR
+          - MXN
+          - MYR
+          - NOK
+          - NZD
+          - OMR
+          - PAB
+          - PHP
+          - PKR
+          - PLN
+          - QAR
+          - ROL
+          - RON
+          - RUB
+          - SAR
+          - SEK
+          - SGD
+          - SIT
+          - SKK
+          - THB
+          - TRL
+          - TRY
+          - UGX
+          - USD
+          - XAF
+          - XOF
+          - ZAR
+          type: string
+        direction:
+          description: 'Is the invoice a ''receivable'' or a ''payable''.Depecrated: ''customer'' or ''supplier'' if the business is the customer or the supplier on the invoice ?'
+          enum:
+          - customer
+          - payable
+          - receivable
+          - supplier
+          type: string
+        due_at:
+          description: Expected date when this invoice will be fully paid.
+          format: date-time
+          type: string
+        first_payment_at:
+          default: null
+          description: Earliest payment date this invoice already received.
+          format: date-time
+          type: string
+          nullable: true
+        invoice_number:
+          description: Invoice number as displayed on the invoice
+          type: string
+        issued_at:
+          description: Invoice creation date displayed on the invoice.
+          format: date-time
+          type: string
+        last_payment_at:
+          default: null
+          description: Latest payment date this invoice already received.
+          format: date-time
+          type: string
+          nullable: true
+        net_amount:
+          description: Amount before tax, in cents
+          type: integer
+        payment_method:
+          default: null
+          description: Expected payment method that will be used to pay this invoice.
+          enum:
+          - card
+          - cheque
+          - direct_debit
+          - other
+          - wire_transfer
+          - null
+          type: string
+          nullable: true
+        salt_id:
+          default: null
+          description: Unique invoice identifier.
+          type: string
+          nullable: true
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/SellerBusinessIdentifier'
+          description: Name or business identifier of the seller (the business who bills). Must be a normalized identifier (not a name).
+        tax_amount:
+          default: null
+          description: Amount of tax, in cents
+          type: integer
+          nullable: true
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type: integer
+          nullable: true
+        total_amount:
+          default: null
+          description: Sum of net amount and tax amount, in cents
+          type: integer
+          nullable: true
+      required:
+      - buyer
+      - direction
+      - due_at
+      - invoice_number
+      - issued_at
+      - net_amount
+      - seller
+      type: object
+    BuyerBusinessIdentifier:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    SellerBusinessIdentifier:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APIBatchUploadContent:
+      properties:
+        account_transactions:
+          default: null
+          items:
+            $ref: '#/components/schemas/BatchUploadContentAccountTransactionsOneAccount'
+          type: array
+          nullable: true
+        accounts:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentAccounts'
+          default: null
+          nullable: true
+        invoices:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentInvoices'
+          default: null
+          nullable: true
+        shared_data_types:
+          items:
+            enum:
+            - account_transactions
+            - accounts
+            - invoices
+            type: string
+          type: array
+      type: object
+    APIPartnerAccountTransaction:
+      properties:
+        account:
+          default: null
+          description: Business bank account identifier or reference
+          type: string
+          nullable: true
+        amount:
+          description: Total amount of the transaction.
+          type: integer
+        at:
+          description: Date of the transaction
+          format: date-time
+          type: string
+        category:
+          default: null
+          description: Category of this transaction (expense, salaries ...)
+          type: string
+          nullable: true
+        counterparty_name:
+          default: null
+          description: Business name of the transaction counterparty
+          type: string
+          nullable: true
+        currency:
+          default: EUR
+          description: Transaction currency
+          enum:
+          - AED
+          - AUD
+          - BGN
+          - BHD
+          - BRL
+          - BZD
+          - CAD
+          - CHF
+          - CLP
+          - CNY
+          - COP
+          - CUC
+          - CYP
+          - CZK
+          - DJF
+          - DKK
+          - EEK
+          - EGP
+          - ERN
+          - EUR
+          - GBP
+          - HKD
+          - HRK
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - ISK
+          - JOD
+          - JPY
+          - KMF
+          - KRW
+          - LBP
+          - LTL
+          - LVL
+          - MAD
+          - MTL
+          - MUR
+          - MXN
+          - MYR
+          - NOK
+          - NZD
+          - OMR
+          - PAB
+          - PHP
+          - PKR
+          - PLN
+          - QAR
+          - ROL
+          - RON
+          - RUB
+          - SAR
+          - SEK
+          - SGD
+          - SIT
+          - SKK
+          - THB
+          - TRL
+          - TRY
+          - UGX
+          - USD
+          - XAF
+          - XOF
+          - ZAR
+          type: string
+        operation_type:
+          default: null
+          description: Source or payment method of this transaction
+          enum:
+          - account_remuneration
+          - card
+          - card_acquirer_payout
+          - cheque
+          - direct_debit
+          - direct_debit_collection
+          - direct_debit_hold
+          - financing_installment
+          - income
+          - nrc_payment
+          - other
+          - pay_later
+          - qonto_fee
+          - recall
+          - swift_income
+          - transfer
+          - null
+          type: string
+          nullable: true
+        provider:
+          default: null
+          description: The provider of this transaction (e.g. bridge, plaid...). "MANUAL" if manually imported.
+          type: string
+          nullable: true
+        reference:
+          default: null
+          description: Bank reference for the transaction
+          type: string
+          nullable: true
+        salt_id:
+          default: null
+          description: Unique identifier of this transaction
+          type: string
+          nullable: true
+        settled_balance:
+          default: null
+          description: Balance of the business bank account right after this transaction was processed
+          type: integer
+          nullable: true
+        side:
+          default: null
+          description: Is the transaction a debit or a credit operation.
+          enum:
+          - credit
+          - debit
+          - null
+          type: string
+          nullable: true
+        status:
+          default: null
+          enum:
+          - completed
+          - declined
+          - deleted
+          - pending
+          - null
+          type: string
+          nullable: true
+      required:
+      - amount
+      - at
+      type: object
+    BatchUploadContentInvoices:
+      properties:
+        total_count:
+          type: integer
+      required:
+      - total_count
+      type: object
+    APIPartnerBusinessInvoices:
+      properties:
+        batch_id:
+          default: null
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
+          type: string
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        invoices:
+          description: List of invoices of the business.
+          items:
+            $ref: '#/components/schemas/APIPartnerBusinessInvoice'
+          type: array
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APIBatchUpload:
+      properties:
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        content:
+          $ref: '#/components/schemas/BatchUploadContent'
+        context:
+          enum:
+          - BORROWER_CREATION
+          - DATA_REFRESH
+          type: string
+        id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - CANCELED
+          - CLOSED
+          - CLOSING_IN_PROGRESS
+          - CLOSING_SCHEDULED
+          - CREATED
+          type: string
+      required:
+      - business_identifier
+      - content
+      - context
+      - id
+      - status
+      type: object
+    APIPartnerBusinessAccount:
+      properties:
+        account_name:
+          default: null
+          description: A name given to this account. Any name can be given.
+          type: string
+          nullable: true
+        account_number:
+          default: null
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+          nullable: true
+        account_number_type:
+          default: null
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          - null
+          type: string
+          nullable: true
+        amount:
+          description: Balance of the bank account.
+          type: integer
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type: string
+          nullable: true
+        bank_identifier_type:
+          default: null
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          - null
+          type: string
+          nullable: true
+        id:
+          description: Unique bank account identifier.
+          type: string
+        last_updated_at:
+          description: Date of last balance update.
+          format: date-time
+          type: string
+        provider:
+          default: null
+          description: The provider of this account (e.g. bridge, plaid...). "MANUAL" if manually imported.
+          type: string
+          nullable: true
+      required:
+      - amount
+      - id
+      - last_updated_at
+      type: object
+    APIPartnerBusinessAccounts:
+      properties:
+        accounts:
+          description: List of accounts balances of the business.
+          items:
+            $ref: '#/components/schemas/APIPartnerBusinessAccount'
+          type: array
+        batch_id:
+          default: null
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
+          type: string
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APICreateBatchUpload:
+      properties:
+        auto_cancel_ongoing_batch_for_business:
+          default: true
+          type: boolean
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        content:
+          $ref: '#/components/schemas/APIBatchUploadContent'
+        context:
+          enum:
+          - BORROWER_CREATION
+          - DATA_REFRESH
+          type: string
+      required:
+      - business_identifier
+      - content
+      - context
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

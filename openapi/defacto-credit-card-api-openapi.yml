@@ -1,0 +1,340 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Credit card API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Credit card
+paths:
+  /cards/{card_id}/entries/export:
+    get:
+      description: Export card transactions as a Pennylane-compatible CSV. Provide either period (YYYY-MM) or from_date + to_date.
+      parameters:
+      - in: path
+        name: card_id
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: from_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      - in: query
+        name: period
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: to_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      responses:
+        '200':
+          description: CSV file attachment
+        '404':
+          description: Card not found
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: get_cards-card-id-entries-export
+      summary: /cards/{card_id}/entries/export
+  /cards/{card_id}/entries:
+    get:
+      description: List entries for a credit card.
+      parameters:
+      - in: path
+        name: card_id
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: from_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      - in: query
+        name: to_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiCardEntry'
+                type: array
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: get_cards-card-id-entries
+      summary: /cards/{card_id}/entries
+  /cards/{card_id}:
+    get:
+      description: Retrieve a credit card by its ID.
+      parameters:
+      - in: path
+        name: card_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiCard'
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: get_cards-card-id
+      summary: /cards/{card_id}
+  /cards:
+    get:
+      description: List credit cards for the authenticated borrower.
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiCard'
+                type: array
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: get_cards
+      summary: /cards
+  /cards/{card_id}/status:
+    patch:
+      description: 'Update card status. Accepted values: ''active'', ''inactive'', ''canceled''.'
+      parameters:
+      - in: path
+        name: card_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardStatusRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiCard'
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: patch_cards-card-id-status
+      summary: /cards/{card_id}/status
+  /cards/{card_id}/ephemeral-key:
+    post:
+      description: Create an ephemeral key to reveal the card's PAN and CVV via the card display SDK.
+      parameters:
+      - in: path
+        name: card_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                nonce:
+                  type: string
+              required:
+              - nonce
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EphemeralKeyResult'
+      security:
+      - Bearer: []
+      tags:
+      - Credit card
+      operationId: post_cards-card-id-ephemeral-key
+      summary: /cards/{card_id}/ephemeral-key
+components:
+  schemas:
+    EphemeralKeyResult:
+      properties:
+        ephemeral_key_secret:
+          type: string
+        provider_account_id:
+          type: string
+        provider_card_id:
+          type: string
+        publishable_key:
+          type: string
+      required:
+      - ephemeral_key_secret
+      - provider_account_id
+      - provider_card_id
+      - publishable_key
+      type: object
+    ApiCardEntry:
+      properties:
+        amount:
+          type: integer
+        created:
+          format: date-time
+          type: string
+        currency:
+          type: string
+        entry_type:
+          default: transaction
+          type: string
+        funding_obligation_id:
+          default: null
+          type: string
+          nullable: true
+        id:
+          type: string
+        merchant_amount:
+          default: null
+          type: integer
+          nullable: true
+        merchant_category:
+          type: string
+        merchant_currency:
+          default: null
+          type: string
+          nullable: true
+        merchant_name:
+          type: string
+        transaction_type:
+          type: string
+      required:
+      - amount
+      - created
+      - currency
+      - id
+      - merchant_category
+      - merchant_name
+      - transaction_type
+      type: object
+    UpdateCardStatusRequest:
+      properties:
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    ApiCard:
+      properties:
+        balance:
+          $ref: '#/components/schemas/CreditBalance'
+        brand:
+          type: string
+        card_type:
+          default: virtual
+          type: string
+        constraints:
+          additionalProperties:
+            nullable: true
+          type: object
+        currency:
+          type: string
+        first_name:
+          default: null
+          type: string
+          nullable: true
+        id:
+          format: uuid
+          type: string
+        last4:
+          type: string
+        last_name:
+          default: null
+          type: string
+          nullable: true
+        provider_account_id:
+          default: null
+          type: string
+          nullable: true
+        provider_card_id:
+          default: null
+          type: string
+          nullable: true
+        status:
+          type: string
+      required:
+      - balance
+      - brand
+      - constraints
+      - currency
+      - id
+      - last4
+      - status
+      type: object
+    CreditBalance:
+      properties:
+        available:
+          type: integer
+        available_including_pending:
+          default: null
+          type: integer
+          nullable: true
+        currency:
+          type: string
+        pending:
+          default: null
+          type: integer
+          nullable: true
+        used:
+          type: integer
+      required:
+      - available
+      - currency
+      - used
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

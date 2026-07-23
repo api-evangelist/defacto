@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Webhook API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Webhook
+paths:
+  /webhook/{webhook_id}:
+    delete:
+      description: Delete a webhook subscription.
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+          content:
+            '*/*':
+              schema: {}
+      security:
+      - Bearer: []
+      tags:
+      - Webhook
+      operationId: delete_webhook-webhook-id
+      summary: /webhook/{webhook_id}
+    patch:
+      description: '
+
+        Update a webhook subscription.
+
+
+        ⚠️ Our webhooks always call the POST method of the given url.
+
+
+        For more information on webhooks such as how to secure them, you can refer to <a href=''https://developers.getdefacto.com/reference/introduction''>our guide</a>.
+
+
+        '
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/CreateWebhook'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Webhook'
+      security:
+      - Bearer: []
+      tags:
+      - Webhook
+      operationId: patch_webhook-webhook-id
+      summary: /webhook/{webhook_id}
+  /webhooks:
+    get:
+      description: '
+
+        List your webhook subscription.
+
+
+        ⚠️ Our webhooks always call the POST method of the given url.
+
+
+        For more information on webhooks such as how to secure them, you can refer to <a href=''https://developers.getdefacto.com/reference/introduction''>our guide</a>.
+
+
+        '
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TypedApiPage9'
+      security:
+      - Bearer: []
+      tags:
+      - Webhook
+      operationId: get_webhooks
+      summary: /webhooks
+    post:
+      description: '
+
+        Create a webhook subscription.
+
+
+        ⚠️ Our webhooks always call the POST method of the given url.
+
+
+        For more information on webhooks such as how to secure them, you can refer to <a href=''https://developers.getdefacto.com/reference/introduction''>our guide</a>.
+
+
+        '
+      requestBody:
+        $ref: '#/components/requestBodies/CreateWebhook'
+      responses:
+        '201':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Webhook'
+      security:
+      - Bearer: []
+      tags:
+      - Webhook
+      operationId: post_webhooks
+      summary: /webhooks
+components:
+  schemas:
+    Webhook1:
+      properties:
+        event_types:
+          items:
+            enum:
+            - BorrowerFinancialProductCreated
+            - BorrowerFinancialProductUpdated
+            - CounterpartyCreditLimit.CREATED
+            - CounterpartyCreditLimit.UPDATED
+            - CreditLimit.UPDATED
+            - CreditLine.BALANCE_UPDATED
+            - CreditLine.CREATED
+            - CreditLine.POOL_AMOUNT_UPDATED
+            - Invoice.DECLINED
+            - Invoice.DELETED
+            - Invoice.SUBMITTED
+            - Invoice.TO_EDIT
+            - Invoice.VERIFIED
+            - Loan.CANCELED
+            - Loan.CLOSED
+            - Loan.DECLINED
+            - Loan.DELETED
+            - Loan.INITIATED
+            - Loan.ISSUE_DETECTED
+            - Loan.PENDING_VALIDATION
+            - Loan.SCHEDULED
+            - Loan.SUBMITTED
+            - Loan.TO_REPAY
+            - Loan.TO_REPAY_FEES
+            - Loan.TO_VALIDATE
+            - Loan.VALIDATED
+            - Payment.CANCELED
+            - Payment.FAILED
+            - Payment.INSTRUCTED
+            - Payment.IN_TRANSIT
+            - Payment.PAID
+            - Payment.SCHEDULED
+            type: string
+          minItems: 1
+          type: array
+        id:
+          default: null
+          format: uuid
+          type: string
+          nullable: true
+        name:
+          type: string
+        to_url:
+          format: url
+          type: string
+      required:
+      - event_types
+      - name
+      - to_url
+      type: object
+    TypedApiPage9:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/Webhook1'
+          type: array
+        next_page:
+          default: null
+          type: string
+          nullable: true
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type: string
+          nullable: true
+        total:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - count
+      - page_size
+      type: object
+    Webhook:
+      properties:
+        event_types:
+          items:
+            enum:
+            - BorrowerFinancialProductCreated
+            - BorrowerFinancialProductUpdated
+            - CounterpartyCreditLimit.CREATED
+            - CounterpartyCreditLimit.UPDATED
+            - CreditLimit.UPDATED
+            - CreditLine.BALANCE_UPDATED
+            - CreditLine.CREATED
+            - CreditLine.POOL_AMOUNT_UPDATED
+            - Invoice.DECLINED
+            - Invoice.DELETED
+            - Invoice.SUBMITTED
+            - Invoice.TO_EDIT
+            - Invoice.VERIFIED
+            - Loan.CANCELED
+            - Loan.CLOSED
+            - Loan.DECLINED
+            - Loan.DELETED
+            - Loan.INITIATED
+            - Loan.ISSUE_DETECTED
+            - Loan.PENDING_VALIDATION
+            - Loan.SCHEDULED
+            - Loan.SUBMITTED
+            - Loan.TO_REPAY
+            - Loan.TO_REPAY_FEES
+            - Loan.TO_VALIDATE
+            - Loan.VALIDATED
+            - Payment.CANCELED
+            - Payment.FAILED
+            - Payment.INSTRUCTED
+            - Payment.IN_TRANSIT
+            - Payment.PAID
+            - Payment.SCHEDULED
+            type: string
+          minItems: 1
+          type: array
+        id:
+          default: null
+          format: uuid
+          type: string
+          nullable: true
+        name:
+          type: string
+        to_url:
+          format: url
+          type: string
+      required:
+      - event_types
+      - name
+      - to_url
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

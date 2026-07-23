@@ -1,0 +1,904 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Eligibility and credit limit API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Eligibility and credit limit
+paths:
+  /credit_line/{credit_line_id}:
+    get:
+      deprecated: true
+      description: '[DEPRECATED] Get credit line by id.<br/> Now use financial-product endpoint'
+      parameters:
+      - in: query
+        name: at
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+      - in: path
+        name: credit_line_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APICreditLine'
+      security:
+      - Bearer: []
+      tags:
+      - Eligibility and credit limit
+      operationId: get_credit-line-credit-line-id
+      summary: /credit_line/{credit_line_id}
+  /credit_line:
+    get:
+      deprecated: true
+      description: '[DEPRECATED] Get the credit line associated with your account.<br/>Your partner max-exposure is no longer available by API'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APITenantCreditLine'
+      security:
+      - Bearer: []
+      tags:
+      - Eligibility and credit limit
+      operationId: get_credit-line
+      summary: /credit_line
+  /credit_lines:
+    get:
+      description: List all the credit lines that have been opened for your company.<br/>By default, this includes all credit lines that have been created for borrowers you registered, as well as the credit line associated with your account.
+      parameters:
+      - description: Search by borrower company number (e.g. SIREN or NIF)
+        in: query
+        name: borrower
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+      - description: Pagination cursor from the previous response's next_page field. Omit to get the first page.
+        in: query
+        name: cursor
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - description: UUID(s) of the credit line(s).
+        in: query
+        name: id
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            format: uuid
+            type: string
+            nullable: true
+      - description: Maximum number of items to return per page.
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          default: 100
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TypedApiPage8'
+      security:
+      - Bearer: []
+      tags:
+      - Eligibility and credit limit
+      operationId: get_credit-lines
+      summary: /credit_lines
+  /eligibility/reasons:
+    get:
+      description: List all the possible reasons for which a borrower would not be eligible for a loan.
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/ListDenialCode'
+                type: array
+      tags:
+      - Eligibility and credit limit
+      operationId: get_eligibility-reasons
+      summary: /eligibility/reasons
+  /eligibility/beneficiary:
+    post:
+      description: "\n<div>\n<h3>Ask if the business can receive the money originated from a loan on one of its bank accounts.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>true</code>,\n  it means the business can receive the money originated from a loan on one of its bank accounts.\n</li>\n<li>when <code>is_eligible</code> is <code>false</code>,\n  it means the business can't receive the money originated from a loan.\n  If the business is the borrower's supplier, it does not prevent the borrower from requesting a loan.\n  However, the money has to arrive in a bank account owned by the borrower, not by the supplier.\n</li>\n</ul>\n</div>\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessIdentifierRequired'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleEligibilityResponse'
+      security:
+      - Bearer: []
+      tags:
+      - Eligibility and credit limit
+      operationId: post_eligibility-beneficiary
+      summary: /eligibility/beneficiary
+  /eligibility/borrower:
+    post:
+      description: "\n<div>\n<h3>Ask for the pre-eligibility of a borrower.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>false</code>\n  and <code>reasons</code> is <code>null</code> or <code>[]</code>\n  it means the borrower **might** be eligible.\n  This will depend on his financials and will be evaluated after\n  you share data with the <code>/business/data/XXX</code> endpoints.\n</li>\n<li>when <code>is_eligible</code> is <code>true</code>, the borrower is eligible. However, we recommend\n  you to share the data you have with the <code>/business/data/XXX</code> endpoints in order to have a more\n  accurate (likely higher) eligible amount.\n</li>\n<li>when <code>is_eligible</code> is <code>false</code> and all items of <code>reasons</code> are in:\n  [OUTDATED_DATA, KYB_STATUS] this means the borrower might be eligible depending on his financing,\n  and we are expecting him to perform a few actions prior to requesting loan. Once you register the\n  borrower, this will be represented by the borrower's status.\n</li>\n</ul>\n</div>\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIBorrowerEligibility'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleEligibilityResponse'
+      security:
+      - Bearer: []
+      tags:
+      - Eligibility and credit limit
+      operationId: post_eligibility-borrower
+      summary: /eligibility/borrower
+components:
+  schemas:
+    APICreditLine:
+      properties:
+        balance_available:
+          default: null
+          description: Remaining amount that can be loaned.
+          type: integer
+          nullable: true
+        balance_pending:
+          default: 0
+          description: ''
+          type: integer
+        balance_pending_validation:
+          default: 0
+          description: Amount locked because some loans are pending validation
+          type: integer
+        contract_number:
+          default: null
+          type: string
+          nullable: true
+        currency:
+          default: EUR
+          enum:
+          - EUR
+          - GBP
+          type: string
+        default_borrower:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        default_borrower_strategy:
+          default: null
+          enum:
+          - BUYER
+          - SELLER
+          - null
+          type: string
+          nullable: true
+        default_guarantor:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        default_loan_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        default_repayment_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        default_repayment_method:
+          default: DIRECT_DEBIT
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        default_repayment_to:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        distribution:
+          enum:
+          - DIRECT
+          - PARTNER
+          type: string
+        end_date:
+          default: null
+          format: date-time
+          type: string
+          nullable: true
+        fees_daily_rate:
+          default: null
+          type: number
+          nullable: true
+        fees_interest_daily_rate:
+          type: number
+        fees_operating_daily_rate:
+          type: number
+        fees_payer:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        id:
+          default: null
+          nullable: true
+        loan_contract_type:
+          enum:
+          - CREDIT_OPERATION
+          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
+          - EQUITY_LOAN
+          - TRADE_RECEIVABLE
+          type: string
+        pool_amount:
+          default: null
+          description: Maximum amount that can be loaned.
+          type: integer
+          nullable: true
+        signed_at:
+          default: null
+          format: date-time
+          type: string
+          nullable: true
+        start_date:
+          format: date-time
+          type: string
+        vat:
+          default: null
+          type: number
+          nullable: true
+      required:
+      - distribution
+      - fees_interest_daily_rate
+      - fees_operating_daily_rate
+      - loan_contract_type
+      - start_date
+      type: object
+    APIBorrowerEligibility:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APILightAccountDetails:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          description: The identifier of the bank.
+          type: string
+        bank_identifier_type:
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
+      type: object
+    TranslationResult:
+      properties:
+        de:
+          type: string
+        en:
+          type: string
+        es:
+          type: string
+        fr:
+          type: string
+      required:
+      - de
+      - en
+      - es
+      - fr
+      type: object
+    ListDenialCode:
+      properties:
+        denial_code_name:
+          type: string
+        translations:
+          $ref: '#/components/schemas/TranslationResult'
+      required:
+      - denial_code_name
+      - translations
+      type: object
+    EligibilityDenialReason:
+      properties:
+        code:
+          description: Unique code identifying the reason of a denial. Can be used to display an error message to your users.
+          enum:
+          - ACTIVITY_DOCUMENTS_REQUIRED
+          - ACTIVITY_NOT_ELIGIBLE_BORROWER
+          - ALREADY_USING_FACTORING_OR_DAILLY
+          - AMOUNT_SUPERIOR_TO_AVAILABLE_BALANCE
+          - AVERAGE_INVOICE_SIZE_TOO_HIGH
+          - BLACKLISTED_FACTORED_COUNTERPARTY
+          - BORROWER_AND_COUNTERPARTY_HAVE_COMMON_DIRECTOR
+          - BORROWER_CHURNED
+          - BORROWER_DEFAULTED
+          - BORROWER_STATUS
+          - BORROWER_TO_SIGN
+          - BUSINESS_AGE_BELOW_THRESHOLD
+          - BUSINESS_AML_EXTREME_RISK
+          - BUSINESS_COMPLIANCE_ISSUE_DETECTED
+          - BUSINESS_HARD_COLLECTION
+          - BUSINESS_HAS_NO_PROFESSIONAL_EMAIL
+          - BUSINESS_INSOLVENCY_PROCEDURE_EXISTS
+          - BUSINESS_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - BUSINESS_LEGAL_FORM_NOT_ELIGIBLE
+          - BUSINESS_MISSING_INFORMATION
+          - BUSINESS_NOT_DIFFUSIBLE
+          - BUSINESS_NOT_REGISTERED
+          - BUSINESS_NOT_REGISTERED_TO_RCS
+          - BUSINESS_NOT_REGISTERED_TO_RCS_OR_RNE
+          - BUSINESS_RADIATED
+          - BUSINESS_REGION_NOT_COVERED
+          - BUSINESS_UNKNOWN
+          - BUSINESS_UNKNOWN_BUYER
+          - BUSINESS_UNKNOWN_SELLER
+          - CAPPING_EXCEEDED
+          - CASHED_IN_NOT_REPAID
+          - CCSF_TRANSACTION_DETECTED
+          - CCSF_TRANSACTION_PENDING_DATA_REQUEST
+          - CCSF_TRANSACTION_WAITING_END_INSTALLMENT_PLAN
+          - COUNTERPARTY_DATA_MISSING
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_EXISTS
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - COUNTERPARTY_KPI_MISSING
+          - COUNTERPARTY_NOT_REGISTERED
+          - COUNTERPARTY_NOT_SELECTED_FOR_FINANCING
+          - COUNTRY_CAPPING_EXCEEDED
+          - COUNTRY_NOT_ELIGIBLE_BORROWER
+          - COUNTRY_NOT_ELIGIBLE_COUNTERPARTY
+          - CREDIT_RISK_NOT_ELIGIBLE
+          - CREDIT_RISK_NOT_ELIGIBLE_COUNTERPARTY
+          - DATA_STILL_REFRESHING
+          - DEBT_ARREARS_PENDING_GRACE_PERIOD
+          - DEPRECATED_LATE_REPAYMENT
+          - DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - DOUBLE_MOBILIZATION
+          - DPD_15_LATE_REPAYMENT_BORROWER
+          - DPD_15_LATE_REPAYMENT_BUYER
+          - DPD_15_LATE_REPAYMENT_SELLER
+          - ELLISPHERE_RISK_INDEX
+          - EXCEEDED_PARTNER_CREDIT_LINE
+          - EXCESSIVE_AMOUNT_LOAN_REQUEST
+          - EXCESSIVE_DURATION_LOAN_REQUEST
+          - EXPOSURE_TOO_OLD
+          - FILL_INVOICE_BUYER_INFORMATION
+          - FILL_INVOICE_SELLER_INFORMATION
+          - FINANCIAL_PRODUCT_DEACTIVATED
+          - FINANCIAL_PRODUCT_NOT_IN_RELEASE
+          - FINANCIAL_STATEMENT_BAD_KPI
+          - FINANCIAL_STATEMENT_PARSING_ISSUE
+          - HIGH_BUSINESS_RISK_INDEX
+          - HIGH_LOAN_DEFAULT_INDEX
+          - HIGH_LYSTA_RISK_INDEX
+          - INDUSTRY_CODE_NOT_ELIGIBLE_BORROWER
+          - INDUSTRY_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - INSOLVENCY_EARLY_SIGNAL_DETECTED
+          - INSOLVENCY_PROCEDURE_EXISTS_BORROWER
+          - INSOLVENCY_PROCEDURE_EXISTS_BUYER
+          - INSOLVENCY_PROCEDURE_EXISTS_SELLER
+          - INSTALLMENT_PLAN_DETECTED_FOR_TAX
+          - INSTALLMENT_PLAN_DETECTED_FOR_URSSAF
+          - INSURANCE_QUOTE_EXPIRED
+          - INVOICE_ALREADY_FINANCED
+          - INVOICE_AUTO_LIQUIDATION
+          - INVOICE_BLACKLIST_WORDS
+          - INVOICE_COMPLIANCE_ISSUE_DETECTED
+          - INVOICE_DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - INVOICE_LME_NON_COMPLIANT
+          - INVOICE_MISSING_ACCOUNT_NUMBER
+          - INVOICE_MISSING_LEGAL_MENTION
+          - INVOICE_MULTIPLE_STAGE
+          - INVOICE_NON_ELIGIBLE_USE_CASE
+          - INVOICE_NOT_ELIGIBLE_TO_CREDIT_INSURANCE
+          - INVOICE_NOT_ISSUED_YET
+          - INVOICE_NOT_RELATED_TO_WCR
+          - INVOICE_OVERDUE
+          - INVOICE_PAYABLE_BORROWER_IS_ACCOUNT_HOLDER
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_LIVE_CONNECTION
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_MANDATE
+          - INVOICE_RECEIVABLE_BORROWER_IS_NOT_ACCOUNT_HOLDER
+          - INVOICE_REPAYMENT_DATE_TOO_FAR_60D
+          - KPI_MISSING
+          - KPI_SCREENING_NOT_ELIGIBLE_BORROWER
+          - KYB_PENDING
+          - KYB_PENDING_USER_ACTION
+          - KYC_PENDING
+          - KYC_PENDING_USER_ACTION
+          - LATE_REPAYMENT_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BUYER
+          - LEGAL_FORM_NOT_ELIGIBLE_COUNTERPARTY
+          - LINKED_BUSINESS_IS_BLOCKED
+          - LOAN_REQUEST_EXPIRED
+          - LOW_CASH_BALANCE
+          - LOW_FREE_CASH_FLOW
+          - MAX_AMOUNT_EXCEEDED
+          - MAX_AMOUNT_EXCEEDED_BORROWER
+          - MAX_AMOUNT_EXCEEDED_BUYER
+          - MAX_AMOUNT_EXCEEDED_SELLER
+          - MISSING_COUNTERPARTY_CONTACT_INFORMATION
+          - MISSING_PUBLIC_PROCUREMENT_DOCUMENT
+          - NEED_BANKING_INTEGRATION
+          - NOT_AN_INVOICE
+          - NOT_DIFFUSIBLE_BUYER
+          - NOT_DIFFUSIBLE_SELLER
+          - NOT_ENOUGH_DATA
+          - NOT_PRE_ELIGIBLE_SPV
+          - NOT_REGISTERED_BUYER
+          - NOT_REGISTERED_SELLER
+          - NO_TAX_PAYMENT_FOUND
+          - NO_URSSAF_PAYMENTS_FOUND
+          - NO_URSSAF_PAYMENT_FOUND
+          - OFFBOARDED
+          - ORANGE_FLAG_TRANSACTIONS
+          - OTHER_BUSINESS_FROM_DIRECTOR_HAS_INSOLVENCY_PROCEDURE
+          - OUTDATED_DATA
+          - OUTDATED_INVOICE
+          - OUTDATED_INVOICE_2WEEKS
+          - OUTDATED_INVOICE_3WEEKS
+          - OVERDRAFT_REQUIRED
+          - PLEASE_RECONNECT_BANK_ACCOUNTS
+          - POSTAL_CODE_NOT_ELIGIBLE_BORROWER
+          - POSTAL_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - PROACTIVE_RECOLLECTION
+          - PRUDENTIAL_EXPOSURE_EXCEEDED
+          - QONTO_INTEGRATION_GERMAN_USER_DOES_NOT_HAVE_4_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_HAVE_6_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - RECENT_DEBT_ARREARS_KO
+          - RECENT_DEBT_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_REVENUE_DROP
+          - RECENT_SEIZURE_DETECTED
+          - RECENT_TAX_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS_PENDING_DATA_REQUEST
+          - RECENT_URSSAF_ARREARS_PENDING_DATA_REQUEST
+          - RED_FLAG_TRANSACTIONS
+          - RELATED_COUNTERPARTY_HAS_FLAG
+          - RELATED_COUNTERPARTY_IS_LATE
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BORROWER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUSINESS
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUYER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_SELLER
+          - REPAYMENT_CONCENTRATION_IS_TOO_HIGH
+          - REQUIRED_FINANCIAL_STATEMENT
+          - RISK_SCORE_DOWNGRADING
+          - SMALL_RECURRING_AMOUNT_DETECTED_FOR_URSSAF
+          - TOO_LONG
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT_BANK_IDENTIFIER
+          - UNAUTHORIZED_LOAN_PAYMENT_BENEFICIARY
+          - URSSAF_PAYMENTS_STOPPED
+          - USER_DOES_NOT_MEET_MINIMUM_MAX_AMOUNT_SIZE
+          - USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - WAITING_FOR_THIRD_PARTY_PROVIDER
+          - WAIT_FOR_REPAYMENT
+          type: string
+        description:
+          default: Not yet available.
+          description: A human readable description of the denial reason, in english. Mainly returned for debug purpose.
+          type: string
+      required:
+      - code
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type: string
+          nullable: true
+        address_line_2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        postal_code:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+      type: object
+    LightBusiness:
+      properties:
+        activity_description:
+          default: null
+          type: string
+          nullable: true
+        activity_type:
+          default: null
+          type: string
+          nullable: true
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+          nullable: true
+        capital:
+          default: null
+          type: integer
+          nullable: true
+        creation_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        has_ongoing_insolvency_procedure:
+          default: null
+          type: boolean
+          nullable: true
+        id:
+          default: null
+          format: uuid
+          type: string
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type: string
+          nullable: true
+        is_active:
+          default: null
+          type: boolean
+          nullable: true
+        is_diffusible:
+          default: null
+          type: boolean
+          nullable: true
+        last_insolvency_procedure_closing_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        last_insolvency_procedure_open_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        last_insolvency_procedure_type:
+          default: null
+          type: string
+          nullable: true
+        legal_form:
+          default: null
+          description: Legal form of the business.
+          type: string
+          nullable: true
+        nace_code:
+          default: null
+          type: string
+          nullable: true
+        name:
+          default: null
+          description: Legal name of the business.
+          type: string
+          nullable: true
+        registration_body:
+          default: null
+          description: Name of the national organization where the business is registered. For example the RCS of Paris in France
+          type: string
+          nullable: true
+        registration_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        registry_radiation_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        share_capital:
+          default: null
+          description: The part of the capital of a company that comes from the issue of shares, in cents.
+          type: integer
+          nullable: true
+        termination_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        vat_number:
+          default: null
+          description: VatNumber
+          type: string
+          nullable: true
+      required:
+      - identifier
+      type: object
+    TypedApiPage8:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APICreditLine'
+          type: array
+        next_page:
+          default: null
+          type: string
+          nullable: true
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type: string
+          nullable: true
+        total:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - count
+      - page_size
+      type: object
+    APITenantCreditLine:
+      properties:
+        amount_to_repay:
+          default: null
+          type: integer
+          nullable: true
+        balance_available:
+          default: null
+          description: Remaining amount that can be loaned.
+          type: integer
+          nullable: true
+        balance_pending:
+          default: 0
+          description: ''
+          type: integer
+        balance_pending_validation:
+          default: 0
+          description: Amount locked because some loans are pending validation
+          type: integer
+        coming_up_monthly_fees:
+          default: null
+          type: integer
+          nullable: true
+        contract_number:
+          default: null
+          type: string
+          nullable: true
+        currency:
+          default: EUR
+          enum:
+          - EUR
+          - GBP
+          type: string
+        default_borrower:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        default_borrower_strategy:
+          default: null
+          enum:
+          - BUYER
+          - SELLER
+          - null
+          type: string
+          nullable: true
+        default_guarantor:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        default_loan_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        default_repayment_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        default_repayment_method:
+          default: DIRECT_DEBIT
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        default_repayment_to:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          nullable: true
+        distribution:
+          enum:
+          - DIRECT
+          - PARTNER
+          type: string
+        end_date:
+          default: null
+          format: date-time
+          type: string
+          nullable: true
+        fees_daily_rate:
+          default: null
+          type: number
+          nullable: true
+        fees_interest_daily_rate:
+          type: number
+        fees_operating_daily_rate:
+          type: number
+        fees_payer:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          nullable: true
+        id:
+          default: null
+          nullable: true
+        loan_contract_type:
+          enum:
+          - CREDIT_OPERATION
+          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
+          - EQUITY_LOAN
+          - TRADE_RECEIVABLE
+          type: string
+        pool_amount:
+          default: null
+          description: Maximum amount that can be loaned.
+          type: integer
+          nullable: true
+        signed_at:
+          default: null
+          format: date-time
+          type: string
+          nullable: true
+        start_date:
+          format: date-time
+          type: string
+        vat:
+          default: null
+          type: number
+          nullable: true
+      required:
+      - distribution
+      - fees_interest_daily_rate
+      - fees_operating_daily_rate
+      - loan_contract_type
+      - start_date
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    SimpleEligibilityResponse:
+      properties:
+        is_eligible:
+          description: Say if the eligibility check accepted the request or not.
+          type: boolean
+        reasons:
+          default: null
+          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
+          items:
+            $ref: '#/components/schemas/EligibilityDenialReason'
+          type: array
+          nullable: true
+      required:
+      - is_eligible
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

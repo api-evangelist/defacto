@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Repay API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Repay
+paths:
+  /repay/now:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepayNowRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RepayNowResponse'
+      security:
+      - Bearer: []
+      operationId: post_repay-now
+      summary: /repay/now
+      tags:
+      - Repay
+components:
+  schemas:
+    RepayNowRequest:
+      properties:
+        amount:
+          minimum: 1
+          type: integer
+        base_callback_url:
+          type: string
+        repayment_method:
+          default: null
+          enum:
+          - PISP
+          - null
+          type: string
+          nullable: true
+      required:
+      - amount
+      - base_callback_url
+      type: object
+    RepayNowResponse:
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

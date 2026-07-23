@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Subscription API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Subscription
+paths:
+  /subscription/{subscription_id}/activate:
+    post:
+      description: Activate a subscription.
+      parameters:
+      - in: path
+        name: subscription_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subscription activated
+        '400':
+          description: Subscription is not in an activatable state
+        '404':
+          description: Subscription not found
+      security:
+      - Bearer: []
+      tags:
+      - Subscription
+      operationId: post_subscription-subscription-id-activate
+      summary: /subscription/{subscription_id}/activate
+components:
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

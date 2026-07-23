@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Accounting
+paths:
+  /events:
+    get:
+      description: Search for business events. These events will let you read business events to build you logic on top of it.
+      parameters:
+      - description: Pagination cursor from the previous response's next_page field. Omit to get the first page.
+        in: query
+        name: cursor
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: event_type
+        required: false
+        x-nullable: true
+        explode: true
+        schema:
+          type: array
+          items:
+            enum:
+            - LOAN_CANCELED
+            - LOAN_DISBURSEMENT_PAID
+            - LOAN_EXTRA_PAID
+            - LOAN_GUARANTEE_DEPOSIT_CHARGED_BACK
+            - LOAN_GUARANTEE_DEPOSIT_PAID
+            - LOAN_INTERESTS_CHARGEBACK_PENALIZED
+            - LOAN_INTERESTS_DISCOUNTED
+            - LOAN_INTERESTS_FALLEN_DUE
+            - LOAN_INTEREST_DEPOSIT_CHARGED_BACK
+            - LOAN_INTEREST_DEPOSIT_PAID
+            - LOAN_INTEREST_FROM_DEPOSIT_PAID
+            - LOAN_INTEREST_FROM_DEPOSIT_UNPAID
+            - LOAN_PRINCIPAL_FALLEN_DUE
+            - LOAN_PRINCIPAL_FALLEN_LATE
+            - LOAN_PRINCIPAL_FROM_DEPOSIT_PAID
+            - LOAN_REFUND_PAID
+            - LOAN_REPAYMENT_FEES_CHARGED_BACK
+            - LOAN_REPAYMENT_FEES_PAID
+            - LOAN_REPAYMENT_NOMINAL_CHARGED_BACK
+            - LOAN_REPAYMENT_NOMINAL_PAID
+            - LOAN_REPAYMENT_NOMINAL_UNPAID
+            - LOAN_RETURNED_PAID
+            - LOAN_VALIDATED
+            type: string
+          default: null
+      - in: query
+        name: from_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      - in: query
+        name: loan_id
+        required: false
+        x-nullable: true
+        explode: true
+        schema:
+          type: array
+          items:
+            format: uuid
+            type: string
+          default: null
+      - description: Maximum number of items to return per page.
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - in: query
+        name: to_date
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TypedApiPage4'
+      security:
+      - Bearer: []
+      tags:
+      - Accounting
+      operationId: get_events
+      summary: /events
+components:
+  schemas:
+    ApiEvent:
+      properties:
+        event_at:
+          format: date-time
+          type: string
+        event_payload:
+          $ref: '#/components/schemas/ApiLoanEventPayload'
+        event_type:
+          enum:
+          - LOAN_CANCELED
+          - LOAN_DISBURSEMENT_PAID
+          - LOAN_EXTRA_PAID
+          - LOAN_GUARANTEE_DEPOSIT_CHARGED_BACK
+          - LOAN_GUARANTEE_DEPOSIT_PAID
+          - LOAN_INTERESTS_CHARGEBACK_PENALIZED
+          - LOAN_INTERESTS_DISCOUNTED
+          - LOAN_INTERESTS_FALLEN_DUE
+          - LOAN_INTEREST_DEPOSIT_CHARGED_BACK
+          - LOAN_INTEREST_DEPOSIT_PAID
+          - LOAN_INTEREST_FROM_DEPOSIT_PAID
+          - LOAN_INTEREST_FROM_DEPOSIT_UNPAID
+          - LOAN_PRINCIPAL_FALLEN_DUE
+          - LOAN_PRINCIPAL_FALLEN_LATE
+          - LOAN_PRINCIPAL_FROM_DEPOSIT_PAID
+          - LOAN_REFUND_PAID
+          - LOAN_REPAYMENT_FEES_CHARGED_BACK
+          - LOAN_REPAYMENT_FEES_PAID
+          - LOAN_REPAYMENT_NOMINAL_CHARGED_BACK
+          - LOAN_REPAYMENT_NOMINAL_PAID
+          - LOAN_REPAYMENT_NOMINAL_UNPAID
+          - LOAN_RETURNED_PAID
+          - LOAN_VALIDATED
+          type: string
+      required:
+      - event_at
+      - event_payload
+      - event_type
+      type: object
+    TypedApiPage4:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiEvent'
+          type: array
+        next_page:
+          default: null
+          type: string
+          nullable: true
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type: string
+          nullable: true
+        total:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - count
+      - page_size
+      type: object
+    ApiLoanEventPayload:
+      properties:
+        deposit_amount:
+          default: null
+          type: integer
+          nullable: true
+        fees_amount:
+          default: null
+          type: integer
+          nullable: true
+        loan_id:
+          format: uuid
+          type: string
+        metadata:
+          additionalProperties:
+            nullable: true
+          type: object
+        principal_amount:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - loan_id
+      - metadata
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

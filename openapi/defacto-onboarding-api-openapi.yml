@@ -1,0 +1,2174 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Onboarding API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Onboarding
+paths:
+  /borrower/{borrower_id}/repayment-methods:
+    get:
+      description: '
+
+        <div>
+
+        <h3>List available repayment methods for borrower.</h3>
+
+        </div>
+
+        '
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TypedApiPage13'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: get_borrower-borrower-id-repayment-methods
+      summary: /borrower/{borrower_id}/repayment-methods
+    post:
+      description: '
+
+        <div>
+
+        <h3>Add and/or choose the repayment method for borrower.</h3>
+
+
+        <p>If payment method is "DIRECT_DEBIT" then the `account` parameter must not be null.</p>
+
+
+        <p>
+
+        If `is_default_repayment_method` is true, then the repayment method becomes the borrower''s default
+
+        repayment method so that upcmoing loan requests will use this payment method and account as a default.
+
+        <br/>
+
+        <br/>
+
+        <i>
+
+        Please note: that the account defined in the `loan_to` attribute of created loans is left
+
+        unchanged. If you want to change the destination account of a loan, you must cancel it and
+
+        request a new loan.
+
+        </i>
+
+        </p>
+
+        <p>
+
+        If `apply_to_all_active_loans` is true, then the repayment method is used for upcoming payments of
+
+        all loans that are in TO_REPAY or TO_REPAY_FEES statuses.
+
+        </p>
+
+        </div>
+
+        '
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiPostRepaymentMethod'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIRepaymentMethodDetails'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_borrower-borrower-id-repayment-methods
+      summary: /borrower/{borrower_id}/repayment-methods
+  /borrower/{borrower_id}:
+    get:
+      description: Retrieve the full profile of a borrower by ID. Returns the borrower's status, business information, accounts, compliance checks, and next actions required.
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIBorrower'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: get_borrower-borrower-id
+      summary: /borrower/{borrower_id}
+  /borrowers:
+    get:
+      description: List all borrowers enrolled on Defacto for your account. Borrowers are companies that have been registered and can request loans through the Defacto platform. Returns a paginated list with their status, business info, accounts, and compliance data.
+      parameters:
+      - description: UUID(s) of the borrower(s) in Defacto API.
+        in: query
+        name: borrower_id
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            format: uuid
+            type: string
+      - description: Legal identifier of the business, such as its SIREN in France.
+        in: query
+        name: borrower_identifier
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - description: Pagination cursor from the previous response's next_page field. Omit to get the first page.
+        in: query
+        name: cursor
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - description: Filter borrowers who signed their contract on or after this datetime.
+        in: query
+        name: from_signed_at
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      - description: Maximum number of items to return per page.
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - description: Filter borrowers who signed their contract on or before this datetime.
+        in: query
+        name: to_signed_at
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          format: date-time
+          default: null
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TypedApiPage12'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: get_borrowers
+      summary: /borrowers
+    post:
+      description: "\n<div>\n<h3>Enroll a new borrower on Defacto.</h3>\n<p>\nThis API will create a borrower and a credit line for this borrower. More information\nin the <b>behavior</b> section below.\n</p>\n<p>\n<strong>Timeout:</strong> 30 seconds (status code will be 504 in such a case)\n</p>\n<br/>\n<h4>Required data</h4>\n<p>\nBorrower must be a commercial company -> eg. in France needs to be registered at an RCS.\n</p>\n<p>\n<b>If the borrower repays by direct debit, the following information are mandatory:</b>\n</p>\n<ul>\n<li> the director’s personal information: Name, birth date, nationality, email address and country of\nresidence of the managing director</li>\n<li>The IBAN of the borrower (please make sure that the borrower is aware\nthat direct debit is used as the repayment method).</li>\n</ul>\n<p>\nWe strongly recommend that you fill up all the information when you can, even on the sandbox.\nFor French borrowers, we manage to pull most of the director information automatically,\nhowever for other countries, this might not be the case.\nFor the borrowers that Defacto is not able to fetch the mandatory data, you need to provide them\nto ensure borrower creation. Otherwise the API will return a 400 error and list the values that it could\nnot obtain.\n</p>\n<h4>Behavior</h4>\n<p>\nThis API endpoint creates a borrower in our system,\nconfigures our system to get the repayment of the loan,\nevaluates the maximum amount of money we can lend to this company and creates a credit line for this\nborrower.\nAfter the credit line is created for this borrower, you can get it with\n<code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>. <br/>\n<b>Synchronous and asynchronous behaviors are offered.</b> </br>\n</p>\n<p>Synchronous behavior:</br></p>\n<ul>\n<li>Set <code>'wait_for_ready': true</code> to activate it</li>\n<li>\n<b>You can <code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>\nand request a loan right after you received the answer from this API endpoint</b>\n</li>\n<li>Response takes from 4 to 8 seconds</li>\n<li>\nThe API answers after the solvency of the company is evaluated and the credit line is created,\nor returns an error.\n</li>\n</ul>\n<br/>\n<p>Asynchronous behavior (default one):</p>\n<ul>\n<li>Set <code>'wait_for_ready': false</code> to activate it</li>\n</li>\n<li>\nOur system will evaluate the solvency of the company and create its credit line after answering\nthe API call.\n<li>\nSo, a loan cannot be requested right after this endpoint answers. You must wait for the creation\nof the credit line. To discover it, you can either subscribe to the CreditLine.CREATED webhook or\nregularly fetch <code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>.\n</li>\n   <li>Response takes between 0.3 and 1.5 second.</li>\n</ul>\n<blockquote class=\"callout callout_warn\" theme=\"\U0001F6A7\">\n<h3 class=\"callout-heading\">\n<span class=\"callout-icon\">\U0001F6A7</span>\n<p>Careful if you subscribe to the CreditLine.CREATED webhook!</p>\n</h3>\n<p>\nIf you subscribe to the webhook, please note that there is an inconsistency in the API at the\nmoment. The webhook sends a <code>borrower_id</code> that does not correspond to the borrower id that\nyou received with this endpoint (it's rather a business_id in our DB, that you cannot fetch).\n</p>\n<p>\nSo at the moment we recommend you to\n<code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code> for all borrowers waiting\nfor a credit line when you receive the webhook event.\n</p>\n</blockquote>\n</div>\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIPostBorrower'
+      responses:
+        '201':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIBorrower'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_borrowers
+      summary: /borrowers
+  /business/public-data:
+    get:
+      description: Search for borrower business information from various sources. This endpoint lets you find the right business identifier to use when onboarding a borrower or counterparty.
+      parameters:
+      - in: query
+        name: city
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: country
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: identifier
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: identifier_type
+        required: false
+        schema:
+          type: string
+          enum:
+          - hr_nummer
+          default: hr_nummer
+      - in: query
+        name: name
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: postal_code
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: street
+        required: false
+        x-nullable: true
+        schema:
+          type: string
+          default: null
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiBusinessDataSearchOutput'
+                type: array
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: get_business-public-data
+      summary: /business/public-data
+  /onboarding/{onboarding_id}:
+    get:
+      description: '
+
+        ## [Partners] Follow the onboarding of a business
+
+
+        If you haven''t visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.
+
+
+        When your borrower is on our web app, sharing his financial data, you might want to keep track of his onboarding.
+
+        This endpoints will let you get access to the onboarding status and details.
+
+        You''ll be able to know if the borrower has shared his financial data and is ready to request loans;
+
+        how much does defacto proposes to lend him; and more.
+
+        '
+      parameters:
+      - in: path
+        name: onboarding_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIOnboarding'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: get_onboarding-onboarding-id
+      summary: /onboarding/{onboarding_id}
+  /borrower/{borrower_id}/deactivate:
+    post:
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+          content:
+            '*/*':
+              schema: {}
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_borrower-borrower-id-deactivate
+      summary: /borrower/{borrower_id}/deactivate
+  /borrower/{borrower_id}/owner:
+    post:
+      description: Create a borrower owner with identity documents
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APICreateOwner'
+      responses:
+        '201':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIOwnerCreatedResponse'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_borrower-borrower-id-owner
+      summary: /borrower/{borrower_id}/owner
+  /borrower/{borrower_id}/sign:
+    post:
+      description: Register the date a new borrower accepted our T&Cs
+      parameters:
+      - in: path
+        name: borrower_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignedInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIBorrower'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_borrower-borrower-id-sign
+      summary: /borrower/{borrower_id}/sign
+  /onboardings:
+    post:
+      description: "\n## [Partners] Start onboarding a new business\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\n**Timeout after**: 30 seconds (status code will be 504 in such a case)\n\nIn order to request loans you will need to have borrowers. In order to test borrower's eligibility, we'll need\nto have access to borrower business' financial data.\n\nThis can be achieved in two ways:\nEither you have this piece of information and you may use the\n[sharing business data](https://developers.getdefacto.com/reference/post_business-data-account-transactions)\nAPI documentation to do so, or you might want to rely on defacto's onboarding process to get this information.\n\nIn the later, you will need to create an onboarding for the business you want to request loans for.\n\n### Behavior\nWhen you send this API request providing business information, your referral and callback url:\nThe system will start an onboarding for you and you will get its id in the response.\n\nThen you must redirect the borrower to the onboarding tunnel so that he can select his financial\ntools and share as much data as he wants to max-out his eligible amount:\n\n- **In the normal case**, redirect him to\n  `https://app.getdefacto.com/onboarding/continue/{onboarding_id}`.\n- **When the response contains a `secure_resume_link`**, redirect him to that link *instead* of the\n  bare continue URL above. This happens when the business already has a bank-connected onboarding:\n  to avoid exposing another party's financial data, that tunnel is gated and can only be reopened by\n  a link carrying a short-lived secure token. The `secure_resume_link` is exactly that\n  pre-authenticated continue URL. It is valid for **2 hours** — if it expires, POST /onboarding again\n  to obtain a fresh one.\n\nOnce borrower has accepted defacto's T&Cs and created his account, he'll be redirected back to the redirect_url\nyou provided and if you subscribed to `CREDIT_LINE.Created` webhook you will receive it shortly.\nRead [webhook](https://developers.getdefacto.com/reference/webhooks-at-defacto) for details.\n\n### Frequently Asked Questions\n\n**How do I get onboarding results?**\nYou can use the GET /onboarding/{onboarding_id} endpoint to retrieve the onboarding results.\n\n**What should I do if the status of the onboarding is expired?**\nOnboardings last for 168 hours;\nafter what you'll have to repeat the POST /onboarding request you just made.\n\n**How do I get the borrower's ID once onboarding is `COMPLETED`?**\nYou can use the GET /onboarding/{onboarding_id} endpoint to retrieve the borrower's ID under the `borrower_id`\nattribute; or you can GET /borrowers/?identifier={business_identifier} to directly get the borrower object.\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIOnboardingCreationRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIOnboarding'
+      security:
+      - Bearer: []
+      tags:
+      - Onboarding
+      operationId: post_onboardings
+      summary: /onboardings
+components:
+  schemas:
+    PublicApiAccountNumber:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - iban
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type: string
+          nullable: true
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          type: string
+      required:
+      - account_number
+      type: object
+    APILightAccount:
+      properties:
+        account_name:
+          default: null
+          description: A name given to this account. Any name can be given.
+          type: string
+          nullable: true
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          description: The identifier of the bank.
+          type: string
+        bank_identifier_type:
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
+      type: object
+    APIOnboardingBusiness:
+      properties:
+        defacto_segment:
+          default: null
+          enum:
+          - CAT1
+          - CAT2
+          - CAT3
+          - CAT4
+          - null
+          type: string
+          nullable: true
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        name:
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      - name
+      type: object
+    UserInput:
+      properties:
+        desired_amount_euros:
+          default: null
+          type: integer
+          nullable: true
+        desired_timeline:
+          default: null
+          type: string
+          nullable: true
+        frequency:
+          default: null
+          enum:
+          - permanent
+          - temporary
+          - null
+          type: string
+          nullable: true
+        immediate_need:
+          default: null
+          type: string
+          nullable: true
+        integrations_need:
+          default: null
+          items:
+            type: string
+          type: array
+          nullable: true
+        no_enrollment_category:
+          default: null
+          type: string
+          nullable: true
+        no_enrollment_detail:
+          default: null
+          type: string
+          nullable: true
+        reason_for_not_connecting_bank_account:
+          allOf:
+          - $ref: '#/components/schemas/ReasonForNotConnectingBankAccount'
+          default: null
+          nullable: true
+        user_need:
+          default: null
+          type: string
+          nullable: true
+      type: object
+    APIAddress:
+      properties:
+        address_line_1:
+          default: null
+          type: string
+          nullable: true
+        address_line_2:
+          default: null
+          type: string
+          nullable: true
+        city:
+          default: null
+          type: string
+          nullable: true
+        country:
+          default: null
+          type: string
+          nullable: true
+        postal_code:
+          default: null
+          maxLength: 10
+          type: string
+          nullable: true
+        state:
+          default: null
+          type: string
+          nullable: true
+      type: object
+    BorrowerComplianceChecks:
+      properties:
+        status:
+          enum:
+          - APPROVED
+          - PENDING_USER_ACTION
+          - REJECTED
+          - REVIEWING
+          - UNKNOWN
+          type: string
+      required:
+      - status
+      type: object
+    APIDirector:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/APIAddress'
+          default: null
+          description: Address of the person.
+          nullable: true
+        birth_date:
+          default: null
+          description: Birth date of the person. (YYYY-MM-DD)
+          format: date
+          type: string
+          nullable: true
+        birth_place:
+          allOf:
+          - $ref: '#/components/schemas/BirthPlace'
+          default: null
+          description: Birth place of the person.
+          nullable: true
+        business_email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        business_phone_number:
+          default: null
+          description: PhoneNumber
+          type: string
+          nullable: true
+        entity_type:
+          default: people
+          enum:
+          - account
+          - account_detail_verification
+          - bill
+          - borrower
+          - borrower_financial_product
+          - business
+          - business_exposure
+          - business_financial_product
+          - contract
+          - counterparty
+          - country
+          - credit_card
+          - credit_line
+          - data_request
+          - deposit
+          - due_interest
+          - eligibility_request
+          - enrollment
+          - entity_eligibility
+          - financial_product
+          - flag
+          - installment
+          - invoice
+          - loan
+          - loan_log
+          - mandate
+          - max_exposure_deployment
+          - onboarding
+          - onboarding_financial_product
+          - payment
+          - people
+          - rac
+          - raw_data
+          - recollection_document
+          - revenue_share
+          - sandbox_invoice
+          - underwriting_check
+          type: string
+        first_name:
+          default: null
+          description: The first name of the person.
+          type: string
+          nullable: true
+        id:
+          default: null
+          nullable: true
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+          nullable: true
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type: string
+          nullable: true
+        last_name:
+          default: null
+          description: The first name of the person.
+          type: string
+          nullable: true
+        legal_name:
+          default: null
+          description: Legal name of the business.
+          type: string
+          nullable: true
+        nationality:
+          default: null
+          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type: string
+          nullable: true
+        role:
+          default: DIRECTOR
+          enum:
+          - DIRECTOR
+          - NON_DIRECTOR
+          type: string
+        siege_address:
+          allOf:
+          - $ref: '#/components/schemas/APIAddress'
+          default: null
+          description: Address of the business head quarters.
+          nullable: true
+        title:
+          default: null
+          description: Title of the person (e.g. M., Dr., etc.)
+          type: string
+          nullable: true
+      type: object
+    APIPostBorrower:
+      properties:
+        account_number:
+          default: null
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+          nullable: true
+        address:
+          allOf:
+          - $ref: '#/components/schemas/BusinessAddress'
+          default: null
+          nullable: true
+        directors:
+          default: null
+          items:
+            $ref: '#/components/schemas/APICreateDirector'
+          minItems: 1
+          type: array
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type: string
+          nullable: true
+        legal_form:
+          default: null
+          description: Legal form of the business.
+          type: string
+          nullable: true
+        metadata:
+          additionalProperties:
+            nullable: true
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type: object
+          nullable: true
+        name:
+          default: null
+          description: Legal name of the business.
+          type: string
+          nullable: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/APICreateOwner'
+          default: null
+          description: The person requesting subscribing to Defacto on behalf of the borrowers. Must be added as a director too
+          nullable: true
+        preferred_language:
+          default: null
+          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
+          type: string
+          nullable: true
+        signed_at:
+          default: null
+          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
+          format: date-time
+          type: string
+          nullable: true
+        vat_number:
+          default: null
+          description: VatNumber
+          type: string
+          nullable: true
+        wait_for_ready:
+          default: false
+          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
+          type: boolean
+      required:
+      - identifier
+      type: object
+    TypedApiPage12:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIBorrower'
+          type: array
+        next_page:
+          default: null
+          type: string
+          nullable: true
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type: string
+          nullable: true
+        total:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - count
+      - page_size
+      type: object
+    CreateAddress:
+      properties:
+        address_line_1:
+          default: null
+          type: string
+          nullable: true
+        address_line_2:
+          default: null
+          type: string
+          nullable: true
+        city:
+          default: null
+          type: string
+          nullable: true
+        country:
+          default: null
+          type: string
+          nullable: true
+        postal_code:
+          default: null
+          maxLength: 10
+          type: string
+          nullable: true
+        state:
+          default: null
+          type: string
+          nullable: true
+      type: object
+    APIEnrollment:
+      properties:
+        agent_feedback:
+          default: null
+          type: string
+          nullable: true
+        enrollment_campaign:
+          type: string
+        enrollment_name:
+          type: string
+        entity_id:
+          format: uuid
+          type: string
+        entity_type:
+          enum:
+          - BORROWER
+          - ONBOARDING
+          type: string
+        id:
+          format: uuid
+          type: string
+        recommendations:
+          default: null
+          items:
+            nullable: true
+          type: array
+          nullable: true
+        status:
+          type: string
+        submitted_at:
+          default: null
+          format: date-time
+          type: string
+          nullable: true
+      required:
+      - enrollment_campaign
+      - enrollment_name
+      - entity_id
+      - entity_type
+      - id
+      - status
+      type: object
+    APIBorrower:
+      properties:
+        accounts:
+          description: Bank accounts of the business.
+          items:
+            $ref: '#/components/schemas/APILightAccount'
+          type: array
+        active_enrollments:
+          items:
+            $ref: '#/components/schemas/APIEnrollment'
+          type: array
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+          nullable: true
+        can_reonboard:
+          default: false
+          type: boolean
+          nullable: true
+        compliance_checks:
+          allOf:
+          - $ref: '#/components/schemas/BorrowerComplianceChecks'
+          default: null
+          description: '[deprecated] Compliance checks state of the borrower. Tells about KYB and KYC procedure progression.'
+          nullable: true
+        contract_id:
+          default: null
+          format: uuid
+          type: string
+          nullable: true
+        contract_s3_url:
+          default: null
+          description: Pre-signed url to download the contract
+          type: string
+          nullable: true
+        directors:
+          default: null
+          description: Directors of the business.
+          items:
+            $ref: '#/components/schemas/APIDirector'
+          minItems: 1
+          type: array
+          nullable: true
+        id:
+          default: null
+          format: uuid
+          type: string
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type: string
+          nullable: true
+        legal_form:
+          default: null
+          description: Legal form of the business.
+          type: string
+          nullable: true
+        metadata:
+          additionalProperties:
+            nullable: true
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type: object
+          nullable: true
+        name:
+          default: null
+          description: Legal name of the business.
+          type: string
+          nullable: true
+        next_actions:
+          default: null
+          items:
+            enum:
+            - FILL_KYB_CASE
+            type: string
+          type: array
+          nullable: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/BorrowerOwner'
+          default: null
+          nullable: true
+        signed_at:
+          default: null
+          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
+          format: date-time
+          type: string
+          nullable: true
+        status:
+          default: null
+          enum:
+          - ALL_PAYMENT_SETUP
+          - BLOCKED
+          - DEACTIVATED
+          - PROHIBITED
+          - READY
+          - SDD_SETUP
+          - SIGNED
+          - TO_SIGN
+          - null
+          type: string
+          nullable: true
+        status_reason:
+          default: null
+          enum:
+          - ACTIVITY_DOCUMENTS_REQUIRED
+          - ACTIVITY_NOT_ELIGIBLE_BORROWER
+          - ALREADY_USING_FACTORING_OR_DAILLY
+          - AMOUNT_SUPERIOR_TO_AVAILABLE_BALANCE
+          - AVERAGE_INVOICE_SIZE_TOO_HIGH
+          - BLACKLISTED_FACTORED_COUNTERPARTY
+          - BORROWER_AND_COUNTERPARTY_HAVE_COMMON_DIRECTOR
+          - BORROWER_CHURNED
+          - BORROWER_DEFAULTED
+          - BORROWER_STATUS
+          - BORROWER_TO_SIGN
+          - BUSINESS_AGE_BELOW_THRESHOLD
+          - BUSINESS_AML_EXTREME_RISK
+          - BUSINESS_COMPLIANCE_ISSUE_DETECTED
+          - BUSINESS_HARD_COLLECTION
+          - BUSINESS_HAS_NO_PROFESSIONAL_EMAIL
+          - BUSINESS_INSOLVENCY_PROCEDURE_EXISTS
+          - BUSINESS_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - BUSINESS_LEGAL_FORM_NOT_ELIGIBLE
+          - BUSINESS_MISSING_INFORMATION
+          - BUSINESS_NOT_DIFFUSIBLE
+          - BUSINESS_NOT_REGISTERED
+          - BUSINESS_NOT_REGISTERED_TO_RCS
+          - BUSINESS_NOT_REGISTERED_TO_RCS_OR_RNE
+          - BUSINESS_RADIATED
+          - BUSINESS_REGION_NOT_COVERED
+          - BUSINESS_UNKNOWN
+          - BUSINESS_UNKNOWN_BUYER
+          - BUSINESS_UNKNOWN_SELLER
+          - CAPPING_EXCEEDED
+          - CASHED_IN_NOT_REPAID
+          - CCSF_TRANSACTION_DETECTED
+          - CCSF_TRANSACTION_PENDING_DATA_REQUEST
+          - CCSF_TRANSACTION_WAITING_END_INSTALLMENT_PLAN
+          - COUNTERPARTY_DATA_MISSING
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_EXISTS
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - COUNTERPARTY_KPI_MISSING
+          - COUNTERPARTY_NOT_REGISTERED
+          - COUNTERPARTY_NOT_SELECTED_FOR_FINANCING
+          - COUNTRY_CAPPING_EXCEEDED
+          - COUNTRY_NOT_ELIGIBLE_BORROWER
+          - COUNTRY_NOT_ELIGIBLE_COUNTERPARTY
+          - CREDIT_RISK_NOT_ELIGIBLE
+          - CREDIT_RISK_NOT_ELIGIBLE_COUNTERPARTY
+          - DATA_STILL_REFRESHING
+          - DEBT_ARREARS_PENDING_GRACE_PERIOD
+          - DEPRECATED_LATE_REPAYMENT
+          - DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - DOUBLE_MOBILIZATION
+          - DPD_15_LATE_REPAYMENT_BORROWER
+          - DPD_15_LATE_REPAYMENT_BUYER
+          - DPD_15_LATE_REPAYMENT_SELLER
+          - ELLISPHERE_RISK_INDEX
+          - EXCEEDED_PARTNER_CREDIT_LINE
+          - EXCESSIVE_AMOUNT_LOAN_REQUEST
+          - EXCESSIVE_DURATION_LOAN_REQUEST
+          - EXPOSURE_TOO_OLD
+          - FILL_INVOICE_BUYER_INFORMATION
+          - FILL_INVOICE_SELLER_INFORMATION
+          - FINANCIAL_PRODUCT_DEACTIVATED
+          - FINANCIAL_PRODUCT_NOT_IN_RELEASE
+          - FINANCIAL_STATEMENT_BAD_KPI
+          - FINANCIAL_STATEMENT_PARSING_ISSUE
+          - HIGH_BUSINESS_RISK_INDEX
+          - HIGH_LOAN_DEFAULT_INDEX
+          - HIGH_LYSTA_RISK_INDEX
+          - INDUSTRY_CODE_NOT_ELIGIBLE_BORROWER
+          - INDUSTRY_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - INSOLVENCY_EARLY_SIGNAL_DETECTED
+          - INSOLVENCY_PROCEDURE_EXISTS_BORROWER
+          - INSOLVENCY_PROCEDURE_EXISTS_BUYER
+          - INSOLVENCY_PROCEDURE_EXISTS_SELLER
+          - INSTALLMENT_PLAN_DETECTED_FOR_TAX
+          - INSTALLMENT_PLAN_DETECTED_FOR_URSSAF
+          - INSURANCE_QUOTE_EXPIRED
+          - INVOICE_ALREADY_FINANCED
+          - INVOICE_AUTO_LIQUIDATION
+          - INVOICE_BLACKLIST_WORDS
+          - INVOICE_COMPLIANCE_ISSUE_DETECTED
+          - INVOICE_DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - INVOICE_LME_NON_COMPLIANT
+          - INVOICE_MISSING_ACCOUNT_NUMBER
+          - INVOICE_MISSING_LEGAL_MENTION
+          - INVOICE_MULTIPLE_STAGE
+          - INVOICE_NON_ELIGIBLE_USE_CASE
+          - INVOICE_NOT_ELIGIBLE_TO_CREDIT_INSURANCE
+          - INVOICE_NOT_ISSUED_YET
+          - INVOICE_NOT_RELATED_TO_WCR
+          - INVOICE_OVERDUE
+          - INVOICE_PAYABLE_BORROWER_IS_ACCOUNT_HOLDER
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_LIVE_CONNECTION
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_MANDATE
+          - INVOICE_RECEIVABLE_BORROWER_IS_NOT_ACCOUNT_HOLDER
+          - INVOICE_REPAYMENT_DATE_TOO_FAR_60D
+          - KPI_MISSING
+          - KPI_SCREENING_NOT_ELIGIBLE_BORROWER
+          - KYB_PENDING
+          - KYB_PENDING_USER_ACTION
+          - KYC_PENDING
+          - KYC_PENDING_USER_ACTION
+          - LATE_REPAYMENT_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BUYER
+          - LEGAL_FORM_NOT_ELIGIBLE_COUNTERPARTY
+          - LINKED_BUSINESS_IS_BLOCKED
+          - LOAN_REQUEST_EXPIRED
+          - LOW_CASH_BALANCE
+          - LOW_FREE_CASH_FLOW
+          - MAX_AMOUNT_EXCEEDED
+          - MAX_AMOUNT_EXCEEDED_BORROWER
+          - MAX_AMOUNT_EXCEEDED_BUYER
+          - MAX_AMOUNT_EXCEEDED_SELLER
+          - MISSING_COUNTERPARTY_CONTACT_INFORMATION
+          - MISSING_PUBLIC_PROCUREMENT_DOCUMENT
+          - NEED_BANKING_INTEGRATION
+          - NOT_AN_INVOICE
+          - NOT_DIFFUSIBLE_BUYER
+          - NOT_DIFFUSIBLE_SELLER
+          - NOT_ENOUGH_DATA
+          - NOT_PRE_ELIGIBLE_SPV
+          - NOT_REGISTERED_BUYER
+          - NOT_REGISTERED_SELLER
+          - NO_TAX_PAYMENT_FOUND
+          - NO_URSSAF_PAYMENTS_FOUND
+          - NO_URSSAF_PAYMENT_FOUND
+          - OFFBOARDED
+          - ORANGE_FLAG_TRANSACTIONS
+          - OTHER_BUSINESS_FROM_DIRECTOR_HAS_INSOLVENCY_PROCEDURE
+          - OUTDATED_DATA
+          - OUTDATED_INVOICE
+          - OUTDATED_INVOICE_2WEEKS
+          - OUTDATED_INVOICE_3WEEKS
+          - OVERDRAFT_REQUIRED
+          - PLEASE_RECONNECT_BANK_ACCOUNTS
+          - POSTAL_CODE_NOT_ELIGIBLE_BORROWER
+          - POSTAL_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - PROACTIVE_RECOLLECTION
+          - PRUDENTIAL_EXPOSURE_EXCEEDED
+          - QONTO_INTEGRATION_GERMAN_USER_DOES_NOT_HAVE_4_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_HAVE_6_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - RECENT_DEBT_ARREARS_KO
+          - RECENT_DEBT_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_REVENUE_DROP
+          - RECENT_SEIZURE_DETECTED
+          - RECENT_TAX_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS_PENDING_DATA_REQUEST
+          - RECENT_URSSAF_ARREARS_PENDING_DATA_REQUEST
+          - RED_FLAG_TRANSACTIONS
+          - RELATED_COUNTERPARTY_HAS_FLAG
+          - RELATED_COUNTERPARTY_IS_LATE
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BORROWER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUSINESS
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUYER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_SELLER
+          - REPAYMENT_CONCENTRATION_IS_TOO_HIGH
+          - REQUIRED_FINANCIAL_STATEMENT
+          - RISK_SCORE_DOWNGRADING
+          - SMALL_RECURRING_AMOUNT_DETECTED_FOR_URSSAF
+          - TOO_LONG
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT_BANK_IDENTIFIER
+          - UNAUTHORIZED_LOAN_PAYMENT_BENEFICIARY
+          - URSSAF_PAYMENTS_STOPPED
+          - USER_DOES_NOT_MEET_MINIMUM_MAX_AMOUNT_SIZE
+          - USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - WAITING_FOR_THIRD_PARTY_PROVIDER
+          - WAIT_FOR_REPAYMENT
+          - null
+          type: string
+          nullable: true
+        vat_number:
+          default: null
+          description: VatNumber
+          type: string
+          nullable: true
+      required:
+      - identifier
+      type: object
+    APICreateDirector:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/CreateAddress'
+          default: null
+          description: Address of the person.
+          nullable: true
+        birth_date:
+          default: null
+          description: Birth date of the person. (YYYY-MM-DD)
+          format: date
+          type: string
+          nullable: true
+        birth_place:
+          allOf:
+          - $ref: '#/components/schemas/BirthPlace'
+          default: null
+          description: Birth place of the person.
+          nullable: true
+        business_email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        business_phone_number:
+          default: null
+          description: PhoneNumber
+          type: string
+          nullable: true
+        entity_type:
+          default: people
+          enum:
+          - account
+          - account_detail_verification
+          - bill
+          - borrower
+          - borrower_financial_product
+          - business
+          - business_exposure
+          - business_financial_product
+          - contract
+          - counterparty
+          - country
+          - credit_card
+          - credit_line
+          - data_request
+          - deposit
+          - due_interest
+          - eligibility_request
+          - enrollment
+          - entity_eligibility
+          - financial_product
+          - flag
+          - installment
+          - invoice
+          - loan
+          - loan_log
+          - mandate
+          - max_exposure_deployment
+          - onboarding
+          - onboarding_financial_product
+          - payment
+          - people
+          - rac
+          - raw_data
+          - recollection_document
+          - revenue_share
+          - sandbox_invoice
+          - underwriting_check
+          type: string
+        first_name:
+          default: null
+          description: The first name of the person.
+          type: string
+          nullable: true
+        id:
+          default: null
+          nullable: true
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+          nullable: true
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type: string
+          nullable: true
+        last_name:
+          default: null
+          description: The first name of the person.
+          type: string
+          nullable: true
+        legal_name:
+          default: null
+          description: Legal name of the business.
+          type: string
+          nullable: true
+        nationality:
+          default: null
+          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type: string
+          nullable: true
+        role:
+          default: DIRECTOR
+          enum:
+          - DIRECTOR
+          - NON_DIRECTOR
+          type: string
+        siege_address:
+          allOf:
+          - $ref: '#/components/schemas/CreateAddress'
+          default: null
+          description: Address of the business head quarters.
+          nullable: true
+        title:
+          default: null
+          description: Title of the person (e.g. M., Dr., etc.)
+          type: string
+          nullable: true
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type: string
+          nullable: true
+        address_line_2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        postal_code:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+      type: object
+    APIPricingDetails:
+      properties:
+        fees_daily_rate:
+          description: Daily interests rate in percent of owed amount.
+          type: number
+        late_daily_rate:
+          description: Daily interests rate in percent of owed amount when loan is late.
+          type: number
+      required:
+      - fees_daily_rate
+      - late_daily_rate
+      type: object
+    OnboardingUserInfo:
+      properties:
+        email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        first_name:
+          default: null
+          type: string
+          nullable: true
+        last_name:
+          default: null
+          type: string
+          nullable: true
+        phone_number:
+          default: null
+          type: string
+          nullable: true
+        total_active_tenants:
+          type: integer
+      required:
+      - total_active_tenants
+      type: object
+    APIOnboardingCreationRequest:
+      properties:
+        business:
+          allOf:
+          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          default: null
+          description: Business linked to this onboarding. Required for partner onboarding.
+          nullable: true
+        email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        phone_number:
+          default: null
+          type: string
+          nullable: true
+        preferred_language:
+          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
+          type: string
+        redirect_url:
+          default: null
+          description: URL where to redirect borrower at end of onboarding after borrower signed the contract
+          type: string
+          nullable: true
+        referral:
+          default: null
+          description: Where the user comes from (.e.g Qonto, Google search, etc.).
+          type: string
+          nullable: true
+        step:
+          default: null
+          description: Current step of the onboarding process - usually oriented after the next user action
+          type: string
+          nullable: true
+        traceability_payload:
+          additionalProperties:
+            nullable: true
+          default: null
+          type: object
+          nullable: true
+      required:
+      - preferred_language
+      type: object
+    BorrowerOwner:
+      properties:
+        email:
+          format: email
+          type: string
+        id:
+          format: uuid
+          type: string
+        phone_number:
+          default: null
+          description: PhoneNumber
+          type: string
+          nullable: true
+      required:
+      - email
+      - id
+      type: object
+    APIIdentityDocument:
+      properties:
+        description:
+          default: null
+          description: An optional string that describes the document.
+          type: string
+          nullable: true
+        document_binary_base64:
+          description: A string that represents the document's binary content encoded in Base64.
+          type: string
+        filename:
+          description: The name of the file, including its extension.
+          type: string
+      required:
+      - document_binary_base64
+      - filename
+      type: object
+    ReasonForNotConnectingBankAccount:
+      properties:
+        answer_code:
+          enum:
+          - no-access-to-company-bank-credentials
+          - not-comfortable-with-bank-account-connection
+          - other
+          - prefer-to-share-documents
+          type: string
+        comments:
+          default: null
+          type: string
+          nullable: true
+      required:
+      - answer_code
+      type: object
+    EligibilityDenialReason:
+      properties:
+        code:
+          description: Unique code identifying the reason of a denial. Can be used to display an error message to your users.
+          enum:
+          - ACTIVITY_DOCUMENTS_REQUIRED
+          - ACTIVITY_NOT_ELIGIBLE_BORROWER
+          - ALREADY_USING_FACTORING_OR_DAILLY
+          - AMOUNT_SUPERIOR_TO_AVAILABLE_BALANCE
+          - AVERAGE_INVOICE_SIZE_TOO_HIGH
+          - BLACKLISTED_FACTORED_COUNTERPARTY
+          - BORROWER_AND_COUNTERPARTY_HAVE_COMMON_DIRECTOR
+          - BORROWER_CHURNED
+          - BORROWER_DEFAULTED
+          - BORROWER_STATUS
+          - BORROWER_TO_SIGN
+          - BUSINESS_AGE_BELOW_THRESHOLD
+          - BUSINESS_AML_EXTREME_RISK
+          - BUSINESS_COMPLIANCE_ISSUE_DETECTED
+          - BUSINESS_HARD_COLLECTION
+          - BUSINESS_HAS_NO_PROFESSIONAL_EMAIL
+          - BUSINESS_INSOLVENCY_PROCEDURE_EXISTS
+          - BUSINESS_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - BUSINESS_LEGAL_FORM_NOT_ELIGIBLE
+          - BUSINESS_MISSING_INFORMATION
+          - BUSINESS_NOT_DIFFUSIBLE
+          - BUSINESS_NOT_REGISTERED
+          - BUSINESS_NOT_REGISTERED_TO_RCS
+          - BUSINESS_NOT_REGISTERED_TO_RCS_OR_RNE
+          - BUSINESS_RADIATED
+          - BUSINESS_REGION_NOT_COVERED
+          - BUSINESS_UNKNOWN
+          - BUSINESS_UNKNOWN_BUYER
+          - BUSINESS_UNKNOWN_SELLER
+          - CAPPING_EXCEEDED
+          - CASHED_IN_NOT_REPAID
+          - CCSF_TRANSACTION_DETECTED
+          - CCSF_TRANSACTION_PENDING_DATA_REQUEST
+          - CCSF_TRANSACTION_WAITING_END_INSTALLMENT_PLAN
+          - COUNTERPARTY_DATA_MISSING
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_EXISTS
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - COUNTERPARTY_KPI_MISSING
+          - COUNTERPARTY_NOT_REGISTERED
+          - COUNTERPARTY_NOT_SELECTED_FOR_FINANCING
+          - COUNTRY_CAPPING_EXCEEDED
+          - COUNTRY_NOT_ELIGIBLE_BORROWER
+          - COUNTRY_NOT_ELIGIBLE_COUNTERPARTY
+          - CREDIT_RISK_NOT_ELIGIBLE
+          - CREDIT_RISK_NOT_ELIGIBLE_COUNTERPARTY
+          - DATA_STILL_REFRESHING
+          - DEBT_ARREARS_PENDING_GRACE_PERIOD
+          - DEPRECATED_LATE_REPAYMENT
+          - DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - DOUBLE_MOBILIZATION
+          - DPD_15_LATE_REPAYMENT_BORROWER
+          - DPD_15_LATE_REPAYMENT_BUYER
+          - DPD_15_LATE_REPAYMENT_SELLER
+          - ELLISPHERE_RISK_INDEX
+          - EXCEEDED_PARTNER_CREDIT_LINE
+          - EXCESSIVE_AMOUNT_LOAN_REQUEST
+          - EXCESSIVE_DURATION_LOAN_REQUEST
+          - EXPOSURE_TOO_OLD
+          - FILL_INVOICE_BUYER_INFORMATION
+          - FILL_INVOICE_SELLER_INFORMATION
+          - FINANCIAL_PRODUCT_DEACTIVATED
+          - FINANCIAL_PRODUCT_NOT_IN_RELEASE
+          - FINANCIAL_STATEMENT_BAD_KPI
+          - FINANCIAL_STATEMENT_PARSING_ISSUE
+          - HIGH_BUSINESS_RISK_INDEX
+          - HIGH_LOAN_DEFAULT_INDEX
+          - HIGH_LYSTA_RISK_INDEX
+          - INDUSTRY_CODE_NOT_ELIGIBLE_BORROWER
+          - INDUSTRY_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - INSOLVENCY_EARLY_SIGNAL_DETECTED
+          - INSOLVENCY_PROCEDURE_EXISTS_BORROWER
+          - INSOLVENCY_PROCEDURE_EXISTS_BUYER
+          - INSOLVENCY_PROCEDURE_EXISTS_SELLER
+          - INSTALLMENT_PLAN_DETECTED_FOR_TAX
+          - INSTALLMENT_PLAN_DETECTED_FOR_URSSAF
+          - INSURANCE_QUOTE_EXPIRED
+          - INVOICE_ALREADY_FINANCED
+          - INVOICE_AUTO_LIQUIDATION
+          - INVOICE_BLACKLIST_WORDS
+          - INVOICE_COMPLIANCE_ISSUE_DETECTED
+          - INVOICE_DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - INVOICE_LME_NON_COMPLIANT
+          - INVOICE_MISSING_ACCOUNT_NUMBER
+          - INVOICE_MISSING_LEGAL_MENTION
+          - INVOICE_MULTIPLE_STAGE
+          - INVOICE_NON_ELIGIBLE_USE_CASE
+          - INVOICE_NOT_ELIGIBLE_TO_CREDIT_INSURANCE
+          - INVOICE_NOT_ISSUED_YET
+          - INVOICE_NOT_RELATED_TO_WCR
+          - INVOICE_OVERDUE
+          - INVOICE_PAYABLE_BORROWER_IS_ACCOUNT_HOLDER
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_LIVE_CONNECTION
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_MANDATE
+          - INVOICE_RECEIVABLE_BORROWER_IS_NOT_ACCOUNT_HOLDER
+          - INVOICE_REPAYMENT_DATE_TOO_FAR_60D
+          - KPI_MISSING
+          - KPI_SCREENING_NOT_ELIGIBLE_BORROWER
+          - KYB_PENDING
+          - KYB_PENDING_USER_ACTION
+          - KYC_PENDING
+          - KYC_PENDING_USER_ACTION
+          - LATE_REPAYMENT_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BUYER
+          - LEGAL_FORM_NOT_ELIGIBLE_COUNTERPARTY
+          - LINKED_BUSINESS_IS_BLOCKED
+          - LOAN_REQUEST_EXPIRED
+          - LOW_CASH_BALANCE
+          - LOW_FREE_CASH_FLOW
+          - MAX_AMOUNT_EXCEEDED
+          - MAX_AMOUNT_EXCEEDED_BORROWER
+          - MAX_AMOUNT_EXCEEDED_BUYER
+          - MAX_AMOUNT_EXCEEDED_SELLER
+          - MISSING_COUNTERPARTY_CONTACT_INFORMATION
+          - MISSING_PUBLIC_PROCUREMENT_DOCUMENT
+          - NEED_BANKING_INTEGRATION
+          - NOT_AN_INVOICE
+          - NOT_DIFFUSIBLE_BUYER
+          - NOT_DIFFUSIBLE_SELLER
+          - NOT_ENOUGH_DATA
+          - NOT_PRE_ELIGIBLE_SPV
+          - NOT_REGISTERED_BUYER
+          - NOT_REGISTERED_SELLER
+          - NO_TAX_PAYMENT_FOUND
+          - NO_URSSAF_PAYMENTS_FOUND
+          - NO_URSSAF_PAYMENT_FOUND
+          - OFFBOARDED
+          - ORANGE_FLAG_TRANSACTIONS
+          - OTHER_BUSINESS_FROM_DIRECTOR_HAS_INSOLVENCY_PROCEDURE
+          - OUTDATED_DATA
+          - OUTDATED_INVOICE
+          - OUTDATED_INVOICE_2WEEKS
+          - OUTDATED_INVOICE_3WEEKS
+          - OVERDRAFT_REQUIRED
+          - PLEASE_RECONNECT_BANK_ACCOUNTS
+          - POSTAL_CODE_NOT_ELIGIBLE_BORROWER
+          - POSTAL_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - PROACTIVE_RECOLLECTION
+          - PRUDENTIAL_EXPOSURE_EXCEEDED
+          - QONTO_INTEGRATION_GERMAN_USER_DOES_NOT_HAVE_4_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_HAVE_6_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - RECENT_DEBT_ARREARS_KO
+          - RECENT_DEBT_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_REVENUE_DROP
+          - RECENT_SEIZURE_DETECTED
+          - RECENT_TAX_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS_PENDING_DATA_REQUEST
+          - RECENT_URSSAF_ARREARS_PENDING_DATA_REQUEST
+          - RED_FLAG_TRANSACTIONS
+          - RELATED_COUNTERPARTY_HAS_FLAG
+          - RELATED_COUNTERPARTY_IS_LATE
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BORROWER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUSINESS
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUYER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_SELLER
+          - REPAYMENT_CONCENTRATION_IS_TOO_HIGH
+          - REQUIRED_FINANCIAL_STATEMENT
+          - RISK_SCORE_DOWNGRADING
+          - SMALL_RECURRING_AMOUNT_DETECTED_FOR_URSSAF
+          - TOO_LONG
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT_BANK_IDENTIFIER
+          - UNAUTHORIZED_LOAN_PAYMENT_BENEFICIARY
+          - URSSAF_PAYMENTS_STOPPED
+          - USER_DOES_NOT_MEET_MINIMUM_MAX_AMOUNT_SIZE
+          - USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - WAITING_FOR_THIRD_PARTY_PROVIDER
+          - WAIT_FOR_REPAYMENT
+          type: string
+        description:
+          default: Not yet available.
+          description: A human readable description of the denial reason, in english. Mainly returned for debug purpose.
+          type: string
+      required:
+      - code
+      type: object
+    BirthPlace:
+      properties:
+        city:
+          default: null
+          description: City where the person was born.
+          type: string
+          nullable: true
+        country:
+          default: null
+          description: Country where the person was born. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type: string
+          nullable: true
+      type: object
+    TypedApiPage13:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIRepaymentMethodDetails'
+          type: array
+        next_page:
+          default: null
+          type: string
+          nullable: true
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type: string
+          nullable: true
+        total:
+          default: null
+          type: integer
+          nullable: true
+      required:
+      - count
+      - page_size
+      type: object
+    APIBusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APIOnboardingEligibilityResponse:
+      properties:
+        finished_processing:
+          type: boolean
+        id:
+          format: uuid
+          type: string
+        is_computing:
+          type: boolean
+        response:
+          allOf:
+          - $ref: '#/components/schemas/APIEligibilityResponse'
+          default: null
+          nullable: true
+        status:
+          enum:
+          - DONE
+          - PENDING_USER_ACTION
+          - PENDING_VALIDATION
+          type: string
+      required:
+      - finished_processing
+      - id
+      - is_computing
+      - status
+      type: object
+    BusinessAddress:
+      properties:
+        address_line_1:
+          type: string
+        address_line_2:
+          default: null
+          type: string
+          nullable: true
+        city:
+          type: string
+        country:
+          type: string
+        postal_code:
+          maxLength: 10
+          type: string
+        state:
+          default: null
+          type: string
+          nullable: true
+      required:
+      - address_line_1
+      - city
+      - country
+      - postal_code
+      type: object
+    ApiPostRepaymentMethod:
+      properties:
+        apply_to_all_active_loans:
+          description: Use this account to repay active loans.
+          type: boolean
+        from_account:
+          allOf:
+          - $ref: '#/components/schemas/PublicApiAccountNumber'
+          default: null
+          description: Account information required if payment_method is DIRECT_DEBIT.
+          nullable: true
+        is_default_repayment_method:
+          description: Use this account by default for new loans repayment.
+          type: boolean
+        name:
+          default: null
+          description: Arbitrary name for this repayment method.
+          type: string
+          nullable: true
+        payment_method:
+          description: 'Payment method for the repayment account. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
+          enum:
+          - DIRECT_DEBIT
+          - SCT
+          type: string
+      required:
+      - apply_to_all_active_loans
+      - is_default_repayment_method
+      - payment_method
+      type: object
+    SignedInput:
+      properties:
+        signed_at:
+          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
+          format: date-time
+          type: string
+        wait_for_ready:
+          default: false
+          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
+          type: boolean
+          nullable: true
+      required:
+      - signed_at
+      type: object
+    APIRepaymentMethodDetails:
+      properties:
+        account_to_credit:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Account information required if payment_method is SCT.
+          nullable: true
+        account_to_debit:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Account information required if payment_method is DIRECT_DEBIT.
+          nullable: true
+        is_main:
+          type: boolean
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        status:
+          enum:
+          - DEACTIVATED
+          - NEW
+          - PENDING_VALIDATION
+          - READY
+          type: string
+      required:
+      - is_main
+      - payment_method
+      - status
+      type: object
+    APIOwnerCreatedResponse:
+      properties:
+        email:
+          format: email
+          type: string
+        id:
+          format: uuid
+          type: string
+        phone_number:
+          description: PhoneNumber
+          type: string
+      required:
+      - email
+      - id
+      - phone_number
+      type: object
+    APICreateOwner:
+      properties:
+        birth_date:
+          default: null
+          format: date
+          type: string
+          nullable: true
+        email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        first_name:
+          type: string
+        identity_documents:
+          allOf:
+          - $ref: '#/components/schemas/APICreateIdentityDocuments'
+          default: null
+          description: 'Owner''s identity documents: All documents must be provided as a Base64 encoded string of the document''s content.The front side of the identity document is mandatory. This can include either just the front side or both sides (recto-verso) of the identity document.The back side of the identity document is optional. You only need to provide it if you have already submitted the front side and vice versa.Additional identity documents are optional. You may submit other identity documents that you believe are relevant, such as a document used as proof of address, or one containing your code and signature.'
+          nullable: true
+        last_name:
+          type: string
+        phone_number:
+          default: null
+          description: PhoneNumber
+          type: string
+          nullable: true
+      required:
+      - first_name
+      - last_name
+      type: object
+    APIEligibilityResponse:
+      properties:
+        fees_daily_rate:
+          default: null
+          description: Daily interests rate in percent of owed amount.
+          type: number
+          nullable: true
+        is_eligible:
+          description: Say if the eligibility check accepted the request or not.
+          type: boolean
+        max_amount:
+          default: 0
+          description: Maximum amount that can be lent, in cents.
+          type: integer
+        pricing_details:
+          allOf:
+          - $ref: '#/components/schemas/APIPricingDetails'
+          default: null
+          description: Details on proposed pricing.
+          nullable: true
+        reasons:
+          default: null
+          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
+          items:
+            $ref: '#/components/schemas/EligibilityDenialReason'
+          type: array
+          nullable: true
+      required:
+      - is_eligible
+      type: object
+    APIOnboarding:
+      properties:
+        borrower_id:
+          default: null
+          description: Borrower linked to this onboarding. Null until borrower completes the onboarding.
+          format: uuid
+          type: string
+          nullable: true
+        business:
+          allOf:
+          - $ref: '#/components/schemas/APIOnboardingBusiness'
+          default: null
+          description: Business linked to this onboarding. Required for partner onboarding.
+          nullable: true
+        eligibility:
+          allOf:
+          - $ref: '#/components/schemas/APIOnboardingEligibilityResponse'
+          default: null
+          nullable: true
+        email:
+          default: null
+          format: email
+          type: string
+          nullable: true
+        email_tracking_consent:
+          default: null
+          description: CNIL email tracking-pixel consent decision recorded for this onboarding (null = not asked).
+          type: boolean
+          nullable: true
+        id:
+          description: Unique id of the onboarding.
+          format: uuid
+          type: string
+        integrations:
+          description: Get a list integrations related to this Onboarding
+          items:
+            $ref: '#/components/schemas/APIIntegration'
+          type: array
+        integrations_need:
+          default: null
+          items:
+            type: string
+          type: array
+          nullable: true
+        is_expired:
+          type: boolean
+        phone_number:
+          default: null
+          description: PhoneNumber
+          type: string
+          nullable: true
+        preferred_language:
+          default: null
+          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
+          type: string
+          nullable: true
+        redirect_url:
+          default: null
+          description: URL where to redirect borrower at end of onboarding after borrower signed the contract
+          type: string
+          nullable: true
+        referral:
+          description: Where the user comes from (.e.g Qonto, Google search, etc.).
+          type: string
+        reset_password_token:
+          default: null
+          type: string
+          nullable: true
+        secure_resume_link:
+          default: null
+          description: Url
+          type: string
+          nullable: true
+        status:
+          description: Status of the onboarding.
+          enum:
+          - COMPLETED
+          - CREATED
+          - DUPLICATE
+          type: string
+        user:
+          allOf:
+          - $ref: '#/components/schemas/OnboardingUserInfo'
+          default: null
+          nullable: true
+        user_input:
+          allOf:
+          - $ref: '#/components/schemas/UserInput'
+          default: null
+          nullable: true
+        user_need:
+          default: null
+          type: string
+          nullable: true
+      required:
+      - id
+      - is_expired
+      - referral
+      - status
+      type: object
+    ApiBusinessDataSearchOutput:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+          nullable: true
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        name:
+          default: null
+          type: string
+          nullable: true
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APIAccountCreation:
+      properties:
+        account_holder:
+          allOf:
+          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          default: null
+          description: The business owning the account.
+          nullable: true
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type: string
+          nullable: true
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      type: object
+    APIIntegration:
+      properties:
+        id:
+          format: uuid
+          type: string
+        is_connected:
+          type: boolean
+        name:
+          type: string
+      required:
+      - id
+      - is_connected
+      - name
+      type: object
+    APICreateIdentityDocuments:
+      properties:
+        custom_identity_documents:
+          default: null
+          items:
+            $ref: '#/components/schemas/APIIdentityDocument'
+          type: array
+          nullable: true
+        identity_document_back:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+          nullable: true
+        identity_document_front:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+          nullable: true
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey

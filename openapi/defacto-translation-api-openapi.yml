@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: Defacto Accounting Translation API
+  version: v1.0.0
+  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  contact:
+    email: contact@getdefacto.com
+    url: https://developers.getdefacto.com/
+servers:
+- url: https://api.getdefacto.com
+  description: Production
+- url: https://api-sandbox.getdefacto.com
+  description: Sandbox
+security:
+- Bearer: []
+tags:
+- name: Translation
+paths:
+  /business/data-request/data-type/{data_type}:
+    get:
+      description: Get translations for a given data request data type.
+      parameters:
+      - in: path
+        name: data_type
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DataTypeInfo'
+      security:
+      - Bearer: []
+      tags:
+      - Translation
+      operationId: get_business-data-request-data-type-data-type
+      summary: /business/data-request/data-type/{data_type}
+  /translation/denial-code/{code}:
+    get:
+      parameters:
+      - in: path
+        name: code
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TranslationResult'
+      tags:
+      - Translation
+      operationId: get_translation-denial-code-code
+      summary: /translation/denial-code/{code}
+components:
+  schemas:
+    TranslationResult:
+      properties:
+        de:
+          type: string
+        en:
+          type: string
+        es:
+          type: string
+        fr:
+          type: string
+      required:
+      - de
+      - en
+      - es
+      - fr
+      type: object
+    DataTypeInfo:
+      properties:
+        data_type:
+          enum:
+          - administrative_seizure_explanation
+          - allocation_seizure_explanation
+          - ccsf_official_document
+          - certificate_of_tax_compliance
+          - certificate_of_vigilance
+          - debt_arrears
+          - financial_capacity
+          - financial_statement
+          - iban_used_for_social_security_payments
+          - insolvency_early_signal_explanation
+          - interim_financial_guarantee
+          - other_seizure_explanation
+          - overdraft_contract
+          - security_services_authorisation
+          - social_security_installment_plan
+          - tax_return
+          - term_sheet
+          - transport_license
+          type: string
+        requires_document:
+          type: boolean
+        translations:
+          $ref: '#/components/schemas/TranslationResult'
+      required:
+      - data_type
+      - requires_document
+      - translations
+      type: object
+  securitySchemes:
+    Bearer:
+      in: header
+      name: Authorization
+      type: apiKey
