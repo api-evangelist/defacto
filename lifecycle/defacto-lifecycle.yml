@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.getdefacto.com/
+summary: Versioning, status, uptime, and deprecated operations for the Defacto API.
+versioning:
+  scheme: single-version
+  current: v1.0.0
+  notes: The reconstructed OpenAPI reports info.version v1.0.0; the API is served without a version path segment on api.getdefacto.com. No dated/versioned release train is documented.
+status_page: https://status.getdefacto.com
+sla:
+  uptime_target: '99.995%'
+  evidence: 99.995% uptime over the trailing 12 months (per getdefacto.com/security)
+  monitoring: 24/7 system monitoring; Business Continuity and Disaster Recovery plans
+deprecation:
+  policy_documented: false
+  header_support_documented: false
+  notes: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support is documented. Several operations are marked [DEPRECATED] in the docs, with migration guidance to the Financial Products endpoints (see recipes/migrating-from-credit-line-to-financial-products).
+deprecated_operations:
+- openapi/defacto-openapi-original.json#get_credit-line
+- openapi/defacto-openapi-original.json#get_credit-line-credit-line-id
+cross_links:
+  changelog: none published at developers.getdefacto.com/changelog (404 as of this pass)
+  conventions: conventions/defacto-conventions.yml

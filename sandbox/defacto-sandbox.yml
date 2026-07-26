@@ -1,0 +1,66 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.getdefacto.com/reference/testing-your-integration
+docs:
+- https://developers.getdefacto.com/reference/testing-your-integration
+- https://developers.getdefacto.com/reference/get-access-to-the-api
+summary: Defacto ships a full sandbox with distinct hosts, distinct API keys, magic test IBANs, and data generators. Values below are published verbatim in the docs.
+environments:
+  sandbox:
+    api: https://api-sandbox.getdefacto.com
+    dashboard: https://sandbox.app.getdefacto.com
+  production:
+    api: https://api.getdefacto.com
+    dashboard: https://app.getdefacto.com
+keys:
+  separation: Sandbox and production use different API keys and two distinct accounts.
+  access: Email contact@getdefacto.com to get sandbox/API access; keys are created in the web app under Settings > API Keys.
+scenario_driver: The sandbox scenario is selected by the target/payee IBAN used on the invoice/loan. Generated IBANs default to the SUCCESS scenario; use the IBAN generator to pick another scenario.
+scenarios:
+- name: SUCCESS
+  description: Successfully creates a loan paid immediately after approval; credit-transfer repayment triggered immediately after payment.
+- name: SUCCESS_ONE_DAY_LATER
+  description: Successfully creates a loan paid immediately after approval; repayment triggered the following day.
+- name: REJECT
+  status: coming soon
+  description: Creates a loan that will be declined by Defacto.
+- name: FAIL
+  description: Creates a loan whose payment will fail after approval.
+test_ibans:
+  bic: FK2FACTO
+  note: An IBAN can be used with only one of your counterparties; assign multiple IBANs to test multiple scenarios. These IBANs do not work in production.
+  values:
+  - iban: FR8811111015593603018280926
+    scenario: SUCCESS
+    example_invoice_pdf: https://github.com/d3facto/sandbox-resources/blob/main/pdf/Invoice%2BSuccess.pdf
+    example_payload: https://github.com/d3facto/sandbox-resources/blob/main/testing-values/invoice_success.json
+  - iban: FR3711111025593244332331294
+    scenario: SUCCESS_ONE_DAY_LATER
+    example_invoice_pdf: https://github.com/d3facto/sandbox-resources/blob/main/pdf/Invoice%2BRepay%2BIn%2BOne%2BDay.pdf
+    example_payload: https://github.com/d3facto/sandbox-resources/blob/main/testing-values/invoice_repay_in_one_day.json
+  - iban: FR1311111045594746737398900
+    scenario: FAIL
+    example_invoice_pdf: https://github.com/d3facto/sandbox-resources/blob/main/pdf/Invoice%2BFail.pdf
+    example_payload: https://github.com/d3facto/sandbox-resources/blob/main/testing-values/invoice_fail.json
+generators:
+- name: IBAN generator
+  operation: get_sandbox-iban-generator
+  path: GET /sandbox/iban-generator
+  description: Generate an IBAN that produces a chosen scenario (e.g. rejected loan). BIC is FK2FACTO.
+- name: Business generator
+  operation: get_sandbox-business-generator
+  path: GET /sandbox/business-generator
+  description: Returns a fake business payload to register as a borrower (does not create it).
+- name: Invoice generator
+  operation: post_sandbox-invoice-generator
+  path: POST /sandbox/invoice-generator
+  description: Generates both an IBAN and a fake invoice for a chosen scenario (use curl for the full response).
+- name: Business eligibility control
+  operation: post_sandbox-business-eligible
+  path: POST /sandbox/business-eligible
+  description: Configure a business as ELIGIBLE / NOT_ELIGIBLE to test eligibility branches.
+resources_repo: https://github.com/d3facto/sandbox-resources
+connectivity_test:
+  operation: get_hello
+  path: GET /hello
+  description: First call to verify your API key/connection.

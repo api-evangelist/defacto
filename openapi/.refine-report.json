@@ -1,0 +1,51 @@
+{
+  "provider": "defacto",
+  "sources": [
+    "defacto-accounting-api-openapi.yml",
+    "defacto-billing-api-openapi.yml",
+    "defacto-business-and-accounts-api-openapi.yml",
+    "defacto-counterparty-api-openapi.yml",
+    "defacto-credit-card-api-openapi.yml",
+    "defacto-eligibility-and-credit-limit-api-openapi.yml",
+    "defacto-financial-product-api-openapi.yml",
+    "defacto-invoice-api-openapi.yml",
+    "defacto-loan-api-openapi.yml",
+    "defacto-onboarding-api-openapi.yml",
+    "defacto-payment-api-openapi.yml",
+    "defacto-recollection-api-openapi.yml",
+    "defacto-repay-api-openapi.yml",
+    "defacto-sharing-business-data-api-openapi.yml",
+    "defacto-subscription-api-openapi.yml",
+    "defacto-testing-api-openapi.yml",
+    "defacto-translation-api-openapi.yml",
+    "defacto-webhook-api-openapi.yml"
+  ],
+  "outputs": [
+    "defacto-accounting-api-openapi.yml",
+    "defacto-billing-api-openapi.yml",
+    "defacto-business-and-accounts-api-openapi.yml",
+    "defacto-counterparty-api-openapi.yml",
+    "defacto-credit-card-api-openapi.yml",
+    "defacto-eligibility-and-credit-limit-api-openapi.yml",
+    "defacto-financial-product-api-openapi.yml",
+    "defacto-invoice-api-openapi.yml",
+    "defacto-loan-api-openapi.yml",
+    "defacto-onboarding-api-openapi.yml",
+    "defacto-payment-api-openapi.yml",
+    "defacto-recollection-api-openapi.yml",
+    "defacto-repay-api-openapi.yml",
+    "defacto-sharing-business-data-api-openapi.yml",
+    "defacto-subscription-api-openapi.yml",
+    "defacto-testing-api-openapi.yml",
+    "defacto-translation-api-openapi.yml",
+    "defacto-webhook-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "defacto-invoice-api-openapi.yml: dangling $ref: #/components/requestBodies/APIPatchInvoice",
+    "defacto-webhook-api-openapi.yml: dangling $ref: #/components/requestBodies/CreateWebhook"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

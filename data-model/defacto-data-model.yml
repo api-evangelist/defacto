@@ -1,0 +1,87 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/defacto-openapi-original.json
+docs: https://developers.getdefacto.com/reference/financial-products
+summary: Core entity-relationship graph for the Defacto financing API, derived from the OpenAPI schemas and the documented resource relationships.
+entities:
+- name: Borrower
+  description: A company enrolled on Defacto that can request loans; created via POST /borrowers, which also opens a credit line.
+  key_operations: [post_borrowers, get_borrowers, get_borrower-borrower-id]
+- name: CreditLine
+  description: The credit facility opened for a borrower; being superseded by FinancialProduct.
+  key_operations: [get_credit-lines]
+  deprecated_operations: [get_credit-line, get_credit-line-credit-line-id]
+- name: FinancialProduct
+  description: The product a borrower can submit loan requests against, each with its own rules and balances.
+  key_operations: [get_borrower-borrower-id-financial-products]
+- name: Loan
+  description: A financing request against a borrower/invoice with a full repayment schedule and status machine.
+  key_operations: [post_loans, get_loans, get_loan-loan-id, post_loan-loan-id-validate, post_loan-loan-id-cancel]
+- name: Invoice
+  description: A payable/receivable document; can be financed by a loan.
+  key_operations: [post_invoices, post_invoices-upload, get_invoices, get_invoice-invoice-id, post_invoice-invoice-id-submit]
+- name: Counterparty
+  description: Any commercial relation (buyer/seller) of a borrower; auto-created from invoices.
+  key_operations: [post_counterparties, get_counterparties, get_counterparty-counterparty-id]
+- name: Card
+  description: A credit card issued to a borrower.
+  key_operations: [get_cards, get_cards-card-id, patch_cards-card-id-status, post_cards-card-id-ephemeral-key]
+- name: Payment
+  description: A payment tied to a loan repayment.
+  key_operations: [get_payments, get_installments]
+- name: InstallmentPlan
+  description: A multi-installment repayment schedule replacing scheduled payments, used in recollection.
+  key_operations: [post_installment-plans-1, get_installment-plan-installment-plan-id]
+- name: RecollectionCase
+  description: A debt-recovery case opened for a late debtor, holding installment plans and follow-up tasks.
+  key_operations: [post_recollection-cases, get_recollection-cases, get_recollection-case-recollection-case-id]
+- name: Bill
+  description: A Defacto fee invoice for the loans a partner performed.
+  key_operations: [get_bills, post_bill-bill-id-sent]
+- name: Onboarding
+  description: The borrower onboarding flow that collects financial data to evaluate eligibility.
+  key_operations: [post_onboardings, get_onboarding-onboarding-id]
+- name: Webhook
+  description: A subscription that POSTs event notifications to a partner URL.
+  key_operations: [post_webhooks, get_webhooks, patch_webhook-webhook-id, delete_webhook-webhook-id]
+relationships:
+- from: Borrower
+  to: CreditLine
+  type: has_one
+  via: borrower
+- from: Borrower
+  to: FinancialProduct
+  type: has_many
+  via: borrower_id
+- from: Loan
+  to: Borrower
+  type: belongs_to
+  via: borrower
+- from: Loan
+  to: Invoice
+  type: has_many
+  via: invoice_ids
+- from: Invoice
+  to: Counterparty
+  type: belongs_to
+  via: counterparty
+- from: Card
+  to: Borrower
+  type: belongs_to
+  via: borrower
+- from: Payment
+  to: Loan
+  type: belongs_to
+  via: loan
+- from: InstallmentPlan
+  to: Loan
+  type: has_many
+  via: loan_ids
+- from: RecollectionCase
+  to: InstallmentPlan
+  type: has_many
+  via: recollection_case_id
+- from: Bill
+  to: Loan
+  type: has_many
+  via: loans

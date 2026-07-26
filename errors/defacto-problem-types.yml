@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/defacto-openapi-original.json
+format: json
+notes:
+- Defacto returns standard HTTP status codes; error bodies are JSON (not RFC 9457 application/problem+json).
+- Loan/invoice declines are surfaced as denial reasons (GET /eligibility/reasons) with human translations
+  via GET /translation/denial-code/{code}); the reason list is dynamic and must not be hard-coded.
+- POST /invoice/{invoice_id}/submit returns 422 with the list of missing fields when data is incomplete.
+- Long-running loan/borrower/onboarding operations time out at 30s returning 504.
+problems:
+- status: '400'
+  title: Bad Request — the request was malformed or missing required fields (a 422 lists missing fields
+    for invoice validation).
+  operation_count: 1
+  example_operations:
+  - post_subscription-subscription-id-activate
+- status: '404'
+  title: Not Found — the referenced resource does not exist or is not visible to your account.
+  operation_count: 2
+  example_operations:
+  - get_cards-card-id-entries-export
+  - post_subscription-subscription-id-activate
+- status: default
+  title: Error — non-2xx responses return a JSON error body; loan/invoice declines carry a denial reason
+    resolvable via GET /translation/denial-code/{code}.
+  operation_count: 1
+  example_operations:
+  - get_translation-denial-code-code

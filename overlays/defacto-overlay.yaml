@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Defacto API
+  version: 1.0.0
+extends: openapi/defacto-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-18'
+    x-apievangelist-source: https://developers.getdefacto.com/llms.txt
+    x-apievangelist-notes: >-
+      Spec reconstructed from Defacto's per-operation ReadMe OpenAPI fragments; operationId values are the
+      provider's ReadMe reference slugs. Auth is HTTP Bearer (API key). Idempotency is via the salt_id request
+      field on POST /loans and POST /installment-plans (no Idempotency-Key header). Pagination is cursor-based.
+- target: $.info
+  update:
+    x-agent-ready:
+      auth: bearer-apikey
+      idempotency: salt_id (request body)
+      pagination: cursor
+      events: 32 webhook event types (see asyncapi/defacto-webhooks-asyncapi.yml)
+      sandbox: https://api-sandbox.getdefacto.com

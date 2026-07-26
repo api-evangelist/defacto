@@ -1,0 +1,294 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/defacto-openapi-original.json
+note: 'Defacto publishes no official MCP server as of this pass. This is a candidate tool list derived one-tool-per-operation
+  from the reconstructed OpenAPI so an MCP server can be generated. Auth: HTTP Bearer (API key); base https://api.getdefacto.com
+  (sandbox https://api-sandbox.getdefacto.com).'
+server:
+  name: defacto
+  transport: http
+  auth: bearer
+tools:
+- name: delete_invoice-invoice-id
+  description: DELETE /invoice/{invoice_id} — Delete an invoice by id
+  source_operation: openapi/defacto-openapi-original.json#delete_invoice-invoice-id
+- name: get_invoice-invoice-id
+  description: GET /invoice/{invoice_id} — Get an invoice by id
+  source_operation: openapi/defacto-openapi-original.json#get_invoice-invoice-id
+- name: patch_invoice-invoice-id
+  description: PATCH /invoice/{invoice_id} — Updates an invoice (with status TO_SUBMIT or TO_EDIT only)
+  source_operation: openapi/defacto-openapi-original.json#patch_invoice-invoice-id
+- name: delete_webhook-webhook-id
+  description: DELETE /webhook/{webhook_id} — Delete a webhook subscription.
+  source_operation: openapi/defacto-openapi-original.json#delete_webhook-webhook-id
+- name: patch_webhook-webhook-id
+  description: PATCH /webhook/{webhook_id} —  Update a webhook subscription.  ⚠️ Our webhooks always call the POST method
+    of the given url.  For more information on webhooks such as how to secure them, you
+  source_operation: openapi/defacto-openapi-original.json#patch_webhook-webhook-id
+- name: get_bills
+  description: 'GET /bills — List your fees invoices (i.e: your Defacto bill) for the loans you performed on the platform.<br/>By
+    default, this endpoint only returns your own bills, but you'
+  source_operation: openapi/defacto-openapi-original.json#get_bills
+- name: get_borrower-borrower-id-financial-products
+  description: 'GET /borrower/{borrower_id}/financial-products —  ## List the financial products available to the borrower.  Financial
+    products are the product against which a borrower can submit loan requests. Each come with'
+  source_operation: openapi/defacto-openapi-original.json#get_borrower-borrower-id-financial-products
+- name: get_borrower-borrower-id-repayment-methods
+  description: GET /borrower/{borrower_id}/repayment-methods —  <div> <h3>List available repayment methods for borrower.</h3>
+    </div>
+  source_operation: openapi/defacto-openapi-original.json#get_borrower-borrower-id-repayment-methods
+- name: post_borrower-borrower-id-repayment-methods
+  description: POST /borrower/{borrower_id}/repayment-methods —  <div> <h3>Add and/or choose the repayment method for borrower.</h3>  <p>If
+    payment method is "DIRECT_DEBIT" then the `account` parameter must not be null.</p>
+  source_operation: openapi/defacto-openapi-original.json#post_borrower-borrower-id-repayment-methods
+- name: get_borrower-borrower-id
+  description: GET /borrower/{borrower_id} — Retrieve the full profile of a borrower by ID. Returns the borrower's status,
+    business information, accounts, compliance checks, and next actions required.
+  source_operation: openapi/defacto-openapi-original.json#get_borrower-borrower-id
+- name: get_borrowers
+  description: GET /borrowers — List all borrowers enrolled on Defacto for your account. Borrowers are companies that have
+    been registered and can request loans through the Defacto platform. R
+  source_operation: openapi/defacto-openapi-original.json#get_borrowers
+- name: post_borrowers
+  description: POST /borrowers —  <div> <h3>Enroll a new borrower on Defacto.</h3> <p> This API will create a borrower and
+    a credit line for this borrower. More information in the <b>behavior</
+  source_operation: openapi/defacto-openapi-original.json#post_borrowers
+- name: get_business-business-id-segment
+  description: GET /business/{business_id}/segment
+  source_operation: openapi/defacto-openapi-original.json#get_business-business-id-segment
+- name: get_business-data-request-data-type-data-type
+  description: GET /business/data-request/data-type/{data_type} — Get translations for a given data request data type.
+  source_operation: openapi/defacto-openapi-original.json#get_business-data-request-data-type-data-type
+- name: get_business-public-data
+  description: GET /business/public-data — Search for borrower business information from various sources. This endpoint lets
+    you find the right business identifier to use when onboarding a borrower or co
+  source_operation: openapi/defacto-openapi-original.json#get_business-public-data
+- name: get_cards-card-id-entries-export
+  description: GET /cards/{card_id}/entries/export — Export card transactions as a Pennylane-compatible CSV. Provide either
+    period (YYYY-MM) or from_date + to_date.
+  source_operation: openapi/defacto-openapi-original.json#get_cards-card-id-entries-export
+- name: get_cards-card-id-entries
+  description: GET /cards/{card_id}/entries — List entries for a credit card.
+  source_operation: openapi/defacto-openapi-original.json#get_cards-card-id-entries
+- name: get_cards-card-id
+  description: GET /cards/{card_id} — Retrieve a credit card by its ID.
+  source_operation: openapi/defacto-openapi-original.json#get_cards-card-id
+- name: get_cards
+  description: GET /cards — List credit cards for the authenticated borrower.
+  source_operation: openapi/defacto-openapi-original.json#get_cards
+- name: get_counterparties
+  description: GET /counterparties — List all the Counterparties. A Counterparty describes any commercial relations with a
+    company. Counterparties are automatically created from the invoices.
+  source_operation: openapi/defacto-openapi-original.json#get_counterparties
+- name: post_counterparties
+  description: POST /counterparties — Create a new counterparty. A Counterparty describes any commercial relations with a
+    company. Counterparties are automatically created from the invoices.
+  source_operation: openapi/defacto-openapi-original.json#post_counterparties
+- name: get_counterparty-counterparty-id
+  description: GET /counterparty/{counterparty_id} — Get a counterparty by id. A Counterparty describes any commercial relations
+    with a company. Counterparties are automatically created from the invoices.
+  source_operation: openapi/defacto-openapi-original.json#get_counterparty-counterparty-id
+- name: get_credit-line-credit-line-id
+  description: GET /credit_line/{credit_line_id} — [DEPRECATED] Get credit line by id.<br/> Now use financial-product endpoint
+  source_operation: openapi/defacto-openapi-original.json#get_credit-line-credit-line-id
+- name: get_credit-line
+  description: GET /credit_line — [DEPRECATED] Get the credit line associated with your account.<br/>Your partner max-exposure
+    is no longer available by API
+  source_operation: openapi/defacto-openapi-original.json#get_credit-line
+- name: get_credit-lines
+  description: GET /credit_lines — List all the credit lines that have been opened for your company.<br/>By default, this
+    includes all credit lines that have been created for borrowers you regist
+  source_operation: openapi/defacto-openapi-original.json#get_credit-lines
+- name: get_eligibility-reasons
+  description: GET /eligibility/reasons — List all the possible reasons for which a borrower would not be eligible for a loan.
+  source_operation: openapi/defacto-openapi-original.json#get_eligibility-reasons
+- name: get_events
+  description: GET /events — Search for business events. These events will let you read business events to build you logic
+    on top of it.
+  source_operation: openapi/defacto-openapi-original.json#get_events
+- name: get_hello
+  description: GET /hello — Make a first call to this endpoint to test your connection to Defacto API with your API Key
+  source_operation: openapi/defacto-openapi-original.json#get_hello
+- name: get_installment-plan-installment-plan-id
+  description: 'GET /installment-plan/{installment_plan_id} — ## Keep track of the progress of an installment plan When the
+    borrower is late to repay his loans or bills, he probably agreed to an installment plan. This endp'
+  source_operation: openapi/defacto-openapi-original.json#get_installment-plan-installment-plan-id
+- name: get_installments
+  description: GET /installments — List installements. Filter by loan or various dates to find what you're looking for.
+  source_operation: openapi/defacto-openapi-original.json#get_installments
+- name: get_invoices
+  description: GET /invoices — Get your invoices
+  source_operation: openapi/defacto-openapi-original.json#get_invoices
+- name: post_invoices
+  description: POST /invoices —  Create an invoice. - If you create an invoice that will need to be edited afterwards, create
+    a draft invoice with the <code>is_draft</code> parameter. Otherwis
+  source_operation: openapi/defacto-openapi-original.json#post_invoices
+- name: get_loan-loan-id-events
+  description: GET /loan/{loan_id}/events — Get the activity eligibility_request of a loan.
+  source_operation: openapi/defacto-openapi-original.json#get_loan-loan-id-events
+- name: get_loan-loan-id
+  description: GET /loan/{loan_id} — Retrieve a loan by its ID. Returns the full loan details including status, amounts, repayment
+    schedule, borrower information, and related documents.
+  source_operation: openapi/defacto-openapi-original.json#get_loan-loan-id
+- name: patch_loan-loan-id
+  description: PATCH /loan/{loan_id} —  Updates a loan. - When the loan is SUBMITTED or TO_VALIDATE, all the below fields
+    can be updated. - When the loan is VALIDATED or SCHEDULED, the references and
+  source_operation: openapi/defacto-openapi-original.json#patch_loan-loan-id
+- name: get_loans
+  description: GET /loans — List loans with pagination. Returns a paginated list of loans filterable by borrower, status,
+    dates, and loan type.
+  source_operation: openapi/defacto-openapi-original.json#get_loans
+- name: post_loans
+  description: 'POST /loans —  ## Request a new loan.  If you haven''t visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan)
+    we r'
+  source_operation: openapi/defacto-openapi-original.json#post_loans
+- name: get_onboarding-onboarding-id
+  description: 'GET /onboarding/{onboarding_id} —  ## [Partners] Follow the onboarding of a business  If you haven''t visited
+    the guide: [how to make your first loan?](https://developers.getdefacto.com/reference'
+  source_operation: openapi/defacto-openapi-original.json#get_onboarding-onboarding-id
+- name: get_payments
+  description: GET /payments — Get payments related to loans
+  source_operation: openapi/defacto-openapi-original.json#get_payments
+- name: get_recollection-case-recollection-case-id
+  description: GET /recollection-case/{recollection_case_id} — Get details of a recollection case.
+  source_operation: openapi/defacto-openapi-original.json#get_recollection-case-recollection-case-id
+- name: put_recollection-case-recollection-case-id
+  description: PUT /recollection-case/{recollection_case_id} — Add notes to a recollection case to follow up on recollection
+    process.
+  source_operation: openapi/defacto-openapi-original.json#put_recollection-case-recollection-case-id
+- name: get_recollection-cases
+  description: GET /recollection-cases — Get recollection cases. You can filter results using debtor business identifier.
+  source_operation: openapi/defacto-openapi-original.json#get_recollection-cases
+- name: post_recollection-cases
+  description: 'POST /recollection-cases — ## Open a recollection case When the borrower is late to repay his loans or bills,
+    you must open a recollection case to start taking actions to recover the debt'
+  source_operation: openapi/defacto-openapi-original.json#post_recollection-cases
+- name: get_referrer-referrer-id
+  description: GET /referrer/{referrer_id} — Get referrer details by ID
+  source_operation: openapi/defacto-openapi-original.json#get_referrer-referrer-id
+- name: get_sandbox-business-generator
+  description: GET /sandbox/business-generator —  Generate a fake business for you to use in your test. Important, this endpoint
+    does not create the business but simply return the payload. Call `/borrowers` to
+  source_operation: openapi/defacto-openapi-original.json#get_sandbox-business-generator
+- name: get_sandbox-iban-generator
+  description: GET /sandbox/iban-generator —  Generate a new IBAN that will produce a given scenario on the sandbox, for example
+    a rejected loan. Each IBAN can be used as the account of a single counterpar
+  source_operation: openapi/defacto-openapi-original.json#get_sandbox-iban-generator
+- name: get_translation-denial-code-code
+  description: GET /translation/denial-code/{code}
+  source_operation: openapi/defacto-openapi-original.json#get_translation-denial-code-code
+- name: get_webhooks
+  description: GET /webhooks —  List your webhook subscription.  ⚠️ Our webhooks always call the POST method of the given
+    url.  For more information on webhooks such as how to secure them, yo
+  source_operation: openapi/defacto-openapi-original.json#get_webhooks
+- name: post_webhooks
+  description: POST /webhooks —  Create a webhook subscription.  ⚠️ Our webhooks always call the POST method of the given
+    url.  For more information on webhooks such as how to secure them, you
+  source_operation: openapi/defacto-openapi-original.json#post_webhooks
+- name: patch_cards-card-id-status
+  description: 'PATCH /cards/{card_id}/status — Update card status. Accepted values: ''active'', ''inactive'', ''canceled''.'
+  source_operation: openapi/defacto-openapi-original.json#patch_cards-card-id-status
+- name: post_bill-bill-id-sent
+  description: POST /bill/{bill_id}/sent —  This endpoint enables you to notify Defacto when you sent the bill for the fees
+    of the loans to your user. A bill should be sent to the user only when its stat
+  source_operation: openapi/defacto-openapi-original.json#post_bill-bill-id-sent
+- name: post_borrower-borrower-id-deactivate
+  description: POST /borrower/{borrower_id}/deactivate
+  source_operation: openapi/defacto-openapi-original.json#post_borrower-borrower-id-deactivate
+- name: post_borrower-borrower-id-owner
+  description: POST /borrower/{borrower_id}/owner — Create a borrower owner with identity documents
+  source_operation: openapi/defacto-openapi-original.json#post_borrower-borrower-id-owner
+- name: post_borrower-borrower-id-sign
+  description: POST /borrower/{borrower_id}/sign — Register the date a new borrower accepted our T&Cs
+  source_operation: openapi/defacto-openapi-original.json#post_borrower-borrower-id-sign
+- name: post_business-data-account-transactions
+  description: POST /business/data/account-transactions —  Upload bank account transactions into our platform to refine borrower
+    credit line allowance.  This endpoint doesn't support updates on data already uploaded.
+  source_operation: openapi/defacto-openapi-original.json#post_business-data-account-transactions
+- name: post_business-data-accounts
+  description: POST /business/data/accounts —  Upload bank account balances into our platform to refine borrower credit line
+    allowance.  This endpoint doesn't support updates on data already uploaded.  The
+  source_operation: openapi/defacto-openapi-original.json#post_business-data-accounts
+- name: post_business-data-batch-upload-batch-id-close
+  description: POST /business/data/batch-upload/{batch_id}/close —  Close a batch of upload started with POST /business/data/batch-upload.  This
+    operation is a required one. Otherwise no data of the batch will be used.
+  source_operation: openapi/defacto-openapi-original.json#post_business-data-batch-upload-batch-id-close
+- name: post_business-data-batch-upload
+  description: POST /business/data/batch-upload —  Create a batch to upload data about a particular business.  This endpoint
+    returns an <code>id</code> that should be put into all /business/data/XXX endpoints.
+  source_operation: openapi/defacto-openapi-original.json#post_business-data-batch-upload
+- name: post_business-data-invoices
+  description: POST /business/data/invoices —  Upload business invoices into our platform to refine borrower credit line allowance.  This
+    endpoint doesn't support updates on data already uploaded.
+  source_operation: openapi/defacto-openapi-original.json#post_business-data-invoices
+- name: post_cards-card-id-ephemeral-key
+  description: POST /cards/{card_id}/ephemeral-key — Create an ephemeral key to reveal the card's PAN and CVV via the card
+    display SDK.
+  source_operation: openapi/defacto-openapi-original.json#post_cards-card-id-ephemeral-key
+- name: post_eligibility-beneficiary
+  description: POST /eligibility/beneficiary —  <div> <h3>Ask if the business can receive the money originated from a loan
+    on one of its bank accounts.</h3>  <p>It should be interpreted the following way:</p
+  source_operation: openapi/defacto-openapi-original.json#post_eligibility-beneficiary
+- name: post_eligibility-borrower
+  description: POST /eligibility/borrower —  <div> <h3>Ask for the pre-eligibility of a borrower.</h3>  <p>It should be interpreted
+    the following way:</p> <ul> <li>when <code>is_eligible</code> is <code>f
+  source_operation: openapi/defacto-openapi-original.json#post_eligibility-borrower
+- name: post_installment-plans-1
+  description: 'POST /installment-plans —  ## Create an installment plan  When you send this API request, our system will
+    create an installment-plan that replaces any scheduled payments you may have on'
+  source_operation: openapi/defacto-openapi-original.json#post_installment-plans-1
+- name: post_invoice-invoice-id-submit
+  description: POST /invoice/{invoice_id}/submit —  Submit an invoice for validation by Defacto (with status TO_SUBMIT or
+    TO_EDIT). If some data is missing prior to validating the invoice, a 422 error will be re
+  source_operation: openapi/defacto-openapi-original.json#post_invoice-invoice-id-submit
+- name: post_invoices-upload
+  description: POST /invoices/upload — Create an invoice entity from the PDF of an invoice. Send the file within a formData.
+    The endpoint will automatically extract the invoice information and create
+  source_operation: openapi/defacto-openapi-original.json#post_invoices-upload
+- name: post_loan-documents-document-type
+  description: POST /loan/documents/{document_type} — Generates a link to an archive of loan documents
+  source_operation: openapi/defacto-openapi-original.json#post_loan-documents-document-type
+- name: post_loan-loan-id-cancel
+  description: POST /loan/{loan_id}/cancel — Use this function to cancel a loan proposal. Available for TO_VALIDATE,VALIDATED
+    and SCHEDULED loans.
+  source_operation: openapi/defacto-openapi-original.json#post_loan-loan-id-cancel
+- name: post_loan-loan-id-validate
+  description: POST /loan/{loan_id}/validate — Use this function to accept a loan proposal. Available for TO_VALIDATE loans
+    only.
+  source_operation: openapi/defacto-openapi-original.json#post_loan-loan-id-validate
+- name: post_onboardings
+  description: 'POST /onboardings —  ## [Partners] Start onboarding a new business  If you haven''t visited the guide: [how
+    to make your first loan?](https://developers.getdefacto.com/reference/mak'
+  source_operation: openapi/defacto-openapi-original.json#post_onboardings
+- name: post_recollection-case-recollection-case-id-installment-plans-compute
+  description: 'POST /recollection-case/{recollection_case_id}/installment-plans/compute — ## Simulate an installment plan  Before
+    creating an installment plan you might need to expose installment amounts & dates to your debtor so that you can find
+    th'
+  source_operation: openapi/defacto-openapi-original.json#post_recollection-case-recollection-case-id-installment-plans-compute
+- name: post_recollection-case-recollection-case-id-installment-plans
+  description: 'POST /recollection-case/{recollection_case_id}/installment-plans —  ## Allow repaying in multiple times This
+    endpoint is dedicated to the creation of an installment plan as part of recollection strategy. You''ll need a recollect'
+  source_operation: openapi/defacto-openapi-original.json#post_recollection-case-recollection-case-id-installment-plans
+- name: post_referrer-referrer-id-upload-invoice-revenue-share-id
+  description: POST /referrer/{referrer_id}/upload-invoice/{revenue_share_id} — Upload revenue share invoice for a referrer
+    and update the related revenue share
+  source_operation: openapi/defacto-openapi-original.json#post_referrer-referrer-id-upload-invoice-revenue-share-id
+- name: post_repay-now
+  description: POST /repay/now
+  source_operation: openapi/defacto-openapi-original.json#post_repay-now
+- name: post_sandbox-business-eligible
+  description: POST /sandbox/business-eligible —  This endpoint enables you to configure the eligibility of a business. Pass
+    NOT_ELIGIBLE to make a business non-eligible. Then, you'll be able to test how the D
+  source_operation: openapi/defacto-openapi-original.json#post_sandbox-business-eligible
+- name: post_sandbox-invoice-generator
+  description: POST /sandbox/invoice-generator —  !!! The documentation website is not able to display the full response of
+    this endpoint. The use of the curl command is recommended. !!!  Generate a fake invoi
+  source_operation: openapi/defacto-openapi-original.json#post_sandbox-invoice-generator
+- name: post_subscription-subscription-id-activate
+  description: POST /subscription/{subscription_id}/activate — Activate a subscription.
+  source_operation: openapi/defacto-openapi-original.json#post_subscription-subscription-id-activate
+- name: put_loan-repayment-terms
+  description: PUT /loan/repayment-terms —  <div> <h3>Change repayment terms of some loans</h3> <p>Changing the payment method
+    and / or date is only possible on loans that are TO_REPAY or  TO_REPAY_FEES.
+  source_operation: openapi/defacto-openapi-original.json#put_loan-repayment-terms

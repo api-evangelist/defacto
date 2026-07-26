@@ -1,0 +1,43 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.getdefacto.com/reference/webhooks-at-defacto
+delivery: Defacto POSTs the notification JSON to the to_url on your subscription (always the POST method).
+management:
+  create: post_webhooks
+  list: get_webhooks
+  update: patch_webhook-webhook-id
+  delete: delete_webhook-webhook-id
+spec: asyncapi/defacto-webhooks-asyncapi.yml
+event_types:
+- BorrowerFinancialProductCreated
+- BorrowerFinancialProductUpdated
+- CounterpartyCreditLimit.CREATED
+- CounterpartyCreditLimit.UPDATED
+- CreditLimit.UPDATED
+- CreditLine.BALANCE_UPDATED
+- CreditLine.CREATED
+- CreditLine.POOL_AMOUNT_UPDATED
+- Invoice.DECLINED
+- Invoice.DELETED
+- Invoice.SUBMITTED
+- Invoice.TO_EDIT
+- Invoice.VERIFIED
+- Loan.CANCELED
+- Loan.CLOSED
+- Loan.DECLINED
+- Loan.DELETED
+- Loan.INITIATED
+- Loan.ISSUE_DETECTED
+- Loan.PENDING_VALIDATION
+- Loan.SCHEDULED
+- Loan.SUBMITTED
+- Loan.TO_REPAY
+- Loan.TO_REPAY_FEES
+- Loan.TO_VALIDATE
+- Loan.VALIDATED
+- Payment.CANCELED
+- Payment.FAILED
+- Payment.INSTRUCTED
+- Payment.IN_TRANSIT
+- Payment.PAID
+- Payment.SCHEDULED

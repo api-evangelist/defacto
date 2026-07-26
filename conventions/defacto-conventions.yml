@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.getdefacto.com/reference/authentication
+docs: https://developers.getdefacto.com/reference/introduction
+summary: Cross-cutting request/response conventions for the Defacto API, captured from the developer docs and reconstructed OpenAPI.
+authentication:
+  style: http-bearer
+  header: Authorization
+  format: Bearer <API_KEY>
+  scheme_name: Bearer
+  notes: API keys are managed in the web app (Settings > API Keys); sandbox and production use distinct keys and distinct accounts.
+  docs: https://developers.getdefacto.com/reference/authentication
+idempotency:
+  supported: true
+  mechanism: request-body-key
+  field: salt_id
+  applies_to:
+  - POST /loans
+  - POST /installment-plans
+  retention: dedup — retrying with the same salt_id returns the existing resource instead of creating a duplicate
+  default: when salt_id is omitted on installment plans it is derived from the sorted loan_ids
+  notes: Defacto recommends setting salt_id to a unique value per loan request to avoid accidental duplicate loans. There is no HTTP Idempotency-Key header; idempotency is expressed in the request body.
+pagination:
+  style: cursor
+  request_params:
+  - cursor
+  - page_size
+  - sort_by
+  notes: List endpoints (e.g. GET /loans, GET /borrowers, GET /invoices) return paginated results navigated by an opaque cursor with configurable page_size and sort_by.
+async_behavior:
+  supported: true
+  notes: Loan and borrower/onboarding creation support synchronous vs asynchronous modes. wait_for_validation (loans) / wait_for_ready (borrowers) force a synchronous decision; otherwise the decision arrives later via webhooks or by polling. Long operations time out at 30s (504).
+error_envelope:
+  format: json
+  standard: not RFC 9457 (no application/problem+json)
+  http_status: standard HTTP status codes (400, 404, 422, 504, ...)
+  declines: loan/invoice declines carry a denial_reason; resolve human text via GET /translation/denial-code/{code}; enumerate reasons via GET /eligibility/reasons
+  see: errors/defacto-problem-types.yml
+webhooks:
+  supported: true
+  delivery: Defacto POSTs the notification JSON to your subscribed to_url
+  see: asyncapi/defacto-webhooks.yml
+rate_limiting:
+  documented: false
+  notes: No public rate-limit headers or quotas are documented as of this pass.
+cross_links:
+  authentication: authentication/defacto-authentication.yml
+  errors: errors/defacto-problem-types.yml
+  lifecycle: lifecycle/defacto-lifecycle.yml
+  sandbox: sandbox/defacto-sandbox.yml

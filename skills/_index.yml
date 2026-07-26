@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/defacto-openapi-original.json
+skills:
+- file: defacto-finance-an-invoice.md
+  name: Finance an invoice with Defacto
+  api: openapi/defacto-openapi-original.json
+  operations: [get_hello, post_borrowers, post_invoices, post_loans, post_loan-loan-id-validate, get_loan-loan-id]
+- file: defacto-subscribe-to-webhooks.md
+  name: Subscribe to Defacto webhooks
+  api: openapi/defacto-openapi-original.json
+  operations: [post_webhooks, get_webhooks, patch_webhook-webhook-id, delete_webhook-webhook-id]

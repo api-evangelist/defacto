@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: searched
+summary: Probed the /.well-known/ discovery surface on Defacto's API and web hosts. No documents were served (all 404) as of this pass — recorded as valid negative results.
+hosts:
+- host: https://api.getdefacto.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://www.getdefacto.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
