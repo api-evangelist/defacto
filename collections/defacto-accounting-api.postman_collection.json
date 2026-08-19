@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "09b0802f-aec1-474a-8906-571a568e92b7",
+      "name": "Accounting",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "70308963-0df9-4ced-985d-2998418a193a",
+          "name": "/events",
+          "request": {
+            "name": "/events",
+            "description": {
+              "content": "Search for business events. These events will let you read business events to build you logic on top of it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_type",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_id",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9e436885-4572-45ef-b6ff-60c1bbd9ef72",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "event_type",
+                      "value": ""
+                    },
+                    {
+                      "key": "from_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "loan_id",
+                      "value": ""
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 848,\n  \"page_size\": 6695,\n  \"data\": [\n    {\n      \"event_at\": \"1983-03-30T06:10:05.662Z\",\n      \"event_payload\": {\n        \"loan_id\": \"0c154ae2-4e88-878d-1fba-23412bfdcb1f\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"deposit_amount\": null,\n        \"fees_amount\": null,\n        \"principal_amount\": null\n      },\n      \"event_type\": \"LOAN_INTEREST_DEPOSIT_CHARGED_BACK\"\n    },\n    {\n      \"event_at\": \"2023-06-17T14:44:24.570Z\",\n      \"event_payload\": {\n        \"loan_id\": \"d7e44442-9a1f-32f1-1927-549853497a61\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {},\n          \"key_3\": {}\n        },\n        \"deposit_amount\": null,\n        \"fees_amount\": null,\n        \"principal_amount\": null\n      },\n      \"event_type\": \"LOAN_REPAYMENT_NOMINAL_CHARGED_BACK\"\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3c7c358e-f206-4b29-ab70-d55d2a39da54",
+    "name": "Defacto Accounting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

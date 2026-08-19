@@ -1,0 +1,357 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Onboarding API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Onboarding",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/repayment-methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/repayment-methods",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>List available repayment methods for borrower.</h3>\n</div>\n"
+        },
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/repayment-methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/repayment-methods",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>Add and/or choose the repayment method for borrower.</h3>\n\n<p>If payment method is \"DIRECT_DEBIT\" then the `account` parameter must not be null.</p>\n\n<p>\nIf `is_default_repayment_method` is true, then the repayment method becomes the borrower's default\nrepayment method so that upcmoing loan requests will use this payment method and account as a default.\n<br/>\n<br/>\n<i>\nPlease note: that the account defined in the `loan_to` attribute of created loans is left\nunchanged. If you want to c"
+        },
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve the full profile of a borrower by ID. Returns the borrower's status, business information, accounts, compliance checks, and next actions required."
+        },
+        {
+          "info": {
+            "name": "/borrowers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/borrowers",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "query",
+                "description": "UUID(s) of the borrower(s) in Defacto API."
+              },
+              {
+                "name": "borrower_identifier",
+                "value": "",
+                "type": "query",
+                "description": "Legal identifier of the business, such as its SIREN in France."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "from_signed_at",
+                "value": "",
+                "type": "query",
+                "description": "Filter borrowers who signed their contract on or after this datetime."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "to_signed_at",
+                "value": "",
+                "type": "query",
+                "description": "Filter borrowers who signed their contract on or before this datetime."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all borrowers enrolled on Defacto for your account. Borrowers are companies that have been registered and can request loans through the Defacto platform. Returns a paginated list with their status, business info, accounts, and compliance data."
+        },
+        {
+          "info": {
+            "name": "/borrowers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/borrowers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>Enroll a new borrower on Defacto.</h3>\n<p>\nThis API will create a borrower and a credit line for this borrower. More information\nin the <b>behavior</b> section below.\n</p>\n<p>\n<strong>Timeout:</strong> 30 seconds (status code will be 504 in such a case)\n</p>\n<br/>\n<h4>Required data</h4>\n<p>\nBorrower must be a commercial company -> eg. in France needs to be registered at an RCS.\n</p>\n<p>\n<b>If the borrower repays by direct debit, the following information are mandatory:</b>\n</p>\n<ul>\n<"
+        },
+        {
+          "info": {
+            "name": "/business/public-data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/business/public-data",
+            "params": [
+              {
+                "name": "city",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "identifier_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "street",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Search for borrower business information from various sources. This endpoint lets you find the right business identifier to use when onboarding a borrower or counterparty."
+        },
+        {
+          "info": {
+            "name": "/onboarding/{onboarding_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/onboarding/:onboarding_id",
+            "params": [
+              {
+                "name": "onboarding_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## [Partners] Follow the onboarding of a business\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\nWhen your borrower is on our web app, sharing his financial data, you might want to keep track of his onboarding.\nThis endpoints will let you get access to the onboarding status and details.\nYou'll be able to know if the borrower has shared his financial data and is ready to requ"
+        },
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/deactivate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/deactivate",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "/borrower/{borrower_id}/deactivate"
+        },
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/owner",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a borrower owner with identity documents"
+        },
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/sign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/sign",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Register the date a new borrower accepted our T&Cs"
+        },
+        {
+          "info": {
+            "name": "/onboardings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/onboardings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## [Partners] Start onboarding a new business\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\n**Timeout after**: 30 seconds (status code will be 504 in such a case)\n\nIn order to request loans you will need to have borrowers. In order to test borrower's eligibility, we'll need\nto have access to borrower business' financial data.\n\nThis can be achieved in two ways:\nEither you ha"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

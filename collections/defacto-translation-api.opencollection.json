@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Translation API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Translation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/business/data-request/data-type/{data_type}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/business/data-request/data-type/:data_type",
+            "params": [
+              {
+                "name": "data_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get translations for a given data request data type."
+        },
+        {
+          "info": {
+            "name": "/translation/denial-code/{code}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/translation/denial-code/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "/translation/denial-code/{code}"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,201 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Credit card API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credit card",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/cards/{card_id}/entries/export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/cards/:card_id/entries/export",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Export card transactions as a Pennylane-compatible CSV. Provide either period (YYYY-MM) or from_date + to_date."
+        },
+        {
+          "info": {
+            "name": "/cards/{card_id}/entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/cards/:card_id/entries",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List entries for a credit card."
+        },
+        {
+          "info": {
+            "name": "/cards/{card_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/cards/:card_id",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a credit card by its ID."
+        },
+        {
+          "info": {
+            "name": "/cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/cards",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List credit cards for the authenticated borrower."
+        },
+        {
+          "info": {
+            "name": "/cards/{card_id}/status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getdefacto.com/cards/:card_id/status",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update card status. Accepted values: 'active', 'inactive', 'canceled'."
+        },
+        {
+          "info": {
+            "name": "/cards/{card_id}/ephemeral-key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/cards/:card_id/ephemeral-key",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "nonce",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create an ephemeral key to reveal the card's PAN and CVV via the card display SDK."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

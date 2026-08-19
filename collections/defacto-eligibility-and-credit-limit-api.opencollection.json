@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Eligibility and credit limit API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eligibility and credit limit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/credit_line/{credit_line_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/credit_line/:credit_line_id",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "credit_line_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "[DEPRECATED] Get credit line by id.<br/> Now use financial-product endpoint"
+        },
+        {
+          "info": {
+            "name": "/credit_line",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/credit_line",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "[DEPRECATED] Get the credit line associated with your account.<br/>Your partner max-exposure is no longer available by API"
+        },
+        {
+          "info": {
+            "name": "/credit_lines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/credit_lines",
+            "params": [
+              {
+                "name": "borrower",
+                "value": "",
+                "type": "query",
+                "description": "Search by borrower company number (e.g. SIREN or NIF)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "UUID(s) of the credit line(s)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all the credit lines that have been opened for your company.<br/>By default, this includes all credit lines that have been created for borrowers you registered, as well as the credit line associated with your account."
+        },
+        {
+          "info": {
+            "name": "/eligibility/reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/eligibility/reasons"
+          },
+          "docs": "List all the possible reasons for which a borrower would not be eligible for a loan."
+        },
+        {
+          "info": {
+            "name": "/eligibility/beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/eligibility/beneficiary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>Ask if the business can receive the money originated from a loan on one of its bank accounts.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>true</code>,\n  it means the business can receive the money originated from a loan on one of its bank accounts.\n</li>\n<li>when <code>is_eligible</code> is <code>false</code>,\n  it means the business can't receive the money originated from a loan.\n  If the business is the borrower's supplier"
+        },
+        {
+          "info": {
+            "name": "/eligibility/borrower",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/eligibility/borrower",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>Ask for the pre-eligibility of a borrower.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>false</code>\n  and <code>reasons</code> is <code>null</code> or <code>[]</code>\n  it means the borrower **might** be eligible.\n  This will depend on his financials and will be evaluated after\n  you share data with the <code>/business/data/XXX</code> endpoints.\n</li>\n<li>when <code>is_eligible</code> is <code>true</code>, the borrower is el"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

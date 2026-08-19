@@ -1,0 +1,499 @@
+{
+  "item": [
+    {
+      "id": "e5f526b7-cd2d-4941-92b0-babbb3a658b4",
+      "name": "Counterparty",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "66613492-0f77-4ec4-a20f-16cb2a926482",
+          "name": "/counterparties",
+          "request": {
+            "name": "/counterparties",
+            "description": {
+              "content": "List all the Counterparties. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "counterparties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "business_name",
+                  "value": "",
+                  "description": "Legal name of the business."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "identifier",
+                  "value": "",
+                  "description": "Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces."
+                },
+                {
+                  "disabled": false,
+                  "key": "identifier_type",
+                  "value": "",
+                  "description": "Type of legal business identifier of the business, such as the SIRET in France."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "relation_types",
+                  "value": "<string>",
+                  "description": "Description of the relation"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation_types",
+                  "value": "<string>",
+                  "description": "Description of the relation"
+                },
+                {
+                  "disabled": false,
+                  "key": "selected_for_financing",
+                  "value": "",
+                  "description": "Whether this counterparty is selected for financing"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "93e89c2c-ef9e-4771-afcb-9573f46cc99b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "business_name",
+                      "value": ""
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "identifier",
+                      "value": ""
+                    },
+                    {
+                      "key": "identifier_type",
+                      "value": ""
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "relation_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "selected_for_financing",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 4115,\n  \"page_size\": 814,\n  \"data\": [\n    {\n      \"credit_limit\": {\n        \"available_amount\": 1759,\n        \"max_amount\": 8879,\n        \"max_amount_details\": null\n      },\n      \"id\": \"a8a03cc6-5a54-c23d-80b6-8805da2b0bb1\",\n      \"identifier\": \"string\",\n      \"identifier_type\": \"siren\",\n      \"name\": \"string\",\n      \"relation_types\": [\n        \"CLIENT\"\n      ],\n      \"address\": null,\n      \"contact\": null,\n      \"selected_for_financing\": null,\n      \"vat_number\": null\n    },\n    {\n      \"credit_limit\": {\n        \"available_amount\": 8424,\n        \"max_amount\": 1646,\n        \"max_amount_details\": null\n      },\n      \"id\": \"3f897c41-ced3-9b28-b05b-28a77c50e478\",\n      \"identifier\": \"string\",\n      \"identifier_type\": \"name\",\n      \"name\": \"string\",\n      \"relation_types\": [\n        \"MARKETPLACE_SELLER\"\n      ],\n      \"address\": null,\n      \"contact\": null,\n      \"selected_for_financing\": null,\n      \"vat_number\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bfe580d-ff09-41a7-a0eb-fcbf4342e1e2",
+          "name": "/counterparties",
+          "request": {
+            "name": "/counterparties",
+            "description": {
+              "content": "Create a new counterparty. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "counterparties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"relation_types\": [\n    \"<string>\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"name\": null,\n  \"vat_number\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8c5b5857-d33a-4874-895b-f2640d36dd0e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"relation_types\": [\n    \"<string>\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"name\": null,\n  \"vat_number\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"credit_limit\": {\n    \"available_amount\": 9158,\n    \"max_amount\": 1125,\n    \"max_amount_details\": null\n  },\n  \"id\": \"7f4614e6-0298-cd57-ee1a-4f89e1bf8b08\",\n  \"identifier\": \"string\",\n  \"identifier_type\": \"belgium_registration_number\",\n  \"name\": \"string\",\n  \"relation_types\": [\n    \"CLIENT\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"selected_for_financing\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a1ddfdf-5efa-49e3-9703-32e7e07cec54",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"relation_types\": [\n    \"<string>\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"name\": null,\n  \"vat_number\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"credit_limit\": {\n    \"available_amount\": 9158,\n    \"max_amount\": 1125,\n    \"max_amount_details\": null\n  },\n  \"id\": \"7f4614e6-0298-cd57-ee1a-4f89e1bf8b08\",\n  \"identifier\": \"string\",\n  \"identifier_type\": \"belgium_registration_number\",\n  \"name\": \"string\",\n  \"relation_types\": [\n    \"CLIENT\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"selected_for_financing\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f303e896-cb29-412c-ace9-b439f90f0b7e",
+          "name": "/counterparty/{counterparty_id}",
+          "request": {
+            "name": "/counterparty/{counterparty_id}",
+            "description": {
+              "content": "Get a counterparty by id. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "counterparty",
+                ":counterparty_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "counterparty_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3babbf6-b7c9-4646-a129-ca734583b5fe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "counterparty",
+                    ":counterparty_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "counterparty_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"credit_limit\": {\n    \"available_amount\": 9158,\n    \"max_amount\": 1125,\n    \"max_amount_details\": null\n  },\n  \"id\": \"7f4614e6-0298-cd57-ee1a-4f89e1bf8b08\",\n  \"identifier\": \"string\",\n  \"identifier_type\": \"belgium_registration_number\",\n  \"name\": \"string\",\n  \"relation_types\": [\n    \"CLIENT\"\n  ],\n  \"address\": null,\n  \"contact\": null,\n  \"selected_for_financing\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a357d7db-ae1b-419f-a194-4279eb600e26",
+    "name": "Defacto Accounting Counterparty API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Webhook API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/webhook/{webhook_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getdefacto.com/webhook/:webhook_id",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate a webhook subscription.\n\n⚠️ Our webhooks always call the POST method of the given url.\n\nFor more information on webhooks such as how to secure them, you can refer to <a href='https://developers.getdefacto.com/reference/introduction'>our guide</a>.\n\n"
+        },
+        {
+          "info": {
+            "name": "/webhook/{webhook_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getdefacto.com/webhook/:webhook_id",
+            "params": [
+              {
+                "name": "webhook_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a webhook subscription."
+        },
+        {
+          "info": {
+            "name": "/webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/webhooks",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nList your webhook subscription.\n\n⚠️ Our webhooks always call the POST method of the given url.\n\nFor more information on webhooks such as how to secure them, you can refer to <a href='https://developers.getdefacto.com/reference/introduction'>our guide</a>.\n\n"
+        },
+        {
+          "info": {
+            "name": "/webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/webhooks",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nCreate a webhook subscription.\n\n⚠️ Our webhooks always call the POST method of the given url.\n\nFor more information on webhooks such as how to secure them, you can refer to <a href='https://developers.getdefacto.com/reference/introduction'>our guide</a>.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

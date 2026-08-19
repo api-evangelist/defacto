@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Sharing business data API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sharing business data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/business/data/account-transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/business/data/account-transactions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpload bank account transactions into our platform to refine borrower\ncredit line allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n\nThe <code>account</code> field of the transactions should match the <code>id</code> field of the\naccounts you share with the POST /business/data/accounts endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "/business/data/accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/business/data/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpload bank account balances into our platform to refine borrower credit\nline allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n\nThe <code>id</code> field of the accounts should match the <code>account</code> field of the\ntransactions you share with the POST /business/data/account-transactions endpoint. If you only\nhave the IBAN of the account, the IBAN being a unique identifier, you can use the IBAN in both\n<code>id</code> and <code>account_number</code>.\n"
+        },
+        {
+          "info": {
+            "name": "/business/data/batch-upload/{batch_id}/close",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/business/data/batch-upload/:batch_id/close",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nClose a batch of upload started with POST /business/data/batch-upload.\n\nThis operation is a required one. Otherwise no data of the batch will be used.\n"
+        },
+        {
+          "info": {
+            "name": "/business/data/batch-upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/business/data/batch-upload",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nCreate a batch to upload data about a particular business.\n\nThis endpoint returns an <code>id</code> that should be put into all /business/data/XXX endpoints.\n\n**Why use batch?**\n- with the batch, you can send accounts transactions in chunks instead of sending them all in a single API call\n- with the batch, you can share more <code>context</code> (see parameter below) with us which enables us to update credit lines more accurately\n"
+        },
+        {
+          "info": {
+            "name": "/business/data/invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/business/data/invoices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpload business invoices into our platform to refine borrower credit\nline allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,616 @@
+{
+  "item": [
+    {
+      "id": "0a725280-b929-46c9-9439-b46373006d73",
+      "name": "Billing",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b019f36-4762-4ecc-89ca-c27372655ee6",
+          "name": "/bills",
+          "request": {
+            "name": "/bills",
+            "description": {
+              "content": "List your fees invoices (i.e: your Defacto bill) for the loans you performed on the platform.<br/>By default, this endpoint only returns your own bills, but you may request bills for your own specific borrowers (with a business identifier or ID) depending on your contract type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bill_id",
+                  "value": "",
+                  "description": "Returns bills with these ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "business_id",
+                  "value": "",
+                  "description": "Return bills for these business ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "business_identifier",
+                  "value": "",
+                  "description": "Return bills for theses business identifiers, such as its SIREN in France."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "",
+                  "description": "Returns bills where end_date field is lower to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "light_bills",
+                  "value": "false",
+                  "description": "Return light bills."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "",
+                  "description": "Returns bills where start_date field is greater or equal to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b0081361-b595-4152-a05c-6b5f00dc0578",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bill_id",
+                      "value": ""
+                    },
+                    {
+                      "key": "business_id",
+                      "value": ""
+                    },
+                    {
+                      "key": "business_identifier",
+                      "value": ""
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "end_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "light_bills",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 3884,\n  \"page_size\": 3486,\n  \"data\": [\n    {\n      \"billed_business\": {\n        \"identifier\": \"string\",\n        \"identifier_type\": null\n      },\n      \"due_date\": \"2007-06-12T16:58:25.811Z\",\n      \"end_date\": \"1974-03-22T11:17:54.220Z\",\n      \"id\": \"48c68790-1d28-0481-a7dc-76cda394a827\",\n      \"payment\": {\n        \"amount\": 9034,\n        \"id\": \"f87cd8ad-ea1a-867a-3308-f58136aaec91\",\n        \"payment_type\": \"LOAN_PAYMENT\",\n        \"status\": \"CANCELED\",\n        \"charged_back_payment_id\": null,\n        \"currency\": \"EUR\",\n        \"failure_reason\": null,\n        \"from_account_details\": null,\n        \"from_references\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_instant\": false,\n        \"paid_at\": null,\n        \"payment_method\": null,\n        \"provider\": null,\n        \"reason\": null,\n        \"related_to\": {\n          \"bills\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"invoices\": [\n            \"4c5ce348-d8d8-d2ee-1b84-db777f487476\",\n            \"169c4e5e-0231-35aa-7675-ca4436665466\"\n          ],\n          \"loans\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"payment_intents\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"subscriptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"scheduled_at\": null,\n        \"to_account_details\": null,\n        \"to_references\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"ran_at\": \"2009-07-28T15:25:14.599Z\",\n      \"start_date\": \"2016-08-10T00:31:29.498Z\",\n      \"status\": \"PAID\",\n      \"to_pay_amount\": 5580,\n      \"amends_bill_id\": null,\n      \"billed_borrower_id\": null,\n      \"document_url\": null,\n      \"email_sent_to_payer_on\": null,\n      \"invoice\": null,\n      \"invoice_number\": null\n    },\n    {\n      \"billed_business\": {\n        \"identifier\": \"string\",\n        \"identifier_type\": null\n      },\n      \"due_date\": \"2003-11-11T18:32:10.689Z\",\n      \"end_date\": \"2000-10-03T14:13:09.506Z\",\n      \"id\": \"4c37c6a9-c102-3006-4e50-b9bcd5471c15\",\n      \"payment\": {\n        \"amount\": 9777,\n        \"id\": \"49cef4f3-920e-202c-80c0-2f9fcbc471b5\",\n        \"payment_type\": \"EXTRA\",\n        \"status\": \"SCHEDULED\",\n        \"charged_back_payment_id\": null,\n        \"currency\": \"EUR\",\n        \"failure_reason\": null,\n        \"from_account_details\": null,\n        \"from_references\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_instant\": false,\n        \"paid_at\": null,\n        \"payment_method\": null,\n        \"provider\": null,\n        \"reason\": null,\n        \"related_to\": {\n          \"bills\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"invoices\": [\n            \"dfb14195-c403-ac58-dbc4-ccdc70b413b5\",\n            \"0900f008-8d8b-1895-545e-da3a891c0b39\"\n          ],\n          \"loans\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"payment_intents\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"subscriptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"scheduled_at\": null,\n        \"to_account_details\": null,\n        \"to_references\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"ran_at\": \"2019-01-07T05:26:27.602Z\",\n      \"start_date\": \"2011-11-17T00:53:11.594Z\",\n      \"status\": \"TO_PAY\",\n      \"to_pay_amount\": 4010,\n      \"amends_bill_id\": null,\n      \"billed_borrower_id\": null,\n      \"document_url\": null,\n      \"email_sent_to_payer_on\": null,\n      \"invoice\": null,\n      \"invoice_number\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b181bbf-925e-4ad3-8c38-d9d6aa0434e5",
+          "name": "/referrer/{referrer_id}",
+          "request": {
+            "name": "/referrer/{referrer_id}",
+            "description": {
+              "content": "Get referrer details by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "referrer",
+                ":referrer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "referrer_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "457b890b-cfdb-4702-b14a-358b1f83a5bb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "referrer",
+                    ":referrer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "referrer_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"business_id\": \"c6f83aa7-0172-057c-c593-ee8566be2719\",\n  \"business_identifier\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"kvk\"\n  },\n  \"config\": {\n    \"referral_code\": \"string\",\n    \"override_financial_products_ids\": null,\n    \"referral_codes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"referrer_type\": null,\n    \"revenue_share_config\": null\n  },\n  \"distribution_id\": \"93157ba7-da70-4287-0879-371804d06fe1\",\n  \"financial_products\": [\n    {\n      \"id\": \"8e416af8-75cb-a963-b08f-4e2e8d777553\",\n      \"lender_id\": \"c6809db2-7d4f-6f90-931b-6f626c7c42ab\",\n      \"name\": \"string\",\n      \"product_type\": \"SELL_IN\",\n      \"rac_id\": \"fce50993-a367-5379-b29c-def69fb0d4bf\",\n      \"configuration\": {\n        \"billing\": {\n          \"bill_overdue_threshold_in_days\": 4,\n          \"fees_payers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loan_overdue_threshold_in_days\": 4,\n          \"penalties_disabled\": false\n        },\n        \"contract_generation_settings\": null,\n        \"contract_templates\": null,\n        \"contract_type\": \"CREDIT_OPERATION\",\n        \"depositing_rules\": null,\n        \"installments\": {\n          \"available_types\": [\n            \"IN_FINE\",\n            \"INSTALLMENTS\"\n          ],\n          \"maximum_reschedule_payment_in_days\": 30,\n          \"minimum_anticipate_payment_in_days\": 1,\n          \"minimum_business_days_until_due_date_to_reschedule_payment\": 1\n        },\n        \"risk_mitigation_config\": null,\n        \"subscription\": {\n          \"monthly_fee_cents\": 0,\n          \"sdd_account_detail_id\": null\n        },\n        \"tcs_documents\": null,\n        \"ux\": {\n          \"aggregation_scenarios\": null,\n          \"fp_status_on_manual_review_eligibility\": \"READY\",\n          \"loan_request\": {\n            \"display_available_balance\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mandatory_options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_duration_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_loan_amount_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_duration_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"d5877b6e-ee29-312c-dc20-d0fc02c30fa5\",\n      \"lender_id\": \"0b806349-407c-20c4-bd06-9f5f4151dd3c\",\n      \"name\": \"string\",\n      \"product_type\": \"DAILLY\",\n      \"rac_id\": \"bfc2eb00-d8fa-a91a-9bef-84262fe59481\",\n      \"configuration\": {\n        \"billing\": {\n          \"bill_overdue_threshold_in_days\": 4,\n          \"fees_payers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"loan_overdue_threshold_in_days\": 4,\n          \"penalties_disabled\": false\n        },\n        \"contract_generation_settings\": null,\n        \"contract_templates\": null,\n        \"contract_type\": \"CREDIT_OPERATION\",\n        \"depositing_rules\": null,\n        \"installments\": {\n          \"available_types\": [\n            \"INSTALLMENTS\",\n            \"INSTALLMENTS\"\n          ],\n          \"maximum_reschedule_payment_in_days\": 30,\n          \"minimum_anticipate_payment_in_days\": 1,\n          \"minimum_business_days_until_due_date_to_reschedule_payment\": 1\n        },\n        \"risk_mitigation_config\": null,\n        \"subscription\": {\n          \"monthly_fee_cents\": 0,\n          \"sdd_account_detail_id\": null\n        },\n        \"tcs_documents\": null,\n        \"ux\": {\n          \"aggregation_scenarios\": null,\n          \"fp_status_on_manual_review_eligibility\": \"READY\",\n          \"loan_request\": {\n            \"display_available_balance\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"mandatory_options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_duration_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_loan_amount_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_duration_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"id\": \"7087d3e4-bfdd-ee72-1400-1ef6bc4f9d91\",\n  \"name\": null,\n  \"referrer_type\": null,\n  \"shared_to_account_detail_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e8b769d-1e0c-46bc-a622-aa1a1ee075c5",
+          "name": "/bill/{bill_id}/sent",
+          "request": {
+            "name": "/bill/{bill_id}/sent",
+            "description": {
+              "content": "\nThis endpoint enables you to notify Defacto when you sent the bill for the fees of the loans to your user.\nA bill should be sent to the user only when its status is VALIDATED (see GET /bills endpoint).\n\nIt is very important to use this endpoint so that Defacto can proceed to a recollection process\nthat will be fair for our users.\n\nThis endpoint is useful only for partners who send the bill themselves.\nBy default the bills are sent the the payers of the fees by Defacto.\nIf you need to send them by yourself please get in touch with us.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":bill_id",
+                "sent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bill_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sent_on\": \"<dateTime>\",\n  \"to_email_addresses\": [\n    \"<email>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e65e605b-ea95-45ff-a148-c5c5963c57c7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":bill_id",
+                    "sent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bill_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sent_on\": \"<dateTime>\",\n  \"to_email_addresses\": [\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72b74d59-4243-4ff3-b979-cfc9a8bcfd09",
+          "name": "/referrer/{referrer_id}/upload-invoice/{revenue_share_id}",
+          "request": {
+            "name": "/referrer/{referrer_id}/upload-invoice/{revenue_share_id}",
+            "description": {
+              "content": "Upload revenue share invoice for a referrer and update the related revenue share",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "referrer",
+                ":referrer_id",
+                "upload-invoice",
+                ":revenue_share_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "referrer_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "revenue_share_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a326abea-f4da-4303-9f19-d6fbd2c3c206",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "referrer",
+                    ":referrer_id",
+                    "upload-invoice",
+                    ":revenue_share_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "referrer_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "revenue_share_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"end_date\": \"2023-06-29T18:14:57.612Z\",\n  \"id\": \"9980af34-0812-04b0-13e5-3223fe2327fc\",\n  \"revenue_shared_with_business\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"siren\",\n    \"name\": \"string\"\n  },\n  \"start_date\": \"1954-07-30T05:40:19.237Z\",\n  \"status\": \"CREATED\",\n  \"document_url\": null,\n  \"email_sent_on\": null,\n  \"email_sent_to\": null,\n  \"payment\": null,\n  \"payment_intent\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ce237835-6951-4a3c-b195-f44c97f403bb",
+    "name": "Defacto Accounting Billing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

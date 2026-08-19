@@ -1,0 +1,902 @@
+{
+  "item": [
+    {
+      "id": "ee8b2f0d-35d2-4363-8a76-da1420ac530a",
+      "name": "Recollection",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2e277b46-f95a-4722-a6b4-05282df208e0",
+          "name": "/installment-plan/{installment_plan_id}",
+          "request": {
+            "name": "/installment-plan/{installment_plan_id}",
+            "description": {
+              "content": "## Keep track of the progress of an installment plan\nWhen the borrower is late to repay his loans or bills, he probably agreed to an installment plan.\nThis endpoint lets you keep track of a given installment plan.\nWhen every installments are in PAID status, the plan is fully repaid.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "installment-plan",
+                ":installment_plan_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "installment_plan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "099fd388-d71f-41e8-a829-c80f4b75c4da",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "installment-plan",
+                    ":installment_plan_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "installment_plan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"business_identifier\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"siret\"\n  },\n  \"id\": \"895c1625-ff50-1d7d-3c0b-4f8323636880\",\n  \"installments\": [\n    {\n      \"amount\": 4799,\n      \"date\": \"1953-01-23T19:59:08.697Z\",\n      \"id\": \"33ca1b08-546c-e438-aaa7-00b5ce05a8de\",\n      \"status\": \"ISSUE_DETECTED\"\n    },\n    {\n      \"amount\": 1980,\n      \"date\": \"1961-10-28T17:35:35.490Z\",\n      \"id\": \"bc9510f8-786a-da3d-4646-8259eafb9746\",\n      \"status\": \"SCHEDULED\"\n    }\n  ],\n  \"loan_ids\": [\n    \"bf8bc1b5-fb09-f1ad-e6fc-af8746e650d9\",\n    \"4f6f873d-6c3c-eb96-0a23-342137ffd6bb\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a11f7fec-3f35-4170-9ad6-7e0af2469873",
+          "name": "/recollection-case/{recollection_case_id}",
+          "request": {
+            "name": "/recollection-case/{recollection_case_id}",
+            "description": {
+              "content": "Get details of a recollection case.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-case",
+                ":recollection_case_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recollection_case_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c2f80dac-fc30-4124-9ed4-ee117fb0dc31",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-case",
+                    ":recollection_case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recollection_case_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"agent\": \"string\",\n  \"debtor_business\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"kvk\"\n  },\n  \"id\": \"5ff70626-f08f-9016-c62f-4d6e5a6673d0\",\n  \"loan_ids\": [\n    \"fff21d0e-52a1-d061-5f66-72608dc62bfd\",\n    \"51d81991-2e3c-825a-0fa2-1c84113e8d5a\"\n  ],\n  \"next_action\": {\n    \"action_name\": \"string\",\n    \"action_status\": \"CANCELED\",\n    \"action_status_date\": \"2015-04-23T22:44:01.497Z\",\n    \"id\": \"7ac387c7-10de-70fd-b00e-fd67ffb98614\",\n    \"original_due_at\": \"1972-03-04T13:33:10.722Z\",\n    \"action_status_details\": null,\n    \"short_description\": null\n  },\n  \"past_actions\": [\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"DONE\",\n      \"action_status_date\": \"1982-11-14T06:49:46.051Z\",\n      \"id\": \"f3eab766-3320-6a80-1532-8c6d47df7a83\",\n      \"original_due_at\": \"2005-09-20T18:58:26.172Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    },\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"CANCELED\",\n      \"action_status_date\": \"1990-04-30T23:02:38.761Z\",\n      \"id\": \"ce396409-15d4-0cc8-e713-bc55ef56a70e\",\n      \"original_due_at\": \"1967-11-14T13:53:11.278Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    }\n  ],\n  \"strategies\": [\n    {\n      \"id\": \"e745fb89-bc98-f3aa-4ed1-8d830ef889a8\",\n      \"is_active\": false,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    },\n    {\n      \"id\": \"1cf49ae5-2984-eede-c01a-02e6a79758d5\",\n      \"is_active\": true,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    }\n  ],\n  \"recollection_notes\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a038a0e-cc1c-412a-8aa6-fa91fe182b99",
+          "name": "/recollection-case/{recollection_case_id}",
+          "request": {
+            "name": "/recollection-case/{recollection_case_id}",
+            "description": {
+              "content": "Add notes to a recollection case to follow up on recollection process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-case",
+                ":recollection_case_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recollection_case_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recollection_notes\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "41033c69-0568-45c0-bfc6-72a857948001",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-case",
+                    ":recollection_case_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recollection_case_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recollection_notes\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"agent\": \"string\",\n  \"debtor_business\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"name\"\n  },\n  \"id\": \"aafbae0a-fd57-cf98-0c3c-5b2b222dd251\",\n  \"loan_ids\": [\n    \"fa8f3838-5629-dac5-f430-fe12ee067cd1\",\n    \"ad5f879c-9a8e-c0b5-a44c-8beaa7ceee4a\"\n  ],\n  \"next_action\": {\n    \"action_name\": \"string\",\n    \"action_status\": \"CANCELED\",\n    \"action_status_date\": \"1958-11-02T22:43:55.615Z\",\n    \"id\": \"7ba4c188-82d2-da99-5419-51ce746827d5\",\n    \"original_due_at\": \"1963-08-09T22:51:04.491Z\",\n    \"action_status_details\": null,\n    \"short_description\": null\n  },\n  \"past_actions\": [\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"DONE\",\n      \"action_status_date\": \"1964-04-17T06:35:01.126Z\",\n      \"id\": \"f63c44e5-c99d-6f04-7920-72a5b5468e69\",\n      \"original_due_at\": \"1966-08-19T20:24:45.580Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    },\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"DONE\",\n      \"action_status_date\": \"1966-06-08T11:32:59.032Z\",\n      \"id\": \"8558f58d-8dbd-ae15-5c07-bbc3cbc67a58\",\n      \"original_due_at\": \"1954-01-09T16:31:04.721Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    }\n  ],\n  \"strategies\": [\n    {\n      \"id\": \"9766ca7e-8ec2-7e61-cbec-36d39949d8b7\",\n      \"is_active\": true,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    },\n    {\n      \"id\": \"aebb7cf2-724f-463a-3ac5-e46ce4a5f0df\",\n      \"is_active\": false,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    }\n  ],\n  \"recollection_notes\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "513e3734-8962-44a3-9bb4-d95668266c10",
+          "name": "/recollection-cases",
+          "request": {
+            "name": "/recollection-cases",
+            "description": {
+              "content": "Get recollection cases. You can filter results using debtor business identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifier",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "identifier_type",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4d58ddb-ca82-4f2d-a728-723220886667",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "identifier_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 4643,\n  \"page_size\": 4211,\n  \"data\": [\n    {\n      \"agent\": \"string\",\n      \"debtor_business\": {\n        \"identifier\": \"string\",\n        \"identifier_type\": \"siren\"\n      },\n      \"id\": \"78f5323b-146b-3eb5-be92-97c778eb5a4c\",\n      \"loan_ids\": [\n        \"8084785a-8fc2-f354-7641-408e30642621\",\n        \"3e33d036-829c-a68e-c621-f5d5e55d9179\"\n      ],\n      \"next_action\": {\n        \"action_name\": \"string\",\n        \"action_status\": \"DONE\",\n        \"action_status_date\": \"1996-03-20T17:34:54.582Z\",\n        \"id\": \"90218986-ad2d-4ce8-24e2-c2191bc1f5b8\",\n        \"original_due_at\": \"1976-05-11T06:55:23.685Z\",\n        \"action_status_details\": null,\n        \"short_description\": null\n      },\n      \"past_actions\": [\n        {\n          \"action_name\": \"string\",\n          \"action_status\": \"SCHEDULED\",\n          \"action_status_date\": \"2010-05-28T14:08:32.982Z\",\n          \"id\": \"8abe9314-b7d0-2cb2-0afe-1bbda9874bcf\",\n          \"original_due_at\": \"1972-06-14T07:54:27.066Z\",\n          \"action_status_details\": null,\n          \"short_description\": null\n        },\n        {\n          \"action_name\": \"string\",\n          \"action_status\": \"DONE\",\n          \"action_status_date\": \"1993-12-18T18:58:54.747Z\",\n          \"id\": \"903b2770-d9e5-2f43-e739-b0b7000160b7\",\n          \"original_due_at\": \"1964-05-19T20:44:46.739Z\",\n          \"action_status_details\": null,\n          \"short_description\": null\n        }\n      ],\n      \"strategies\": [\n        {\n          \"id\": \"b2efcc84-f52c-12d6-262b-6545ce008f5d\",\n          \"is_active\": false,\n          \"strategy_type\": \"INSTALLMENT_PLAN\"\n        },\n        {\n          \"id\": \"d9c0829e-6751-e3a7-6533-5b1fe9b1d53d\",\n          \"is_active\": true,\n          \"strategy_type\": \"INSTALLMENT_PLAN\"\n        }\n      ],\n      \"recollection_notes\": null\n    },\n    {\n      \"agent\": \"string\",\n      \"debtor_business\": {\n        \"identifier\": \"string\",\n        \"identifier_type\": \"hr_nummer\"\n      },\n      \"id\": \"e6026be8-433d-44c0-d276-555eaa06bdb3\",\n      \"loan_ids\": [\n        \"a835b141-245b-8c83-9118-3e37359eb6cd\",\n        \"6133ea97-9f8b-0199-f87a-f8afe0252d59\"\n      ],\n      \"next_action\": {\n        \"action_name\": \"string\",\n        \"action_status\": \"SCHEDULED\",\n        \"action_status_date\": \"1946-10-02T02:51:05.322Z\",\n        \"id\": \"5aa1a2a8-9720-f278-39ca-9f4a6cd01aa3\",\n        \"original_due_at\": \"1993-05-22T22:37:38.098Z\",\n        \"action_status_details\": null,\n        \"short_description\": null\n      },\n      \"past_actions\": [\n        {\n          \"action_name\": \"string\",\n          \"action_status\": \"SCHEDULED\",\n          \"action_status_date\": \"1979-12-05T03:41:36.758Z\",\n          \"id\": \"b8229364-f25d-8aaa-b29e-a5b45af22102\",\n          \"original_due_at\": \"1982-01-06T19:22:56.175Z\",\n          \"action_status_details\": null,\n          \"short_description\": null\n        },\n        {\n          \"action_name\": \"string\",\n          \"action_status\": \"SCHEDULED\",\n          \"action_status_date\": \"1954-01-26T23:06:56.351Z\",\n          \"id\": \"766e2cc6-b2cd-4799-c0df-e12d26e35db2\",\n          \"original_due_at\": \"1976-11-15T15:18:13.307Z\",\n          \"action_status_details\": null,\n          \"short_description\": null\n        }\n      ],\n      \"strategies\": [\n        {\n          \"id\": \"dc7cf81a-431d-dc1c-c010-1ab0c5893d07\",\n          \"is_active\": false,\n          \"strategy_type\": \"INSTALLMENT_PLAN\"\n        },\n        {\n          \"id\": \"072f1dec-f9f4-8ea0-5e67-00151600077b\",\n          \"is_active\": true,\n          \"strategy_type\": \"INSTALLMENT_PLAN\"\n        }\n      ],\n      \"recollection_notes\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d30fb8fd-ce16-4b9c-88b7-c6bfd6f2c5d0",
+          "name": "/recollection-cases",
+          "request": {
+            "name": "/recollection-cases",
+            "description": {
+              "content": "## Open a recollection case\nWhen the borrower is late to repay his loans or bills, you must open a recollection case to start taking\nactions to recover the debt.\nThis endpoint will let you open a new recollection case for a business (debtor).\nYou need to indicate at least one loan or bill (ids).\nFor the follow up of the case by the recollection agent, you need to add a task to be done in the future.\nThe task MUST have a name and a due date, the description is optional.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agent\": \"<string>\",\n  \"debtor_business\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"loan_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"next_action\": {\n    \"action_name\": \"<string>\",\n    \"due_at\": \"<dateTime>\",\n    \"short_description\": null\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fed5f883-d1b3-41bb-b0ae-5cda6dd1d0b8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"<string>\",\n  \"debtor_business\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"loan_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"next_action\": {\n    \"action_name\": \"<string>\",\n    \"due_at\": \"<dateTime>\",\n    \"short_description\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"agent\": \"string\",\n  \"debtor_business\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"id\": \"5e4d5cf3-29fd-4f95-84b3-e68ee0f230b5\",\n  \"loan_ids\": [\n    \"1b5de835-0973-c1d6-4e4f-5409308adbcf\",\n    \"6c0c6370-1f25-761c-de23-29c2b2fee56e\"\n  ],\n  \"next_action\": {\n    \"action_name\": \"string\",\n    \"action_status\": \"DONE\",\n    \"action_status_date\": \"2015-09-22T15:35:30.945Z\",\n    \"id\": \"cdd950bc-5ce3-ea89-1c92-a8ffc10c5c9f\",\n    \"original_due_at\": \"1962-04-03T16:41:54.688Z\",\n    \"action_status_details\": null,\n    \"short_description\": null\n  },\n  \"past_actions\": [\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"SCHEDULED\",\n      \"action_status_date\": \"2006-08-02T12:22:35.845Z\",\n      \"id\": \"52283afb-c70d-7cf5-9473-1c6a12ccb7b5\",\n      \"original_due_at\": \"1959-05-17T05:26:00.549Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    },\n    {\n      \"action_name\": \"string\",\n      \"action_status\": \"SCHEDULED\",\n      \"action_status_date\": \"1949-10-08T13:45:31.473Z\",\n      \"id\": \"318ff1de-c842-ef10-5a25-0758997d8f76\",\n      \"original_due_at\": \"1986-05-01T10:34:13.713Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    }\n  ],\n  \"strategies\": [\n    {\n      \"id\": \"b85ac3a3-5ed0-cbc0-f597-4b44987e100b\",\n      \"is_active\": false,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    },\n    {\n      \"id\": \"ca9d36c6-feef-12d3-b722-2e540bfaaf52\",\n      \"is_active\": true,\n      \"strategy_type\": \"INSTALLMENT_PLAN\"\n    }\n  ],\n  \"recollection_notes\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e07738fc-d429-49f5-8d66-01aedcd7d74e",
+          "name": "/recollection-case/{recollection_case_id}/installment-plans/compute",
+          "request": {
+            "name": "/recollection-case/{recollection_case_id}/installment-plans/compute",
+            "description": {
+              "content": "## Simulate an installment plan\n\nBefore creating an installment plan you might need to expose installment amounts & dates to your debtor\nso that you can find the right agreement. This endpoint will help you achieving such simulation.\n\nTo use this endpoint, you'll need to provide the list of loans or bills you want to repay with proposed\nplan. Then select plan starting date and periodicity. The system automatically returns a plan avoiding\navoiding bank holidays and weekends and explicitly, enlists loans paid on every installment & gives the\nlettering of each installment.\n\nThe returned payload will serve as an input for POST /recollection-case/<id>/installment-plan endpoint.\n\n__Note:__\nThe `recollection_fees` amount allows you to add an arbitrary amount to the proposed installment plan. See\nPOST /recollection-case/<id>/installment-plan endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-case",
+                ":recollection_case_id",
+                "installment-plans",
+                "compute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recollection_case_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"number_of_installment\": \"<integer>\",\n  \"start_date\": \"<dateTime>\",\n  \"period\": \"<string>\",\n  \"recollection_fees\": 0,\n  \"repayment_method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf8837cf-70a6-4cf9-93ab-64eb3fed44c9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-case",
+                    ":recollection_case_id",
+                    "installment-plans",
+                    "compute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recollection_case_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"number_of_installment\": \"<integer>\",\n  \"start_date\": \"<dateTime>\",\n  \"period\": \"<string>\",\n  \"recollection_fees\": 0,\n  \"repayment_method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"installments\": [\n    {\n      \"amount\": 4455,\n      \"date\": \"1993-09-19T14:57:35.244Z\",\n      \"loans\": [\n        {\n          \"amount\": 5654,\n          \"loan_id\": \"ba205f56-e63c-d73f-bb53-0708fcc551ad\"\n        },\n        {\n          \"amount\": 9021,\n          \"loan_id\": \"d0fbda58-3429-5e22-9377-64ee520da2c8\"\n        }\n      ],\n      \"recollection_fees\": 0\n    },\n    {\n      \"amount\": 7274,\n      \"date\": \"2003-06-05T13:54:50.425Z\",\n      \"loans\": [\n        {\n          \"amount\": 5472,\n          \"loan_id\": \"7a97236e-cc67-607f-4d35-df9cda1d0caa\"\n        },\n        {\n          \"amount\": 7393,\n          \"loan_id\": \"5430ff1d-67b5-de33-b3b2-5492c04f7abd\"\n        }\n      ],\n      \"recollection_fees\": 0\n    }\n  ],\n  \"payment_method\": \"DIRECT_DEBIT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "583714df-b29a-4575-aa26-830206881507",
+          "name": "/recollection-case/{recollection_case_id}/installment-plans",
+          "request": {
+            "name": "/recollection-case/{recollection_case_id}/installment-plans",
+            "description": {
+              "content": "\n## Allow repaying in multiple times\nThis endpoint is dedicated to the creation of an installment plan as part of recollection strategy.\nYou'll need a recollection-case id to use this endpoint.\n\nIn the event of insolvency, your debtor can opt for an installment plan to repay his debt with smaller\nrecurring pamyents. This smoothens the repayment effort, allowing the debtor to reimburse selected\nloans or bills progressively.\n\nthe value of the `installment` parameter must be obtained by calling the POST /installment-plan/compute\nendpoint.\n\nThe `repayment_method` field allows you to decide between direct-debit and sepa credit transfer.\nIf you pick DIRECT_DEBIT, the debited account will reuse borrower's main repayment account.\ncf. GET /borrower/{borrower_id}/repayment-methods endpoint\n\nWe know recollection process has costs, for this reason the `recollection_fees` field permits adding\nan arbitrary amount to proposed installment plan. This amount can cover recollection expenses\nfor example. When recollection_fees are collected, they are paid-out to the partner later.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recollection-case",
+                ":recollection_case_id",
+                "installment-plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recollection_case_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installments\": [\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"recollection_fees\": 0\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"recollection_fees\": 0\n    }\n  ],\n  \"payment_method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f801aa2-b381-4dbf-961a-59742851f16f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recollection-case",
+                    ":recollection_case_id",
+                    "installment-plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recollection_case_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installments\": [\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"recollection_fees\": 0\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"recollection_fees\": 0\n    }\n  ],\n  \"payment_method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"installment_plan_id\": \"da0709d2-f8e4-e657-4793-656da228ccff\",\n  \"recollection_case\": {\n    \"agent\": \"string\",\n    \"debtor_business\": {\n      \"identifier\": \"<string>\",\n      \"identifier_type\": \"<string>\"\n    },\n    \"id\": \"63f7e007-d98c-50e2-88da-566d6665ea2f\",\n    \"loan_ids\": [\n      \"869ff79f-8fa9-9653-5095-dbacab4b193a\",\n      \"a41f9aa4-09ce-7a49-42bd-89e38cb9bf6a\"\n    ],\n    \"next_action\": {\n      \"action_name\": \"string\",\n      \"action_status\": \"CANCELED\",\n      \"action_status_date\": \"1982-09-27T21:19:55.479Z\",\n      \"id\": \"18dd7419-bd04-84f5-b841-389d519fb4dc\",\n      \"original_due_at\": \"1971-05-08T07:03:24.926Z\",\n      \"action_status_details\": null,\n      \"short_description\": null\n    },\n    \"past_actions\": [\n      {\n        \"action_name\": \"string\",\n        \"action_status\": \"SCHEDULED\",\n        \"action_status_date\": \"2013-01-26T03:04:45.614Z\",\n        \"id\": \"bcccd623-8e23-1609-7015-0df2ff9750f7\",\n        \"original_due_at\": \"2016-04-29T19:02:07.185Z\",\n        \"action_status_details\": null,\n        \"short_description\": null\n      },\n      {\n        \"action_name\": \"string\",\n        \"action_status\": \"CANCELED\",\n        \"action_status_date\": \"1949-10-02T19:35:11.322Z\",\n        \"id\": \"cfdcfe31-11b2-5c4f-6707-295f1f8fd264\",\n        \"original_due_at\": \"1955-01-01T07:52:47.609Z\",\n        \"action_status_details\": null,\n        \"short_description\": null\n      }\n    ],\n    \"strategies\": [\n      {\n        \"id\": \"d70eeb79-7649-eb78-ecd1-17371a9205da\",\n        \"is_active\": false,\n        \"strategy_type\": \"INSTALLMENT_PLAN\"\n      },\n      {\n        \"id\": \"f24fd866-bc46-a01d-263f-74992a757c5d\",\n        \"is_active\": false,\n        \"strategy_type\": \"INSTALLMENT_PLAN\"\n      }\n    ],\n    \"recollection_notes\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dcf17656-f50c-4ed5-935b-d10d5cb5cb56",
+    "name": "Defacto Accounting Recollection API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

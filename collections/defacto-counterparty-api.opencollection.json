@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Counterparty API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Counterparty",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/counterparties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/counterparties",
+            "params": [
+              {
+                "name": "business_name",
+                "value": "",
+                "type": "query",
+                "description": "Legal name of the business."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces."
+              },
+              {
+                "name": "identifier_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of legal business identifier of the business, such as the SIRET in France."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "relation_types",
+                "value": "",
+                "type": "query",
+                "description": "Description of the relation"
+              },
+              {
+                "name": "selected_for_financing",
+                "value": "",
+                "type": "query",
+                "description": "Whether this counterparty is selected for financing"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all the Counterparties. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices."
+        },
+        {
+          "info": {
+            "name": "/counterparties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/counterparties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new counterparty. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices."
+        },
+        {
+          "info": {
+            "name": "/counterparty/{counterparty_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/counterparty/:counterparty_id",
+            "params": [
+              {
+                "name": "counterparty_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a counterparty by id. A Counterparty describes any commercial relations with a company. Counterparties are automatically created from the invoices."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

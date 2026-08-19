@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Billing API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/bills",
+            "params": [
+              {
+                "name": "bill_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns bills with these ids."
+              },
+              {
+                "name": "business_id",
+                "value": "",
+                "type": "query",
+                "description": "Return bills for these business ids."
+              },
+              {
+                "name": "business_identifier",
+                "value": "",
+                "type": "query",
+                "description": "Return bills for theses business identifiers, such as its SIREN in France."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Returns bills where end_date field is lower to this date."
+              },
+              {
+                "name": "light_bills",
+                "value": "",
+                "type": "query",
+                "description": "Return light bills."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Returns bills where start_date field is greater or equal to this date."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List your fees invoices (i.e: your Defacto bill) for the loans you performed on the platform.<br/>By default, this endpoint only returns your own bills, but you may request bills for your own specific borrowers (with a business identifier or ID) depending on your contract type."
+        },
+        {
+          "info": {
+            "name": "/referrer/{referrer_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/referrer/:referrer_id",
+            "params": [
+              {
+                "name": "referrer_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get referrer details by ID"
+        },
+        {
+          "info": {
+            "name": "/bill/{bill_id}/sent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/bill/:bill_id/sent",
+            "params": [
+              {
+                "name": "bill_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis endpoint enables you to notify Defacto when you sent the bill for the fees of the loans to your user.\nA bill should be sent to the user only when its status is VALIDATED (see GET /bills endpoint).\n\nIt is very important to use this endpoint so that Defacto can proceed to a recollection process\nthat will be fair for our users.\n\nThis endpoint is useful only for partners who send the bill themselves.\nBy default the bills are sent the the payers of the fees by Defacto.\nIf you need to send them "
+        },
+        {
+          "info": {
+            "name": "/referrer/{referrer_id}/upload-invoice/{revenue_share_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/referrer/:referrer_id/upload-invoice/:revenue_share_id",
+            "params": [
+              {
+                "name": "referrer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "revenue_share_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upload revenue share invoice for a referrer and update the related revenue share"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

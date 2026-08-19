@@ -1,0 +1,346 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Loan API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loan",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/loan/{loan_id}/events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/loan/:loan_id/events",
+            "params": [
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the activity eligibility_request of a loan."
+        },
+        {
+          "info": {
+            "name": "/loan/{loan_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/loan/:loan_id",
+            "params": [
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a loan by its ID. Returns the full loan details including status, amounts, repayment schedule, borrower information, and related documents."
+        },
+        {
+          "info": {
+            "name": "/loan/{loan_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getdefacto.com/loan/:loan_id",
+            "params": [
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdates a loan.\n- When the loan is SUBMITTED or TO_VALIDATE, all the below fields can be updated.\n- When the loan is VALIDATED or SCHEDULED, the references and to_repay_at fields can be updated.\n- When the loan is TO_REPAY, only the to_repay_at change be changed. The earliest acceptable date being loan.earliest_to_repay_at.\n\nThis operation is not available when the loan is in another status.\n"
+        },
+        {
+          "info": {
+            "name": "/loans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/loans",
+            "params": [
+              {
+                "name": "borrower",
+                "value": "",
+                "type": "query",
+                "description": "Search by borrower company number (e.g. SIREN or NIF)"
+              },
+              {
+                "name": "contractual_repayment_date_from",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where contractual_repayment_date field is greater or equal to this date."
+              },
+              {
+                "name": "contractual_repayment_date_to",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where contractual_repayment_date field is lower to this date."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "guarantee_called",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans for which the guarantee was called"
+              },
+              {
+                "name": "guarantor",
+                "value": "",
+                "type": "query",
+                "description": "Entity legally responsible to payback the loan"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more loan UUIDs."
+              },
+              {
+                "name": "loan_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "postponed",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans that have been postponed"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search for loans based on one or more of the following fields: loan ID, invoice number, amount, estimated fees, status, or counterparty name."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Specify the sorting field and order. Default sorting: created_at DESC. Possible values: ['created_at:asc', 'created_at:desc', 'to_repay_at:asc', 'to_repay_at:desc', 'to_pay_at:asc', 'to_pay_at:desc']"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Loan statuses. Possible values: ['SUBMITTED', 'PENDING_VALIDATION', 'TO_VALIDATE', 'DECLINED', 'VALIDATED', 'CANCELED', 'SCHEDULED', 'INITIATED', 'TO_REPAY', 'TO_REPAY_FEES', 'CLOSED', 'ISSUE_DETECTED', 'DELETED']"
+              },
+              {
+                "name": "to_pay_at_from",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where pay_at field is greater or equal to this date."
+              },
+              {
+                "name": "to_pay_at_to",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where pay_at field is lower to this date."
+              },
+              {
+                "name": "to_repay_at_from",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where repay_at field is greater or equal to this date."
+              },
+              {
+                "name": "to_repay_at_to",
+                "value": "",
+                "type": "query",
+                "description": "Returns loans where repay_at field is lower to this date."
+              },
+              {
+                "name": "to_repay_at_within_days",
+                "value": "",
+                "type": "query",
+                "description": "Shorthand alias for to_repay_at_from=now() and to_repay_at_to=now().plus(x, 'days'). Mutually exclusive with to_repay_at_from & to_repay_at_to."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List loans with pagination. Returns a paginated list of loans filterable by borrower, status, dates, and loan type."
+        },
+        {
+          "info": {
+            "name": "/loans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/loans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## Request a new loan.\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\n**Key Parameters**:\nAs the loan request is a complex operation, it has many parameters. The most important ones are:\n- borrower\n- amount\n- to_pay_at\n- to_repay_at\n- salt_id: ⚠️ In order to avoid accidental duplication in requested loans we recommend you to set the <code>salt_id</code> parameter to a unique"
+        },
+        {
+          "info": {
+            "name": "/loan/documents/{document_type}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/loan/documents/:document_type",
+            "params": [
+              {
+                "name": "document_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a link to an archive of loan documents"
+        },
+        {
+          "info": {
+            "name": "/loan/{loan_id}/cancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/loan/:loan_id/cancel",
+            "params": [
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Use this function to cancel a loan proposal. Available for TO_VALIDATE,VALIDATED and SCHEDULED loans."
+        },
+        {
+          "info": {
+            "name": "/loan/{loan_id}/validate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/loan/:loan_id/validate",
+            "params": [
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Use this function to accept a loan proposal. Available for TO_VALIDATE loans only."
+        },
+        {
+          "info": {
+            "name": "/loan/repayment-terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getdefacto.com/loan/repayment-terms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n<div>\n<h3>Change repayment terms of some loans</h3>\n<p>Changing the payment method and / or date is only possible on loans that are TO_REPAY or\n TO_REPAY_FEES.\n</p>\n<p>Postponing loan repayment date is only possible once. </p>\n<p>If loan is supposed to be repaid using a sepa direct-debit, you may not be able to change the\n debited account number less than 3 days before the scheduled payment date because payment has already\n been instructed. In such case you'll get a 400 error telling you that t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

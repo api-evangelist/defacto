@@ -1,0 +1,730 @@
+{
+  "item": [
+    {
+      "id": "bb78a22f-969c-46ab-9b69-f5e66cacc8fb",
+      "name": "Eligibility and credit limit",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01729fc5-e6bd-4bbc-9d3d-2f778294d916",
+          "name": "/credit_line/{credit_line_id}",
+          "request": {
+            "name": "/credit_line/{credit_line_id}",
+            "description": {
+              "content": "[DEPRECATED] Get credit line by id.<br/> Now use financial-product endpoint",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "credit_line",
+                ":credit_line_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "credit_line_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "054ec7c6-42d5-47ba-abe2-449e991423f6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "credit_line",
+                    ":credit_line_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "credit_line_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"distribution\": \"DIRECT\",\n  \"fees_interest_daily_rate\": 5846.428147257162,\n  \"fees_operating_daily_rate\": 2937.7098765906085,\n  \"loan_contract_type\": \"TRADE_RECEIVABLE\",\n  \"start_date\": \"1984-11-20T07:04:34.893Z\",\n  \"balance_available\": null,\n  \"balance_pending\": 0,\n  \"balance_pending_validation\": 0,\n  \"contract_number\": null,\n  \"currency\": \"EUR\",\n  \"default_borrower\": null,\n  \"default_borrower_strategy\": null,\n  \"default_guarantor\": null,\n  \"default_loan_from\": null,\n  \"default_repayment_from\": null,\n  \"default_repayment_method\": \"DIRECT_DEBIT\",\n  \"default_repayment_to\": null,\n  \"end_date\": null,\n  \"fees_daily_rate\": null,\n  \"fees_payer\": null,\n  \"id\": null,\n  \"pool_amount\": null,\n  \"signed_at\": null,\n  \"vat\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e53f395-d0ba-4914-8250-14ee77142969",
+          "name": "/credit_line",
+          "request": {
+            "name": "/credit_line",
+            "description": {
+              "content": "[DEPRECATED] Get the credit line associated with your account.<br/>Your partner max-exposure is no longer available by API",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "credit_line"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5d2b6426-1c44-4d9a-8b21-6a4522fb758d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "credit_line"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"distribution\": \"DIRECT\",\n  \"fees_interest_daily_rate\": 466.82661646698875,\n  \"fees_operating_daily_rate\": 5757.030047006182,\n  \"loan_contract_type\": \"CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE\",\n  \"start_date\": \"1999-02-18T08:42:52.035Z\",\n  \"amount_to_repay\": null,\n  \"balance_available\": null,\n  \"balance_pending\": 0,\n  \"balance_pending_validation\": 0,\n  \"coming_up_monthly_fees\": null,\n  \"contract_number\": null,\n  \"currency\": \"EUR\",\n  \"default_borrower\": null,\n  \"default_borrower_strategy\": null,\n  \"default_guarantor\": null,\n  \"default_loan_from\": null,\n  \"default_repayment_from\": null,\n  \"default_repayment_method\": \"DIRECT_DEBIT\",\n  \"default_repayment_to\": null,\n  \"end_date\": null,\n  \"fees_daily_rate\": null,\n  \"fees_payer\": null,\n  \"id\": null,\n  \"pool_amount\": null,\n  \"signed_at\": null,\n  \"vat\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27e29f08-ff3e-4368-b5dc-d6d460914d25",
+          "name": "/credit_lines",
+          "request": {
+            "name": "/credit_lines",
+            "description": {
+              "content": "List all the credit lines that have been opened for your company.<br/>By default, this includes all credit lines that have been created for borrowers you registered, as well as the credit line associated with your account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "credit_lines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "borrower",
+                  "value": "<string>",
+                  "description": "Search by borrower company number (e.g. SIREN or NIF)"
+                },
+                {
+                  "disabled": false,
+                  "key": "borrower",
+                  "value": "<string>",
+                  "description": "Search by borrower company number (e.g. SIREN or NIF)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "UUID(s) of the credit line(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "UUID(s) of the credit line(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab7a72d5-36eb-49e5-9c68-32f524ba11c8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "credit_lines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "borrower",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "borrower",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 3281,\n  \"page_size\": 5401,\n  \"data\": [\n    {\n      \"distribution\": \"DIRECT\",\n      \"fees_interest_daily_rate\": 7902.568497959111,\n      \"fees_operating_daily_rate\": 8726.922420484225,\n      \"loan_contract_type\": \"CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE\",\n      \"start_date\": \"1951-12-28T04:55:49.529Z\",\n      \"balance_available\": null,\n      \"balance_pending\": 0,\n      \"balance_pending_validation\": 0,\n      \"contract_number\": null,\n      \"currency\": \"EUR\",\n      \"default_borrower\": null,\n      \"default_borrower_strategy\": null,\n      \"default_guarantor\": null,\n      \"default_loan_from\": null,\n      \"default_repayment_from\": null,\n      \"default_repayment_method\": \"DIRECT_DEBIT\",\n      \"default_repayment_to\": null,\n      \"end_date\": null,\n      \"fees_daily_rate\": null,\n      \"fees_payer\": null,\n      \"id\": null,\n      \"pool_amount\": null,\n      \"signed_at\": null,\n      \"vat\": null\n    },\n    {\n      \"distribution\": \"PARTNER\",\n      \"fees_interest_daily_rate\": 1067.446626297559,\n      \"fees_operating_daily_rate\": 892.5796447732138,\n      \"loan_contract_type\": \"CREDIT_OPERATION\",\n      \"start_date\": \"1964-12-12T03:29:01.384Z\",\n      \"balance_available\": null,\n      \"balance_pending\": 0,\n      \"balance_pending_validation\": 0,\n      \"contract_number\": null,\n      \"currency\": \"EUR\",\n      \"default_borrower\": null,\n      \"default_borrower_strategy\": null,\n      \"default_guarantor\": null,\n      \"default_loan_from\": null,\n      \"default_repayment_from\": null,\n      \"default_repayment_method\": \"DIRECT_DEBIT\",\n      \"default_repayment_to\": null,\n      \"end_date\": null,\n      \"fees_daily_rate\": null,\n      \"fees_payer\": null,\n      \"id\": null,\n      \"pool_amount\": null,\n      \"signed_at\": null,\n      \"vat\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2db37df3-861c-4742-bcb1-e9dce5768ae0",
+          "name": "/eligibility/reasons",
+          "request": {
+            "name": "/eligibility/reasons",
+            "description": {
+              "content": "List all the possible reasons for which a borrower would not be eligible for a loan.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eligibility",
+                "reasons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55c0d5cb-198b-4967-994c-9011ebcead59",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligibility",
+                    "reasons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"denial_code_name\": \"string\",\n    \"translations\": {\n      \"de\": \"string\",\n      \"en\": \"string\",\n      \"es\": \"string\",\n      \"fr\": \"string\"\n    }\n  },\n  {\n    \"denial_code_name\": \"string\",\n    \"translations\": {\n      \"de\": \"string\",\n      \"en\": \"string\",\n      \"es\": \"string\",\n      \"fr\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "893e86a6-69db-4f42-a4d9-a046fa031541",
+          "name": "/eligibility/beneficiary",
+          "request": {
+            "name": "/eligibility/beneficiary",
+            "description": {
+              "content": "\n<div>\n<h3>Ask if the business can receive the money originated from a loan on one of its bank accounts.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>true</code>,\n  it means the business can receive the money originated from a loan on one of its bank accounts.\n</li>\n<li>when <code>is_eligible</code> is <code>false</code>,\n  it means the business can't receive the money originated from a loan.\n  If the business is the borrower's supplier, it does not prevent the borrower from requesting a loan.\n  However, the money has to arrive in a bank account owned by the borrower, not by the supplier.\n</li>\n</ul>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eligibility",
+                "beneficiary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c7acbe0-7fa6-47b9-adfb-3c5dfc7049a9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligibility",
+                    "beneficiary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"is_eligible\": true,\n  \"reasons\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0f0472e-190d-4662-82ae-00c43f6b3734",
+          "name": "/eligibility/borrower",
+          "request": {
+            "name": "/eligibility/borrower",
+            "description": {
+              "content": "\n<div>\n<h3>Ask for the pre-eligibility of a borrower.</h3>\n\n<p>It should be interpreted the following way:</p>\n<ul>\n<li>when <code>is_eligible</code> is <code>false</code>\n  and <code>reasons</code> is <code>null</code> or <code>[]</code>\n  it means the borrower **might** be eligible.\n  This will depend on his financials and will be evaluated after\n  you share data with the <code>/business/data/XXX</code> endpoints.\n</li>\n<li>when <code>is_eligible</code> is <code>true</code>, the borrower is eligible. However, we recommend\n  you to share the data you have with the <code>/business/data/XXX</code> endpoints in order to have a more\n  accurate (likely higher) eligible amount.\n</li>\n<li>when <code>is_eligible</code> is <code>false</code> and all items of <code>reasons</code> are in:\n  [OUTDATED_DATA, KYB_STATUS] this means the borrower might be eligible depending on his financing,\n  and we are expecting him to perform a few actions prior to requesting loan. Once you register the\n  borrower, this will be represented by the borrower's status.\n</li>\n</ul>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eligibility",
+                "borrower"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06af8ac6-4e6c-451d-b0c2-be936d7008ec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligibility",
+                    "borrower"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"is_eligible\": true,\n  \"reasons\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5034a86-f4be-4f99-8ecf-f2784972566a",
+    "name": "Defacto Accounting Eligibility and credit limit API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

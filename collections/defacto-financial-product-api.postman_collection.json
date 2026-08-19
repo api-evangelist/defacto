@@ -1,0 +1,162 @@
+{
+  "item": [
+    {
+      "id": "28e8bf71-3f51-4fe9-92d4-be67eb4e8534",
+      "name": "Financial product",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d38b67ad-658c-4fb2-87ba-ec24fea078b2",
+          "name": "/borrower/{borrower_id}/financial-products",
+          "request": {
+            "name": "/borrower/{borrower_id}/financial-products",
+            "description": {
+              "content": "\n## List the financial products available to the borrower.\n\nFinancial products are the product against which a borrower can submit loan requests.\nEach come with its own set of rules, and balances (maximum amount available, etc.).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "financial-products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2795e00e-8f26-4dcf-acd6-b1b729126ded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "financial-products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 25,\n  \"page_size\": 3270,\n  \"data\": [\n    {\n      \"borrower_id\": \"3cb9aa47-e4d4-055f-03a7-6d9d825c779f\",\n      \"can_request_loan\": true,\n      \"financial_product\": {\n        \"configuration\": {\n          \"billing\": {\n            \"bill_overdue_threshold_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fees_payers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loan_overdue_threshold_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"penalties_disabled\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"contract_generation_settings\": null,\n          \"contract_templates\": null,\n          \"contract_type\": \"CREDIT_OPERATION\",\n          \"depositing_rules\": null,\n          \"installments\": {\n            \"available_types\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_reschedule_payment_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_anticipate_payment_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_business_days_until_due_date_to_reschedule_payment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"risk_mitigation_config\": null,\n          \"subscription\": {\n            \"monthly_fee_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sdd_account_detail_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"tcs_documents\": null,\n          \"ux\": {\n            \"aggregation_scenarios\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fp_status_on_manual_review_eligibility\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loan_request\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"name\": \"string\",\n        \"product_type\": \"RECEIVABLE_FACTORING\"\n      },\n      \"id\": \"2d7efb0c-e2b3-8925-a25f-2d81e758491f\",\n      \"status\": \"PRODUCT_DISCONTINUED\",\n      \"amount_outstanding\": null,\n      \"amount_pending_validation\": null,\n      \"available_amount\": null,\n      \"fees_daily_rate\": null,\n      \"max_amount\": null,\n      \"status_reason\": null,\n      \"unlock_loan_request_link\": null\n    },\n    {\n      \"borrower_id\": \"a1a16866-bb26-26db-27dc-38b7846e29e3\",\n      \"can_request_loan\": false,\n      \"financial_product\": {\n        \"configuration\": {\n          \"billing\": {\n            \"bill_overdue_threshold_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fees_payers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loan_overdue_threshold_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"penalties_disabled\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"contract_generation_settings\": null,\n          \"contract_templates\": null,\n          \"contract_type\": \"CREDIT_OPERATION\",\n          \"depositing_rules\": null,\n          \"installments\": {\n            \"available_types\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"maximum_reschedule_payment_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_anticipate_payment_in_days\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"minimum_business_days_until_due_date_to_reschedule_payment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"risk_mitigation_config\": null,\n          \"subscription\": {\n            \"monthly_fee_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sdd_account_detail_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"tcs_documents\": null,\n          \"ux\": {\n            \"aggregation_scenarios\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fp_status_on_manual_review_eligibility\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loan_request\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"name\": \"string\",\n        \"product_type\": \"FLEX_FINANCING\"\n      },\n      \"id\": \"78ad512c-69aa-22f1-eaec-f79427c04886\",\n      \"status\": \"CREATED\",\n      \"amount_outstanding\": null,\n      \"amount_pending_validation\": null,\n      \"available_amount\": null,\n      \"fees_daily_rate\": null,\n      \"max_amount\": null,\n      \"status_reason\": null,\n      \"unlock_loan_request_link\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "83281b28-9a76-4238-a039-573a5ebbbe4b",
+    "name": "Defacto Accounting Financial product API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

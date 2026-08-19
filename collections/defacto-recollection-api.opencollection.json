@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Recollection API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recollection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/installment-plan/{installment_plan_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/installment-plan/:installment_plan_id",
+            "params": [
+              {
+                "name": "installment_plan_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "## Keep track of the progress of an installment plan\nWhen the borrower is late to repay his loans or bills, he probably agreed to an installment plan.\nThis endpoint lets you keep track of a given installment plan.\nWhen every installments are in PAID status, the plan is fully repaid.\n"
+        },
+        {
+          "info": {
+            "name": "/recollection-case/{recollection_case_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/recollection-case/:recollection_case_id",
+            "params": [
+              {
+                "name": "recollection_case_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get details of a recollection case."
+        },
+        {
+          "info": {
+            "name": "/recollection-case/{recollection_case_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getdefacto.com/recollection-case/:recollection_case_id",
+            "params": [
+              {
+                "name": "recollection_case_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add notes to a recollection case to follow up on recollection process."
+        },
+        {
+          "info": {
+            "name": "/recollection-cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/recollection-cases",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "identifier_type",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get recollection cases. You can filter results using debtor business identifier."
+        },
+        {
+          "info": {
+            "name": "/recollection-cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/recollection-cases",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "## Open a recollection case\nWhen the borrower is late to repay his loans or bills, you must open a recollection case to start taking\nactions to recover the debt.\nThis endpoint will let you open a new recollection case for a business (debtor).\nYou need to indicate at least one loan or bill (ids).\nFor the follow up of the case by the recollection agent, you need to add a task to be done in the future.\nThe task MUST have a name and a due date, the description is optional.\n"
+        },
+        {
+          "info": {
+            "name": "/recollection-case/{recollection_case_id}/installment-plans/compute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/recollection-case/:recollection_case_id/installment-plans/compute",
+            "params": [
+              {
+                "name": "recollection_case_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "## Simulate an installment plan\n\nBefore creating an installment plan you might need to expose installment amounts & dates to your debtor\nso that you can find the right agreement. This endpoint will help you achieving such simulation.\n\nTo use this endpoint, you'll need to provide the list of loans or bills you want to repay with proposed\nplan. Then select plan starting date and periodicity. The system automatically returns a plan avoiding\navoiding bank holidays and weekends and explicitly, enlist"
+        },
+        {
+          "info": {
+            "name": "/recollection-case/{recollection_case_id}/installment-plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/recollection-case/:recollection_case_id/installment-plans",
+            "params": [
+              {
+                "name": "recollection_case_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## Allow repaying in multiple times\nThis endpoint is dedicated to the creation of an installment plan as part of recollection strategy.\nYou'll need a recollection-case id to use this endpoint.\n\nIn the event of insolvency, your debtor can opt for an installment plan to repay his debt with smaller\nrecurring pamyents. This smoothens the repayment effort, allowing the debtor to reimburse selected\nloans or bills progressively.\n\nthe value of the `installment` parameter must be obtained by calling the"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

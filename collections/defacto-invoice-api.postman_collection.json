@@ -1,0 +1,989 @@
+{
+  "item": [
+    {
+      "id": "4cba5186-4cdd-4de0-9d88-e4de74952026",
+      "name": "Invoice",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "128c2e04-f4f5-48b9-8dad-ba65dd15a174",
+          "name": "/invoice/{invoice_id}",
+          "request": {
+            "name": "/invoice/{invoice_id}",
+            "description": {
+              "content": "Delete an invoice by id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoice",
+                ":invoice_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "69568711-16db-4b86-8bbb-6d2a4bd70b45",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoice",
+                    ":invoice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 7696,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"a612d911-5558-355a-58c9-8487dd25199b\",\n    \"20603ca7-cbc5-aa23-52ed-a55f0366ffb9\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29bd65ac-ef52-449c-b5ed-c6c4da8c6136",
+          "name": "/invoice/{invoice_id}",
+          "request": {
+            "name": "/invoice/{invoice_id}",
+            "description": {
+              "content": "Get an invoice by id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoice",
+                ":invoice_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4fb24ed1-2932-4233-b49a-cdcddfee7e8c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoice",
+                    ":invoice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 8793,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"38be2928-3575-50e8-425c-b5e0f054b92b\",\n    \"2af27b30-b3bf-98c9-6954-7722eac6a1c2\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a98e79a-b932-4be8-b863-1953ee3069dc",
+          "name": "/invoice/{invoice_id}",
+          "request": {
+            "name": "/invoice/{invoice_id}",
+            "description": {
+              "content": "Updates an invoice (with status TO_SUBMIT or TO_EDIT only)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoice",
+                ":invoice_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {}
+          },
+          "response": [
+            {
+              "id": "61d336b9-cf16-4090-afc1-ddd7746dd0be",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoice",
+                    ":invoice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 8793,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"38be2928-3575-50e8-425c-b5e0f054b92b\",\n    \"2af27b30-b3bf-98c9-6954-7722eac6a1c2\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fe7c9ec-e4b5-440b-bf83-8a76d9d3fa8f",
+          "name": "/invoices",
+          "request": {
+            "name": "/invoices",
+            "description": {
+              "content": "Get your invoices",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "buyer",
+                  "value": "<string>",
+                  "description": "Business buying a product or service from the seller."
+                },
+                {
+                  "disabled": false,
+                  "key": "buyer",
+                  "value": "<string>",
+                  "description": "Business buying a product or service from the seller."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "invoice_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "invoice_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "linked_to_loan",
+                  "value": "",
+                  "description": "If false, the invoice is not linked to any loan and has not been submitted for a loan."
+                },
+                {
+                  "disabled": false,
+                  "key": "linked_to_loan_paid_after",
+                  "value": "",
+                  "description": "Filters invoices linked to a loan that was paid after the specified date (based on the loan's paid_at field). This filter is only effective when `linked_to_loan` is set to true."
+                },
+                {
+                  "disabled": false,
+                  "key": "linked_to_loan_paid_before",
+                  "value": "",
+                  "description": "Filters invoices linked to a loan that was paid before the specified date (based on the loan's paid_at field). This filter is only effective when `linked_to_loan` is set to true."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "",
+                  "description": "Query to filter invoices"
+                },
+                {
+                  "disabled": false,
+                  "key": "seller",
+                  "value": "<string>",
+                  "description": "Business selling a product or service to the buyer."
+                },
+                {
+                  "disabled": false,
+                  "key": "seller",
+                  "value": "<string>",
+                  "description": "Business selling a product or service to the buyer."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "<b>TO_SUBMIT, SUBMITTED, TO_EDIT or VERIFIED</b><ul><li>TO_SUBMIT: the invoice is a draft, you can correct it and submit it when correct</li><li>SUBMITTED: the invoice has been submitted and Defacto is verifying it</li><li>TO_EDIT: the invoice has not been validated by Defacto. It should be edited before you can submit it again</li><li>VERIFIED: the invoice has been verified by Defacto. A loan can now be requested for the invoice.</li></ul>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "<b>TO_SUBMIT, SUBMITTED, TO_EDIT or VERIFIED</b><ul><li>TO_SUBMIT: the invoice is a draft, you can correct it and submit it when correct</li><li>SUBMITTED: the invoice has been submitted and Defacto is verifying it</li><li>TO_EDIT: the invoice has not been validated by Defacto. It should be edited before you can submit it again</li><li>VERIFIED: the invoice has been verified by Defacto. A loan can now be requested for the invoice.</li></ul>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ec9024ec-6797-4b86-8200-537e00d525cf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buyer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buyer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "invoice_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "invoice_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "linked_to_loan",
+                      "value": ""
+                    },
+                    {
+                      "key": "linked_to_loan_paid_after",
+                      "value": ""
+                    },
+                    {
+                      "key": "linked_to_loan_paid_before",
+                      "value": ""
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "query",
+                      "value": ""
+                    },
+                    {
+                      "key": "seller",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seller",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 4978,\n  \"page_size\": 342,\n  \"data\": [\n    {\n      \"invoice_number\": \"string\",\n      \"net_amount\": 8669,\n      \"buyer\": null,\n      \"currency\": \"EUR\",\n      \"document_url\": null,\n      \"due_at\": null,\n      \"id\": null,\n      \"is_draft\": null,\n      \"issued_at\": null,\n      \"loan_ids\": [\n        \"6b245bd5-fefc-197e-c339-9597d7978f83\",\n        \"72d523b6-a304-30e8-5f47-c51371ff582f\"\n      ],\n      \"metadata\": null,\n      \"seller\": null,\n      \"status\": \"TO_SUBMIT\",\n      \"status_reason\": null,\n      \"tax_amount\": null,\n      \"to_account_details\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    },\n    {\n      \"invoice_number\": \"string\",\n      \"net_amount\": 1799,\n      \"buyer\": null,\n      \"currency\": \"EUR\",\n      \"document_url\": null,\n      \"due_at\": null,\n      \"id\": null,\n      \"is_draft\": null,\n      \"issued_at\": null,\n      \"loan_ids\": [\n        \"3429d737-82c0-4cea-ffa0-17e8bb84cd12\",\n        \"860a9861-fd8f-db1c-9ea4-df33681da2d6\"\n      ],\n      \"metadata\": null,\n      \"seller\": null,\n      \"status\": \"TO_SUBMIT\",\n      \"status_reason\": null,\n      \"tax_amount\": null,\n      \"to_account_details\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd9f2e0d-111f-4a7c-861d-351a2eb86cb4",
+          "name": "/invoices",
+          "request": {
+            "name": "/invoices",
+            "description": {
+              "content": "\nCreate an invoice.\n- If you create an invoice that will need to be edited afterwards, create a draft invoice with the <code>is_draft</code> parameter. Otherwise set <code>is_draft</code> to false.\n- This endpoint requires the base64-encoded value of the PDF of the invoice. You can for example use [base64guru](https://base64.guru/converter/encode/pdf).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"due_at\": null,\n  \"invoice_number\": null,\n  \"is_draft\": false,\n  \"issued_at\": null,\n  \"metadata\": null,\n  \"net_amount\": null,\n  \"seller\": null,\n  \"tax_amount\": null,\n  \"to_account\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e80d7a35-b3b0-4f4e-be0f-b851d1142804",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"due_at\": null,\n  \"invoice_number\": null,\n  \"is_draft\": false,\n  \"issued_at\": null,\n  \"metadata\": null,\n  \"net_amount\": null,\n  \"seller\": null,\n  \"tax_amount\": null,\n  \"to_account\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 8793,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"38be2928-3575-50e8-425c-b5e0f054b92b\",\n    \"2af27b30-b3bf-98c9-6954-7722eac6a1c2\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af39616b-1f50-49a8-90f3-0cff3e93646c",
+          "name": "/invoice/{invoice_id}/submit",
+          "request": {
+            "name": "/invoice/{invoice_id}/submit",
+            "description": {
+              "content": "\nSubmit an invoice for validation by Defacto (with status TO_SUBMIT or TO_EDIT).\nIf some data is missing prior to validating the invoice, a 422 error will be returned with the list of the missing fields.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoice",
+                ":invoice_id",
+                "submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {}
+          },
+          "response": [
+            {
+              "id": "2cde041f-e200-42aa-b6cc-473e3cf978fe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoice",
+                    ":invoice_id",
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 8793,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"38be2928-3575-50e8-425c-b5e0f054b92b\",\n    \"2af27b30-b3bf-98c9-6954-7722eac6a1c2\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "038eae1b-b6e4-4c73-8f6d-04cceb172a6f",
+          "name": "/invoices/upload",
+          "request": {
+            "name": "/invoices/upload",
+            "description": {
+              "content": "Create an invoice entity from the PDF of an invoice. Send the file within a formData. The endpoint will automatically extract the invoice information and create an invoice entity from them.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "buyer",
+                  "value": "",
+                  "description": "Business identifier of the buyer, must be in the form <business_identifier_type>-<business_identifier> such as SIREN-899021021 for a french company."
+                },
+                {
+                  "disabled": false,
+                  "key": "seller",
+                  "value": "",
+                  "description": "Business identifier of the seller, must be in the form <business_identifier_type>-<business_identifier> such as SIREN-899021021 for a french company."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "metadata",
+                  "value": "null",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a23f373d-37d9-4c2c-af3f-52634a0719a7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buyer",
+                      "value": ""
+                    },
+                    {
+                      "key": "seller",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "metadata",
+                      "value": "null",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"string\",\n  \"net_amount\": 8793,\n  \"buyer\": null,\n  \"currency\": \"EUR\",\n  \"document_url\": null,\n  \"due_at\": null,\n  \"id\": null,\n  \"is_draft\": null,\n  \"issued_at\": null,\n  \"loan_ids\": [\n    \"38be2928-3575-50e8-425c-b5e0f054b92b\",\n    \"2af27b30-b3bf-98c9-6954-7722eac6a1c2\"\n  ],\n  \"metadata\": null,\n  \"seller\": null,\n  \"status\": \"TO_SUBMIT\",\n  \"status_reason\": null,\n  \"tax_amount\": null,\n  \"to_account_details\": null,\n  \"to_pay_amount\": null,\n  \"total_amount\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "daf807ea-4caf-4876-a77d-0b9eaa7f0e7a",
+    "name": "Defacto Accounting Invoice API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

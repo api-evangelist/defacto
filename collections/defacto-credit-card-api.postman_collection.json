@@ -1,0 +1,859 @@
+{
+  "item": [
+    {
+      "id": "4a4422d0-acbc-4696-b0b8-ae3d931178d9",
+      "name": "Credit card",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e9079809-6e83-4fd0-b081-7d66e8c50df5",
+          "name": "/cards/{card_id}/entries/export",
+          "request": {
+            "name": "/cards/{card_id}/entries/export",
+            "description": {
+              "content": "Export card transactions as a Pennylane-compatible CSV. Provide either period (YYYY-MM) or from_date + to_date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                ":card_id",
+                "entries",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "card_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6cc03d47-ecbb-43ff-bb5b-1f3bf7615a7e",
+              "name": "CSV file attachment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id",
+                    "entries",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "period",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_date",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d53c8215-0bc9-4ffb-ac8e-c2255addec56",
+              "name": "Card not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id",
+                    "entries",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "period",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_date",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d0da9d6-8973-4edf-9bc3-fc2464afaadb",
+          "name": "/cards/{card_id}/entries",
+          "request": {
+            "name": "/cards/{card_id}/entries",
+            "description": {
+              "content": "List entries for a credit card.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                ":card_id",
+                "entries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "card_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "47490167-fc9a-476e-9d26-dfa4d5c52830",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_date",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"amount\": 3924,\n    \"created\": \"1976-12-28T10:05:01.895Z\",\n    \"currency\": \"string\",\n    \"id\": \"string\",\n    \"merchant_category\": \"string\",\n    \"merchant_name\": \"string\",\n    \"transaction_type\": \"string\",\n    \"entry_type\": \"transaction\",\n    \"funding_obligation_id\": null,\n    \"merchant_amount\": null,\n    \"merchant_currency\": null\n  },\n  {\n    \"amount\": 1826,\n    \"created\": \"1966-08-19T22:16:48.839Z\",\n    \"currency\": \"string\",\n    \"id\": \"string\",\n    \"merchant_category\": \"string\",\n    \"merchant_name\": \"string\",\n    \"transaction_type\": \"string\",\n    \"entry_type\": \"transaction\",\n    \"funding_obligation_id\": null,\n    \"merchant_amount\": null,\n    \"merchant_currency\": null\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df35cd7a-11c3-412a-a1ff-5c14e5e0e812",
+          "name": "/cards/{card_id}",
+          "request": {
+            "name": "/cards/{card_id}",
+            "description": {
+              "content": "Retrieve a credit card by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                ":card_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "card_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7598631b-c800-47e0-bebd-189aa6d56147",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"balance\": {\n    \"available\": 8928,\n    \"currency\": \"string\",\n    \"used\": 3657,\n    \"available_including_pending\": null,\n    \"pending\": null\n  },\n  \"brand\": \"string\",\n  \"constraints\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"currency\": \"string\",\n  \"id\": \"2df11c29-c030-3c26-6584-84638b113de6\",\n  \"last4\": \"string\",\n  \"status\": \"string\",\n  \"card_type\": \"virtual\",\n  \"first_name\": null,\n  \"last_name\": null,\n  \"provider_account_id\": null,\n  \"provider_card_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "692c1d01-4e4a-4cb8-b8f6-df8656ad6aa8",
+          "name": "/cards",
+          "request": {
+            "name": "/cards",
+            "description": {
+              "content": "List credit cards for the authenticated borrower.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f9251c80-8506-4159-ad30-be32e59c8293",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"balance\": {\n      \"available\": 9992,\n      \"currency\": \"string\",\n      \"used\": 5757,\n      \"available_including_pending\": null,\n      \"pending\": null\n    },\n    \"brand\": \"string\",\n    \"constraints\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    \"currency\": \"string\",\n    \"id\": \"6aea14fe-646c-ceac-ad7b-71a0b5fbb91e\",\n    \"last4\": \"string\",\n    \"status\": \"string\",\n    \"card_type\": \"virtual\",\n    \"first_name\": null,\n    \"last_name\": null,\n    \"provider_account_id\": null,\n    \"provider_card_id\": null\n  },\n  {\n    \"balance\": {\n      \"available\": 5278,\n      \"currency\": \"string\",\n      \"used\": 547,\n      \"available_including_pending\": null,\n      \"pending\": null\n    },\n    \"brand\": \"string\",\n    \"constraints\": {\n      \"key_0\": {}\n    },\n    \"currency\": \"string\",\n    \"id\": \"f6a7c8a2-ffb7-4714-4ad0-fa92d90cc28c\",\n    \"last4\": \"string\",\n    \"status\": \"string\",\n    \"card_type\": \"virtual\",\n    \"first_name\": null,\n    \"last_name\": null,\n    \"provider_account_id\": null,\n    \"provider_card_id\": null\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c213766a-0952-44e3-9755-9bb228e44981",
+          "name": "/cards/{card_id}/status",
+          "request": {
+            "name": "/cards/{card_id}/status",
+            "description": {
+              "content": "Update card status. Accepted values: 'active', 'inactive', 'canceled'.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                ":card_id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "card_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "de4d5e7f-3906-46a0-b338-826208a102c9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"balance\": {\n    \"available\": 8928,\n    \"currency\": \"string\",\n    \"used\": 3657,\n    \"available_including_pending\": null,\n    \"pending\": null\n  },\n  \"brand\": \"string\",\n  \"constraints\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"currency\": \"string\",\n  \"id\": \"2df11c29-c030-3c26-6584-84638b113de6\",\n  \"last4\": \"string\",\n  \"status\": \"string\",\n  \"card_type\": \"virtual\",\n  \"first_name\": null,\n  \"last_name\": null,\n  \"provider_account_id\": null,\n  \"provider_card_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3195cdcd-b062-4edf-952f-a5e522cb3ae2",
+          "name": "/cards/{card_id}/ephemeral-key",
+          "request": {
+            "name": "/cards/{card_id}/ephemeral-key",
+            "description": {
+              "content": "Create an ephemeral key to reveal the card's PAN and CVV via the card display SDK.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                ":card_id",
+                "ephemeral-key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "card_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "493a39e8-c976-4ae9-8f8c-ae2c3541de1d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    ":card_id",
+                    "ephemeral-key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "card_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ephemeral_key_secret\": \"string\",\n  \"provider_account_id\": \"string\",\n  \"provider_card_id\": \"string\",\n  \"publishable_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d15deef0-cbb8-4229-8865-25299c8085a9",
+    "name": "Defacto Accounting Credit card API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

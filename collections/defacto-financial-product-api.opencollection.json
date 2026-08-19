@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Financial product API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Financial product",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/borrower/{borrower_id}/financial-products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/borrower/:borrower_id/financial-products",
+            "params": [
+              {
+                "name": "borrower_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## List the financial products available to the borrower.\n\nFinancial products are the product against which a borrower can submit loan requests.\nEach come with its own set of rules, and balances (maximum amount available, etc.).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

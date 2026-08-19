@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "d460d670-bb02-46ca-8726-dcb3186cdb65",
+      "name": "Testing",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db412f64-7642-4092-93fd-666a1abb5ebe",
+          "name": "/hello",
+          "request": {
+            "name": "/hello",
+            "description": {
+              "content": "Make a first call to this endpoint to test your connection to Defacto API with your API Key",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hello"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "178721ee-9d0a-45a2-897a-2bf03498012a",
+              "name": "A welcoming message from Defacto API.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hello"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c3ce262-1cf4-4631-adfc-92ae95861b99",
+          "name": "/sandbox/business-generator",
+          "request": {
+            "name": "/sandbox/business-generator",
+            "description": {
+              "content": "\nGenerate a fake business for you to use in your test.\nImportant, this endpoint does not create the business but simply return the payload.\nCall `/borrowers` to register this business and generate loan for it\nWarning: these invoices and their IBANs will not work in production.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandbox",
+                "business-generator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "FRA"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_borrower",
+                  "value": "true"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fd275a8d-072e-40af-802d-5d65e9b3d4af",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandbox",
+                    "business-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "country",
+                      "value": "FRA"
+                    },
+                    {
+                      "key": "is_borrower",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"account_number\": null,\n  \"address\": null,\n  \"directors\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"owner\": null,\n  \"preferred_language\": null,\n  \"signed_at\": null,\n  \"vat_number\": null,\n  \"wait_for_ready\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57a1bac6-6ddc-419d-a27d-6edf3a910a77",
+          "name": "/sandbox/iban-generator",
+          "request": {
+            "name": "/sandbox/iban-generator",
+            "description": {
+              "content": "\nGenerate a new IBAN that will produce a given scenario on the sandbox, for example a rejected loan.\nEach IBAN can be used as the account of a single counterparty or borrower (a buyer or seller of yours).\nSo, if you want to test the API for several of your counterparties, you will have to generate several of them.\nThe BIC associated to these IBANs is FK2FACTO.\nAlso, if you want to test another scenario on a given business, create a new IBAN and use it in the <code>to_account</code> field of the next invoice and loan that you create for this counterparty.\nFor more information on the scenarios of the sandbox, please refer to the <a href=\"https://developers.getdefacto.com/reference/testing-your-integration\">Testing Multiple Scenarios & Errors</a> section.\nWarning: these IBANs will not work in production.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandbox",
+                "iban-generator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "FRA"
+                },
+                {
+                  "disabled": false,
+                  "key": "scenario",
+                  "value": "SUCCESS"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "db40ee9f-2f53-404e-8924-99895a29e2c3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandbox",
+                    "iban-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "country",
+                      "value": "FRA"
+                    },
+                    {
+                      "key": "scenario",
+                      "value": "SUCCESS"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"iban\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31856854-e5fc-47d9-ab0d-2d3a63f7cfc9",
+          "name": "/sandbox/business-eligible",
+          "request": {
+            "name": "/sandbox/business-eligible",
+            "description": {
+              "content": "\nThis endpoint enables you to configure the eligibility of a business.\nPass NOT_ELIGIBLE to make a business non-eligible.\nThen, you'll be able to test how the Defacto API behaves when requesting a loan for a non-eligible business.\nYou can test multiple scenarios:\n(1) when the business is the borrower or\n(2) when the business is on the invoice to finance but is not the borrower.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandbox",
+                "business-eligible"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": null\n  },\n  \"scenario\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35a9a4f8-a15d-41c2-8ddd-76e3b07520af",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandbox",
+                    "business-eligible"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": null\n  },\n  \"scenario\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56ca4f9a-167b-489e-838e-0907651155c8",
+          "name": "/sandbox/invoice-generator",
+          "request": {
+            "name": "/sandbox/invoice-generator",
+            "description": {
+              "content": "\n!!! The documentation website is not able to display the full response of this endpoint. The use of the curl command is recommended. !!!\n\nGenerate a fake invoice that will produce a given scenario on the sandbox, for example a rejected loan.\nThe generation will not add the invoice to the list of your invoices. You must do this via API.\nTo achieve this, you can copy the invoice_creation_payload into the payload of the invoice creation API.\nIf you want to test another scenario on a given business, create another fake invoice.\nFor more information on the scenarios of the sandbox, please refer to the <a href=\"https://developers.getdefacto.com/reference/testing-your-integration\">Testing your integration</a> section.\nWarning: these invoices and their IBANs will not work in production.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandbox",
+                "invoice-generator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"buyer\": null,\n  \"country\": \"FRA\",\n  \"scenario\": \"SUCCESS\",\n  \"seller\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f77f9652-7f8f-4c57-944e-0c65b3de6f31",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandbox",
+                    "invoice-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"buyer\": null,\n  \"country\": \"FRA\",\n  \"scenario\": \"SUCCESS\",\n  \"seller\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"invoice_creation_payload\": {\n    \"document\": \"string\",\n    \"buyer\": null,\n    \"currency\": \"EUR\",\n    \"due_at\": null,\n    \"invoice_number\": null,\n    \"is_draft\": false,\n    \"issued_at\": null,\n    \"metadata\": null,\n    \"net_amount\": null,\n    \"seller\": null,\n    \"tax_amount\": null,\n    \"to_account\": null,\n    \"to_pay_amount\": null,\n    \"total_amount\": null\n  },\n  \"pdf_download_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "99e0659f-ab22-4ad6-83d8-b0be9aa306ff",
+    "name": "Defacto Accounting Testing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

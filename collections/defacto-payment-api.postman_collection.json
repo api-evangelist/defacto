@@ -1,0 +1,745 @@
+{
+  "item": [
+    {
+      "id": "c89a7f3a-f20f-43fa-938e-1bd0b787d35f",
+      "name": "Payment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2409f160-10f3-4845-bded-c8b93e2fcdd5",
+          "name": "/installments",
+          "request": {
+            "name": "/installments",
+            "description": {
+              "content": "List installements. Filter by loan or various dates to find what you're looking for.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "installments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "installment_plan_ids",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_ids",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "paid_at_gt",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "paid_at_lt",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "to_pay_at_gt",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "to_pay_at_lt",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_gt",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_lt",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b94cb40d-b820-42a0-8c87-d0964927b5f5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "installments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "installment_plan_ids",
+                      "value": ""
+                    },
+                    {
+                      "key": "loan_ids",
+                      "value": ""
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "paid_at_gt",
+                      "value": ""
+                    },
+                    {
+                      "key": "paid_at_lt",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_pay_at_gt",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_pay_at_lt",
+                      "value": ""
+                    },
+                    {
+                      "key": "updated_at_gt",
+                      "value": ""
+                    },
+                    {
+                      "key": "updated_at_lt",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 7807,\n  \"page_size\": 9184,\n  \"data\": [\n    {\n      \"attempts\": [\n        {\n          \"amount\": 8240,\n          \"currency\": \"GBP\",\n          \"payment_id\": \"45252658-7de7-bbc9-4e38-c9e215a2e0cb\",\n          \"payment_method\": \"DIRECT_DEBIT\",\n          \"payment_type\": \"CHARGEBACK\",\n          \"reference\": \"string\",\n          \"scheduled_at\": \"1990-08-16T04:22:52.123Z\",\n          \"status\": \"IN_TRANSIT\",\n          \"failure_reason\": null,\n          \"paid_at\": null\n        },\n        {\n          \"amount\": 9484,\n          \"currency\": \"EUR\",\n          \"payment_id\": \"cb746857-99fb-fa1d-da91-616ecaf4d6fd\",\n          \"payment_method\": \"P2P\",\n          \"payment_type\": \"REPAYMENT_FEES\",\n          \"reference\": \"string\",\n          \"scheduled_at\": \"1979-05-11T03:00:13.574Z\",\n          \"status\": \"PROPOSED\",\n          \"failure_reason\": null,\n          \"paid_at\": null\n        }\n      ],\n      \"currency\": \"EUR\",\n      \"due_amount\": 9429,\n      \"id\": \"73c853d7-5520-f6cd-78d9-2e6427c6873d\",\n      \"paid_amount\": 611,\n      \"payment_method\": \"DIRECT_DEBIT\",\n      \"reference\": \"string\",\n      \"scheduled_at\": \"1978-02-14T19:42:04.978Z\",\n      \"to_account_detail\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"bic\"\n      },\n      \"from_account_detail\": null,\n      \"last_repayment_date\": null\n    },\n    {\n      \"attempts\": [\n        {\n          \"amount\": 3898,\n          \"currency\": \"EUR\",\n          \"payment_id\": \"c90de6ff-b20f-97b7-5bbf-77e74e993129\",\n          \"payment_method\": \"P2P\",\n          \"payment_type\": \"REVERT\",\n          \"reference\": \"string\",\n          \"scheduled_at\": \"1998-02-26T22:42:43.504Z\",\n          \"status\": \"IN_TRANSIT\",\n          \"failure_reason\": null,\n          \"paid_at\": null\n        },\n        {\n          \"amount\": 9368,\n          \"currency\": \"GBP\",\n          \"payment_id\": \"986697f7-c851-dc51-3831-33aad6324dea\",\n          \"payment_method\": \"P2P\",\n          \"payment_type\": \"DEPOSIT_RELEASE\",\n          \"reference\": \"string\",\n          \"scheduled_at\": \"1989-11-01T15:12:12.969Z\",\n          \"status\": \"IN_TRANSIT\",\n          \"failure_reason\": null,\n          \"paid_at\": null\n        }\n      ],\n      \"currency\": \"EUR\",\n      \"due_amount\": 2182,\n      \"id\": \"4fc659c3-d779-b478-1c49-61ec07d2d518\",\n      \"paid_amount\": 5851,\n      \"payment_method\": \"P2P\",\n      \"reference\": \"string\",\n      \"scheduled_at\": \"2020-09-03T20:55:22.820Z\",\n      \"to_account_detail\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"account_number\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"from_account_detail\": null,\n      \"last_repayment_date\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c5e1d45-e3eb-4aed-8184-add3bad77620",
+          "name": "/payments",
+          "request": {
+            "name": "/payments",
+            "description": {
+              "content": "Get payments related to loans",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "deposit_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these deposit IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "deposit_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these deposit IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_account_id",
+                  "value": "",
+                  "description": "Filter by source account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": "",
+                  "description": "Return payments created on or after this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter by one or more payment UUIDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter by one or more payment UUIDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_bills",
+                  "value": "true",
+                  "description": "Include billing payments (default: true)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_loans",
+                  "value": "true",
+                  "description": "Include loan disbursement payments (default: true)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_payment_intents",
+                  "value": "true",
+                  "description": "Include payment intent payments (default: true)."
+                },
+                {
+                  "disabled": false,
+                  "key": "is_reconciled",
+                  "value": "",
+                  "description": "Filter by reconciliation status."
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these loan IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these loan IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "paid_after",
+                  "value": "",
+                  "description": "Return payments where paid_at is after this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "paid_before",
+                  "value": "",
+                  "description": "Return payments where paid_at is before this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_intent_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these payment intent IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_intent_id",
+                  "value": "<string>",
+                  "description": "Filter payments linked to these payment intent IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_method",
+                  "value": "<string>",
+                  "description": "Filter by payment method (e.g. DIRECT_DEBIT, SCT)."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_method",
+                  "value": "<string>",
+                  "description": "Filter by payment method (e.g. DIRECT_DEBIT, SCT)."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_type",
+                  "value": "<string>",
+                  "description": "Filter by payment type (e.g. LOAN_PAYMENT, REPAYMENT)."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_type",
+                  "value": "<string>",
+                  "description": "Filter by payment type (e.g. LOAN_PAYMENT, REPAYMENT)."
+                },
+                {
+                  "disabled": false,
+                  "key": "references",
+                  "value": "<string>",
+                  "description": "Filter by payment references."
+                },
+                {
+                  "disabled": false,
+                  "key": "references",
+                  "value": "<string>",
+                  "description": "Filter by payment references."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "Sort field and direction (format: column:ASC or column:DESC)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by payment status."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by payment status."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_account_id",
+                  "value": "",
+                  "description": "Filter by destination account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": "",
+                  "description": "Return payments created on or before this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "",
+                  "description": "Return payments updated after this date."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2f5c9720-91a0-4ea4-ac8d-1e4281678f17",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "deposit_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deposit_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_account_id",
+                      "value": ""
+                    },
+                    {
+                      "key": "from_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "include_bills",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_loans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_payment_intents",
+                      "value": "true"
+                    },
+                    {
+                      "key": "is_reconciled",
+                      "value": ""
+                    },
+                    {
+                      "key": "loan_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "loan_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "paid_after",
+                      "value": ""
+                    },
+                    {
+                      "key": "paid_before",
+                      "value": ""
+                    },
+                    {
+                      "key": "payment_intent_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_intent_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to_account_id",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_date",
+                      "value": ""
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 5762,\n  \"page_size\": 2097,\n  \"data\": [\n    {\n      \"amount\": 8053,\n      \"id\": \"a9f6687c-da5d-78b6-74bd-932dcd150016\",\n      \"payment_type\": \"LOAN_PAYMENT\",\n      \"status\": \"PROPOSED\",\n      \"charged_back_payment_id\": null,\n      \"currency\": \"EUR\",\n      \"failure_reason\": null,\n      \"from_account_details\": null,\n      \"from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_instant\": false,\n      \"paid_at\": null,\n      \"payment_method\": null,\n      \"provider\": null,\n      \"reason\": null,\n      \"related_to\": {\n        \"bills\": [\n          {\n            \"amount\": 9874,\n            \"bill_id\": \"b5d1d896-3760-1fdf-a983-c00e7f13100c\",\n            \"payment_id\": null\n          },\n          {\n            \"amount\": 5075,\n            \"bill_id\": \"da1b7cd0-b58f-40dd-5817-c6f55647c410\",\n            \"payment_id\": null\n          }\n        ],\n        \"invoices\": [\n          \"09d487e9-8775-a2ec-205f-e546c050dc3e\",\n          \"73e0a8de-e10d-9dc7-71de-a04063229e26\"\n        ],\n        \"loans\": [\n          {\n            \"amount\": 8875,\n            \"loan_id\": \"48465eed-9ca8-f08f-99ea-9772d3db0e56\",\n            \"payment_type\": \"LENDER_PREFUNDING\",\n            \"deposit_id\": null\n          },\n          {\n            \"amount\": 7118,\n            \"loan_id\": \"fdc3054c-b2ec-abcd-e1e4-3ce56024f289\",\n            \"payment_type\": \"DEPOSIT_RELEASE\",\n            \"deposit_id\": null\n          }\n        ],\n        \"payment_intents\": [\n          {\n            \"amount\": 2186,\n            \"payment_intent_id\": \"f3bc6dd8-147a-8eeb-afe9-7c2ef6c09a3a\",\n            \"payment_type\": \"REPAYMENT_FEES\"\n          },\n          {\n            \"amount\": 7378,\n            \"payment_intent_id\": \"08cc92ab-dc2a-8212-0062-4755b95ca401\",\n            \"payment_type\": \"SUBSCRIPTION\"\n          }\n        ],\n        \"subscriptions\": [\n          {\n            \"amount_cents\": 1080,\n            \"subscription_id\": \"d8128427-6efd-bf5b-b69c-e824e10d9c43\"\n          },\n          {\n            \"amount_cents\": 3218,\n            \"subscription_id\": \"fbf474d7-6cad-ae47-1935-1d9b0a6f9a28\"\n          }\n        ]\n      },\n      \"scheduled_at\": null,\n      \"to_account_details\": null,\n      \"to_references\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"amount\": 9605,\n      \"id\": \"40bfdbd9-fb0b-8e58-23e7-ae5dc3f0bdf2\",\n      \"payment_type\": \"LENDER_DEBT_RESOLUTION\",\n      \"status\": \"IN_TRANSIT\",\n      \"charged_back_payment_id\": null,\n      \"currency\": \"EUR\",\n      \"failure_reason\": null,\n      \"from_account_details\": null,\n      \"from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_instant\": false,\n      \"paid_at\": null,\n      \"payment_method\": null,\n      \"provider\": null,\n      \"reason\": null,\n      \"related_to\": {\n        \"bills\": [\n          {\n            \"amount\": 9170,\n            \"bill_id\": \"23e35115-321b-d31d-289c-75b4aeb8fa1b\",\n            \"payment_id\": null\n          },\n          {\n            \"amount\": 7887,\n            \"bill_id\": \"d0f48827-ce37-5c14-462b-680b03121c4b\",\n            \"payment_id\": null\n          }\n        ],\n        \"invoices\": [\n          \"f84de900-af00-f43b-9c04-d2145188b340\",\n          \"c971e358-75d4-d88e-f3a4-87b7c243b034\"\n        ],\n        \"loans\": [\n          {\n            \"amount\": 3821,\n            \"loan_id\": \"757d45b7-08e9-50ba-0ddf-c5f153d86e20\",\n            \"payment_type\": \"REVENUE_SHARE\",\n            \"deposit_id\": null\n          },\n          {\n            \"amount\": 9154,\n            \"loan_id\": \"564f80e4-5640-a051-60b5-c8f3bbd4242a\",\n            \"payment_type\": \"EXTRA\",\n            \"deposit_id\": null\n          }\n        ],\n        \"payment_intents\": [\n          {\n            \"amount\": 533,\n            \"payment_intent_id\": \"59eb2662-2fb9-7cbb-ff30-66ab1b9fbca5\",\n            \"payment_type\": \"LENDER_REPURCHASE\"\n          },\n          {\n            \"amount\": 192,\n            \"payment_intent_id\": \"9aeb0e0a-9372-39c1-c9e6-1de631db4d7e\",\n            \"payment_type\": \"DEPOSIT_WITHDRAWAL\"\n          }\n        ],\n        \"subscriptions\": [\n          {\n            \"amount_cents\": 1227,\n            \"subscription_id\": \"ef6be2f6-30cb-ecf6-fca5-dd846367a2e4\"\n          },\n          {\n            \"amount_cents\": 6202,\n            \"subscription_id\": \"632b15e1-01a0-fae5-d09c-41dd4a2ec614\"\n          }\n        ]\n      },\n      \"scheduled_at\": null,\n      \"to_account_details\": null,\n      \"to_references\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c152da53-be0e-47b8-b057-bfceaab3dc8b",
+          "name": "/installment-plans",
+          "request": {
+            "name": "/installment-plans",
+            "description": {
+              "content": "\n## Create an installment plan\n\nWhen you send this API request, our system will create an installment-plan that replaces any scheduled\npayments you may have on the loans involved in this installment-plan. Once fully processed, the\ninstallment-plan reaches the SCHEDULED status with its payment intents in PROPOSED status, ready to\nbe executed.\n\n**Key Parameters**:\nAs the loan request is a complex operation, it has many parameters. The most important ones are:\n- payment method (SCT or Direct debit)\n- amount (in cents)\n- debited account information in case of direct debit\n- installments\n- loans and their amounts\n- installment date\n- payment reference\n\n### Behavior\nThe endpoint returns 201 immediately with the installment-plan in DRAFT status. Cancelation of the\nprevious scheduled plans on the same loans, creation of payment intents, and activation of the new\nplan happen asynchronously in a background task — poll the resource to observe the transition to\nSCHEDULED. Retrying with the same salt_id returns the existing plan (dedup); when salt_id is\nomitted, it is derived from the sorted loan_ids.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "installment-plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installments\": [\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"reference\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"reference\": null\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"from_account\": null,\n  \"salt_id\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4f3050fe-156d-4253-a6af-9d177e70f47a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "installment-plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installments\": [\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"reference\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"date\": \"<dateTime>\",\n      \"loans\": [\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        },\n        {\n          \"amount\": \"<integer>\",\n          \"loan_id\": \"<uuid>\"\n        }\n      ],\n      \"reference\": null\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"from_account\": null,\n  \"salt_id\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"id\": \"2d519302-fc5f-eec9-1f0d-c961ef1fdac1\",\n  \"installments\": [\n    {\n      \"amount\": 500,\n      \"date\": \"1982-03-08T07:47:18.061Z\",\n      \"id\": \"599b6a55-7446-f7a0-2cc8-98555a511603\",\n      \"status\": \"WAITING\"\n    },\n    {\n      \"amount\": 4591,\n      \"date\": \"2018-03-28T23:03:09.085Z\",\n      \"id\": \"ff39146f-02ab-297f-46ee-3394cb0fa606\",\n      \"status\": \"SCHEDULED\"\n    }\n  ],\n  \"loan_ids\": [\n    \"c19f39f6-08b6-e2eb-42a3-5c6ecf902cab\",\n    \"66e0f643-daf6-6991-ab3c-15e28f8b0c8b\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b4e1b1df-b199-4daf-a784-cfd75b1c708c",
+    "name": "Defacto Accounting Payment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

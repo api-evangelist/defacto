@@ -1,0 +1,269 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Payment API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/installments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/installments",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "installment_plan_ids",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "loan_ids",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "paid_at_gt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "paid_at_lt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to_pay_at_gt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to_pay_at_lt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_at_gt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_at_lt",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List installements. Filter by loan or various dates to find what you're looking for."
+        },
+        {
+          "info": {
+            "name": "/payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/payments",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "deposit_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments linked to these deposit IDs."
+              },
+              {
+                "name": "from_account_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source account ID."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Return payments created on or after this date."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more payment UUIDs."
+              },
+              {
+                "name": "include_bills",
+                "value": "",
+                "type": "query",
+                "description": "Include billing payments (default: true)."
+              },
+              {
+                "name": "include_loans",
+                "value": "",
+                "type": "query",
+                "description": "Include loan disbursement payments (default: true)."
+              },
+              {
+                "name": "include_payment_intents",
+                "value": "",
+                "type": "query",
+                "description": "Include payment intent payments (default: true)."
+              },
+              {
+                "name": "is_reconciled",
+                "value": "",
+                "type": "query",
+                "description": "Filter by reconciliation status."
+              },
+              {
+                "name": "loan_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments linked to these loan IDs."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "paid_after",
+                "value": "",
+                "type": "query",
+                "description": "Return payments where paid_at is after this date."
+              },
+              {
+                "name": "paid_before",
+                "value": "",
+                "type": "query",
+                "description": "Return payments where paid_at is before this date."
+              },
+              {
+                "name": "payment_intent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments linked to these payment intent IDs."
+              },
+              {
+                "name": "payment_method",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment method (e.g. DIRECT_DEBIT, SCT)."
+              },
+              {
+                "name": "payment_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment type (e.g. LOAN_PAYMENT, REPAYMENT)."
+              },
+              {
+                "name": "references",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment references."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort field and direction (format: column:ASC or column:DESC)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment status."
+              },
+              {
+                "name": "to_account_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by destination account ID."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Return payments created on or before this date."
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Return payments updated after this date."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get payments related to loans"
+        },
+        {
+          "info": {
+            "name": "/installment-plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/installment-plans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\n## Create an installment plan\n\nWhen you send this API request, our system will create an installment-plan that replaces any scheduled\npayments you may have on the loans involved in this installment-plan. Once fully processed, the\ninstallment-plan reaches the SCHEDULED status with its payment intents in PROPOSED status, ready to\nbe executed.\n\n**Key Parameters**:\nAs the loan request is a complex operation, it has many parameters. The most important ones are:\n- payment method (SCT or Direct debit)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

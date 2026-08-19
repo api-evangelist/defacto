@@ -1,0 +1,1308 @@
+{
+  "item": [
+    {
+      "id": "f795db86-f631-4513-9e4c-dd9fba9d8dd7",
+      "name": "Loan",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b747d24c-612e-40de-8ca4-99e82c058455",
+          "name": "/loan/{loan_id}/events",
+          "request": {
+            "name": "/loan/{loan_id}/events",
+            "description": {
+              "content": "Get the activity eligibility_request of a loan.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                ":loan_id",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "loan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3338ee25-9ae0-41ad-8025-94d1e5676ffd",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    ":loan_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "loan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 5696,\n  \"page_size\": 6517,\n  \"data\": [\n    {\n      \"entity_type\": \"business\",\n      \"status\": \"PENDING_VALIDATION\",\n      \"payload\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      \"timestamp\": \"2005-11-20T17:36:31.301Z\",\n      \"transition_name\": null\n    },\n    {\n      \"entity_type\": \"mandate\",\n      \"status\": \"DELETED\",\n      \"payload\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"timestamp\": \"1968-03-20T12:09:28.619Z\",\n      \"transition_name\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2058790-b397-4d99-a0ae-8b40e8ab7619",
+          "name": "/loan/{loan_id}",
+          "request": {
+            "name": "/loan/{loan_id}",
+            "description": {
+              "content": "Retrieve a loan by its ID. Returns the full loan details including status, amounts, repayment schedule, borrower information, and related documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                ":loan_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "loan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "32de9007-1f1e-4730-b4b7-b8045f4d473e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    ":loan_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "loan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"amount\": 4,\n  \"beneficiary\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"borrower\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"currency\": \"GBP\",\n  \"deposits\": {\n    \"key_0\": {\n      \"amount\": 7861,\n      \"paid_amount\": 8171,\n      \"deposit_id\": null\n    }\n  },\n  \"documents\": [\n    {\n      \"document_type\": \"time_sheet\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    },\n    {\n      \"document_type\": \"public_procurement_single_copy\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    }\n  ],\n  \"earliest_to_repay_at\": \"2002-12-10T21:32:44.332Z\",\n  \"id\": \"b05044d5-ccbc-d977-da13-27e1fe985acc\",\n  \"invoice_ids\": [\n    \"f93f34c8-7d15-9ba7-4530-e04b1d9de0ab\",\n    \"6975f2b3-53c7-bb9b-3c68-8154d861204f\"\n  ],\n  \"loan_from\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"internal_id\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"name\"\n  },\n  \"loan_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"loan_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_type\": \"CREDIT_CARD_FINANCING\",\n  \"paid_interests_amount\": 3537,\n  \"repaid_amount\": 3760,\n  \"repaid_nominal_amount\": 9508,\n  \"repayment_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repayment_method\": \"DIRECT_DEBIT\",\n  \"repayment_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"undefined\"\n  },\n  \"repayment_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"SCHEDULED\",\n  \"submitted_at\": \"1968-07-22T08:16:24.758Z\",\n  \"to_pay_at\": \"1959-07-12T21:51:36.163Z\",\n  \"to_repay_at\": \"1961-03-10T13:22:37.748Z\",\n  \"borrower_financial_product_id\": null,\n  \"closed_at\": null,\n  \"contract_url\": null,\n  \"contractual_repayment_date\": null,\n  \"denial_reason\": null,\n  \"fees_estimated\": null,\n  \"fees_ongoing\": null,\n  \"guarantor\": null,\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"rVg3hKU@XzCevsejkSokkEFjHtSgQghgc.tor\",\n    \"THAe1@nuGLDHqtgsGUfkIrG.ag\"\n  ],\n  \"paid_at\": null,\n  \"repaid_nominal_at\": null,\n  \"repayment_from\": null,\n  \"transfer_contract_url\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7ed095d-6ecf-4a39-ae2d-9015accb04a3",
+          "name": "/loan/{loan_id}",
+          "request": {
+            "name": "/loan/{loan_id}",
+            "description": {
+              "content": "\nUpdates a loan.\n- When the loan is SUBMITTED or TO_VALIDATE, all the below fields can be updated.\n- When the loan is VALIDATED or SCHEDULED, the references and to_repay_at fields can be updated.\n- When the loan is TO_REPAY, only the to_repay_at change be changed. The earliest acceptable date being loan.earliest_to_repay_at.\n\nThis operation is not available when the loan is in another status.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                ":loan_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "loan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": null,\n  \"lender_id\": null,\n  \"loan_to\": null,\n  \"loan_to_references\": null,\n  \"metadata\": null,\n  \"repayment_method\": null,\n  \"repayment_to_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"to_pay_at\": null,\n  \"to_repay_at\": null,\n  \"transfer_contract_url\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36c857d9-78ce-4486-8458-3ddeb4a85801",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    ":loan_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "loan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": null,\n  \"lender_id\": null,\n  \"loan_to\": null,\n  \"loan_to_references\": null,\n  \"metadata\": null,\n  \"repayment_method\": null,\n  \"repayment_to_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"to_pay_at\": null,\n  \"to_repay_at\": null,\n  \"transfer_contract_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"amount\": 9760,\n  \"beneficiary\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"borrower\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"currency\": \"GBP\",\n  \"deposits\": {\n    \"key_0\": {\n      \"amount\": 4436,\n      \"paid_amount\": 9065,\n      \"deposit_id\": null\n    },\n    \"key_1\": {\n      \"amount\": 6175,\n      \"paid_amount\": 7766,\n      \"deposit_id\": null\n    },\n    \"key_2\": {\n      \"amount\": 7823,\n      \"paid_amount\": 5009,\n      \"deposit_id\": null\n    }\n  },\n  \"documents\": [\n    {\n      \"document_type\": \"sale_purchase_agreement\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    },\n    {\n      \"document_type\": \"public_procurement_single_copy\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    }\n  ],\n  \"earliest_to_repay_at\": \"2001-11-04T12:08:10.732Z\",\n  \"id\": \"3bd6ca26-61a9-7388-b246-5b806ef3b863\",\n  \"invoice_ids\": [\n    \"fbfa744a-4ee3-a796-80c7-5b6eef863ad5\",\n    \"67f4fbcd-f973-81b5-70ba-af224d0737e1\"\n  ],\n  \"loan_from\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"routing_number\"\n  },\n  \"loan_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"account_number\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"undefined\"\n  },\n  \"loan_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_type\": \"INVOICE_BASED_FINANCING\",\n  \"paid_interests_amount\": 3809,\n  \"repaid_amount\": 6307,\n  \"repaid_nominal_amount\": 1283,\n  \"repayment_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repayment_method\": \"SCT\",\n  \"repayment_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"undefined\"\n  },\n  \"repayment_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"VALIDATED\",\n  \"submitted_at\": \"1979-08-27T10:14:55.061Z\",\n  \"to_pay_at\": \"1966-01-23T08:44:11.132Z\",\n  \"to_repay_at\": \"1963-09-02T23:05:23.813Z\",\n  \"borrower_financial_product_id\": null,\n  \"closed_at\": null,\n  \"contract_url\": null,\n  \"contractual_repayment_date\": null,\n  \"denial_reason\": null,\n  \"fees_estimated\": null,\n  \"fees_ongoing\": null,\n  \"guarantor\": null,\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"VE-oi26DFZiwvc@LMDIgcedSuJRmsLLd.fs\",\n    \"O546@pJqxTRTofquF.axzw\"\n  ],\n  \"paid_at\": null,\n  \"repaid_nominal_at\": null,\n  \"repayment_from\": null,\n  \"transfer_contract_url\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5381f82-f0b2-47e9-ae2c-77bcbc2c6ec4",
+          "name": "/loans",
+          "request": {
+            "name": "/loans",
+            "description": {
+              "content": "List loans with pagination. Returns a paginated list of loans filterable by borrower, status, dates, and loan type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "borrower",
+                  "value": "<string>",
+                  "description": "Search by borrower company number (e.g. SIREN or NIF)"
+                },
+                {
+                  "disabled": false,
+                  "key": "borrower",
+                  "value": "<string>",
+                  "description": "Search by borrower company number (e.g. SIREN or NIF)"
+                },
+                {
+                  "disabled": false,
+                  "key": "contractual_repayment_date_from",
+                  "value": "",
+                  "description": "Returns loans where contractual_repayment_date field is greater or equal to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "contractual_repayment_date_to",
+                  "value": "",
+                  "description": "Returns loans where contractual_repayment_date field is lower to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "guarantee_called",
+                  "value": "",
+                  "description": "Returns loans for which the guarantee was called"
+                },
+                {
+                  "disabled": false,
+                  "key": "guarantor",
+                  "value": "",
+                  "description": "Entity legally responsible to payback the loan"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter by one or more loan UUIDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter by one or more loan UUIDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "postponed",
+                  "value": "",
+                  "description": "Returns loans that have been postponed"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "",
+                  "description": "Search for loans based on one or more of the following fields: loan ID, invoice number, amount, estimated fees, status, or counterparty name."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "",
+                  "description": "Specify the sorting field and order. Default sorting: created_at DESC. Possible values: ['created_at:asc', 'created_at:desc', 'to_repay_at:asc', 'to_repay_at:desc', 'to_pay_at:asc', 'to_pay_at:desc']"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Loan statuses. Possible values: ['SUBMITTED', 'PENDING_VALIDATION', 'TO_VALIDATE', 'DECLINED', 'VALIDATED', 'CANCELED', 'SCHEDULED', 'INITIATED', 'TO_REPAY', 'TO_REPAY_FEES', 'CLOSED', 'ISSUE_DETECTED', 'DELETED']"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Loan statuses. Possible values: ['SUBMITTED', 'PENDING_VALIDATION', 'TO_VALIDATE', 'DECLINED', 'VALIDATED', 'CANCELED', 'SCHEDULED', 'INITIATED', 'TO_REPAY', 'TO_REPAY_FEES', 'CLOSED', 'ISSUE_DETECTED', 'DELETED']"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_pay_at_from",
+                  "value": "",
+                  "description": "Returns loans where pay_at field is greater or equal to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_pay_at_to",
+                  "value": "",
+                  "description": "Returns loans where pay_at field is lower to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_repay_at_from",
+                  "value": "",
+                  "description": "Returns loans where repay_at field is greater or equal to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_repay_at_to",
+                  "value": "",
+                  "description": "Returns loans where repay_at field is lower to this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_repay_at_within_days",
+                  "value": "",
+                  "description": "Shorthand alias for to_repay_at_from=now() and to_repay_at_to=now().plus(x, 'days'). Mutually exclusive with to_repay_at_from & to_repay_at_to."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "34d8107e-2656-4403-ba4f-5c2c872008a9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "borrower",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "borrower",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contractual_repayment_date_from",
+                      "value": ""
+                    },
+                    {
+                      "key": "contractual_repayment_date_to",
+                      "value": ""
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "guarantee_called",
+                      "value": ""
+                    },
+                    {
+                      "key": "guarantor",
+                      "value": ""
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "loan_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "loan_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "postponed",
+                      "value": ""
+                    },
+                    {
+                      "key": "query",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": ""
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to_pay_at_from",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_pay_at_to",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_repay_at_from",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_repay_at_to",
+                      "value": ""
+                    },
+                    {
+                      "key": "to_repay_at_within_days",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 3928,\n  \"page_size\": 3183,\n  \"data\": [\n    {\n      \"amount\": 8098,\n      \"beneficiary\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"borrower\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"currency\": \"EUR\",\n      \"deposits\": {\n        \"key_0\": {\n          \"amount\": 8033,\n          \"paid_amount\": 7392,\n          \"deposit_id\": null\n        },\n        \"key_1\": {\n          \"amount\": 4274,\n          \"paid_amount\": 4838,\n          \"deposit_id\": null\n        },\n        \"key_2\": {\n          \"amount\": 4636,\n          \"paid_amount\": 4967,\n          \"deposit_id\": null\n        }\n      },\n      \"earliest_to_repay_at\": \"2024-06-30T15:18:38.223Z\",\n      \"id\": \"ed3a334e-2e75-581b-e646-18ede0c71621\",\n      \"invoice_ids\": [\n        \"8da51236-2c20-aa67-28e3-65f5816fbefb\",\n        \"8dd76d4c-fdc6-5f4c-e68d-424271192b3f\"\n      ],\n      \"loan_from\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"internal_id\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"loan_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"loan_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_type\": \"FUNDING_OBLIGATION_CONSOLIDATION\",\n      \"paid_interests_amount\": 2273,\n      \"repaid_amount\": 7733,\n      \"repaid_nominal_amount\": 9393,\n      \"repayment_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"repayment_method\": \"DIRECT_DEBIT\",\n      \"repayment_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"account_number\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"repayment_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"INITIATED\",\n      \"submitted_at\": \"1955-03-10T06:29:43.807Z\",\n      \"to_pay_at\": \"1979-12-26T22:50:34.302Z\",\n      \"to_repay_at\": \"2007-01-19T14:24:42.440Z\",\n      \"borrower_financial_product_id\": null,\n      \"closed_at\": null,\n      \"contract_url\": null,\n      \"contractual_repayment_date\": null,\n      \"denial_reason\": null,\n      \"fees_estimated\": null,\n      \"fees_ongoing\": null,\n      \"guarantor\": null,\n      \"metadata\": null,\n      \"notification_emails\": [\n        \"fEZP65Hhdhb3G@uMMGfuaf.rojc\",\n        \"WBYaVQxPxR2@RZKXEohtcZYmHmr.stcw\"\n      ],\n      \"paid_at\": null,\n      \"repaid_nominal_at\": null,\n      \"repayment_from\": null,\n      \"transfer_contract_url\": null\n    },\n    {\n      \"amount\": 8535,\n      \"beneficiary\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"borrower\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"currency\": \"GBP\",\n      \"deposits\": {\n        \"key_0\": {\n          \"amount\": 2012,\n          \"paid_amount\": 3049,\n          \"deposit_id\": null\n        },\n        \"key_1\": {\n          \"amount\": 9481,\n          \"paid_amount\": 2208,\n          \"deposit_id\": null\n        },\n        \"key_2\": {\n          \"amount\": 4386,\n          \"paid_amount\": 8456,\n          \"deposit_id\": null\n        }\n      },\n      \"earliest_to_repay_at\": \"1975-01-19T11:09:42.868Z\",\n      \"id\": \"26cae41f-0250-a997-539f-cf287cba4d85\",\n      \"invoice_ids\": [\n        \"1b389e65-0d2e-fefd-0440-7eb792fdd932\",\n        \"555c19b6-a473-729d-02b3-7712490c559e\"\n      ],\n      \"loan_from\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"bic\"\n      },\n      \"loan_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"account_number\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"name\"\n      },\n      \"loan_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_type\": \"FUNDING_OBLIGATION_CONSOLIDATION\",\n      \"paid_interests_amount\": 3085,\n      \"repaid_amount\": 6587,\n      \"repaid_nominal_amount\": 1566,\n      \"repayment_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"repayment_method\": \"P2P\",\n      \"repayment_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"internal_id\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"repayment_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"TO_REPAY\",\n      \"submitted_at\": \"1992-11-08T16:05:32.626Z\",\n      \"to_pay_at\": \"2008-06-14T23:17:58.694Z\",\n      \"to_repay_at\": \"1977-04-25T07:09:10.208Z\",\n      \"borrower_financial_product_id\": null,\n      \"closed_at\": null,\n      \"contract_url\": null,\n      \"contractual_repayment_date\": null,\n      \"denial_reason\": null,\n      \"fees_estimated\": null,\n      \"fees_ongoing\": null,\n      \"guarantor\": null,\n      \"metadata\": null,\n      \"notification_emails\": [\n        \"Z6w@NnWh.vtb\",\n        \"KnlunJlVjY@YAeNhhJDoYqNnoiHusBOCP.dwz\"\n      ],\n      \"paid_at\": null,\n      \"repaid_nominal_at\": null,\n      \"repayment_from\": null,\n      \"transfer_contract_url\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f44148cc-15d2-4eb8-9867-65ba44f52d4e",
+          "name": "/loans",
+          "request": {
+            "name": "/loans",
+            "description": {
+              "content": "\n## Request a new loan.\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\n**Key Parameters**:\nAs the loan request is a complex operation, it has many parameters. The most important ones are:\n- borrower\n- amount\n- to_pay_at\n- to_repay_at\n- salt_id: ⚠️ In order to avoid accidental duplication in requested loans we recommend you to set the <code>salt_id</code> parameter to a unique value for each request.\n\n**Timeout after**: 30 seconds (status code will be 504 in such a case)\n\nFor loan related to invoices, at the moment, we don't support multiple-invoices financing.\n- You can either request a loan for an existing invoice, in which case you should set <code>invoice_ids</code>.\n- Or you can create the invoice and request a loan with a single call to this API.\n- If you pass an invoice in <code>invoices</code>, the base64-encoded value of the PDF of the invoice is required under the <code>document</code> property. You can for example use <a href='https://base64.guru/converter/encode/pdf'>base64guru</a>.\n\n\n### Behavior\nWhen you send this API request, our system will:\n1. Create a loan (you will get its id in the response)\n2. Start evaluating your loan request. Here you should choose between 2 behaviors:\na. (default) Getting the decision asynchronously. The status of the returned loan will always be PENDING_VALIDATION. Webhooks will tell you if it goes approved or declined. In can happen from a few seconds after the request up to a few days after it.\nb. Getting the decision synchronously. This is recommended if this endpoint is called directly from a frontend. To activate this option, set <code>\"wait_for_validation\": true</code>. In such a case, the returned loan status will be:\ni. if the loan is automatically accepted by Defacto -> the status of the loan will be TO_VALIDATE if you set <code>\"auto_validate\": false</code>, or one of: VALIDATED, SCHEDULED, INITIATED, TO_REPAY. Fore more information on this, see section \"Why the status of the loan in the response vary?\" below.\nii. if the loan is automatically declined by Defacto -> the status of the loan will be DECLINED and the <code>denial_reason</code> will be set.\niii. if the loan validation takes longer than 20s (max response time is 2 business days) -> the status of the loan will be PENDING_VALIDATION. It is therefore very important to think about how to communicate with the end-user. While its not an issue for validated loans, it can get frustrating for declined loans. Users must be alerted of loans that gets declined few hours after their request.\n3. If the loan is accepted by Defacto, it will then move forward and its status will be updated regularly. Subscribe to webhooks to get live notifications of this.\n\n**Why the status of the loan in the response vary?**\nThe status vary because our system is asynchronous and the steps moving the loan forward may be executed immediately or not depending on the current load on our system.\n\n**What should I do if the status of the loan is __TO_VALIDATE__?**\nTO_VALIDATE means that Defacto accepted the loan as is.\nThe next step is to get the user consent for this loan offer.\nWhen obtained, call [<code>POST /loan/{loan_id}/validate</code>](https://developers.getdefacto.com/reference/post_loan-loan-id-validate).\n\nMost of the time the user does not want to do this manual consent. To avoid requiring this, you can set <code>\"auto_validate\": true</code> in your request. When setting this option, please ensure that its very explicit for the user that the loan may be automatically accepted and paid so that they won't be able to cancel it. Users can cancel the loan only before Defacto sends the money to the beneficiary, which happens 24 to 48 hours before the <code>\"to_pay_at\"</code> date.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<integer>\",\n  \"loan_to\": {\n    \"account_number\": \"<string>\",\n    \"account_holder\": null,\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": null,\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"to_pay_at\": \"<dateTime>\",\n  \"to_repay_at\": \"<dateTime>\",\n  \"attachments\": [\n    {\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"credit_card_expenses\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_ownership_act\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null,\n      \"time_sheet\": null\n    },\n    {\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"credit_card_expenses\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_ownership_act\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null,\n      \"time_sheet\": null\n    }\n  ],\n  \"auto_validate\": false,\n  \"borrower\": null,\n  \"borrower_financial_product_id\": null,\n  \"currency\": \"EUR\",\n  \"documents\": [\n    {\n      \"document_binary_base64\": \"<string>\",\n      \"document_name\": \"<string>\",\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null\n    },\n    {\n      \"document_binary_base64\": \"<string>\",\n      \"document_name\": \"<string>\",\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null\n    }\n  ],\n  \"installment_plan_type\": \"IN_FINE\",\n  \"installments\": null,\n  \"invoice_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"invoices\": [\n    {\n      \"buyer\": {\n        \"address\": null,\n        \"contact\": null,\n        \"identifier\": null,\n        \"identifier_type\": null,\n        \"name\": null,\n        \"vat_number\": null\n      },\n      \"document\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"seller\": {\n        \"address\": null,\n        \"contact\": null,\n        \"identifier\": null,\n        \"identifier_type\": null,\n        \"name\": null,\n        \"vat_number\": null\n      },\n      \"total_amount\": \"<integer>\",\n      \"address\": null,\n      \"currency\": \"EUR\",\n      \"invoice_type\": \"USER\",\n      \"metadata\": null,\n      \"net_amount\": null,\n      \"tax_amount\": null,\n      \"to_account\": null,\n      \"to_pay_amount\": null\n    }\n  ],\n  \"loan_to_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"loan_type\": \"INVOICE_BASED_FINANCING\",\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"repayment_from_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"salt_id\": null,\n  \"wait_for_validation\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "523279a9-0669-4609-9813-ee56cf629a43",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<integer>\",\n  \"loan_to\": {\n    \"account_number\": \"<string>\",\n    \"account_holder\": null,\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": null,\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"to_pay_at\": \"<dateTime>\",\n  \"to_repay_at\": \"<dateTime>\",\n  \"attachments\": [\n    {\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"credit_card_expenses\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_ownership_act\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null,\n      \"time_sheet\": null\n    },\n    {\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"credit_card_expenses\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_ownership_act\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null,\n      \"time_sheet\": null\n    }\n  ],\n  \"auto_validate\": false,\n  \"borrower\": null,\n  \"borrower_financial_product_id\": null,\n  \"currency\": \"EUR\",\n  \"documents\": [\n    {\n      \"document_binary_base64\": \"<string>\",\n      \"document_name\": \"<string>\",\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null\n    },\n    {\n      \"document_binary_base64\": \"<string>\",\n      \"document_name\": \"<string>\",\n      \"document_type\": \"<string>\",\n      \"additional_document_data\": null,\n      \"description\": null,\n      \"invoice\": null,\n      \"pro_forma\": null,\n      \"public_procurement_single_copy\": null,\n      \"sale_purchase_agreement\": null\n    }\n  ],\n  \"installment_plan_type\": \"IN_FINE\",\n  \"installments\": null,\n  \"invoice_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"invoices\": [\n    {\n      \"buyer\": {\n        \"address\": null,\n        \"contact\": null,\n        \"identifier\": null,\n        \"identifier_type\": null,\n        \"name\": null,\n        \"vat_number\": null\n      },\n      \"document\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"seller\": {\n        \"address\": null,\n        \"contact\": null,\n        \"identifier\": null,\n        \"identifier_type\": null,\n        \"name\": null,\n        \"vat_number\": null\n      },\n      \"total_amount\": \"<integer>\",\n      \"address\": null,\n      \"currency\": \"EUR\",\n      \"invoice_type\": \"USER\",\n      \"metadata\": null,\n      \"net_amount\": null,\n      \"tax_amount\": null,\n      \"to_account\": null,\n      \"to_pay_amount\": null\n    }\n  ],\n  \"loan_to_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"loan_type\": \"INVOICE_BASED_FINANCING\",\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"repayment_from_references\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"salt_id\": null,\n  \"wait_for_validation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"amount\": 401,\n  \"beneficiary\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"borrower\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"currency\": \"EUR\",\n  \"deposits\": {\n    \"key_0\": {\n      \"amount\": 5595,\n      \"paid_amount\": 7758,\n      \"deposit_id\": null\n    },\n    \"key_1\": {\n      \"amount\": 9539,\n      \"paid_amount\": 6141,\n      \"deposit_id\": null\n    }\n  },\n  \"documents\": [\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    },\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    }\n  ],\n  \"earliest_to_repay_at\": \"1949-03-26T16:02:53.896Z\",\n  \"id\": \"5cdc4e65-e043-80d9-69cd-269236845d3b\",\n  \"invoice_ids\": [\n    \"56b287b9-86ae-34a0-d137-9439528d4933\",\n    \"f13c77e6-bac1-a931-5d3e-d113c08fb02c\"\n  ],\n  \"loan_from\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"name\"\n  },\n  \"loan_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"loan_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_type\": \"CREDIT_CARD_FINANCING\",\n  \"paid_interests_amount\": 981,\n  \"repaid_amount\": 5376,\n  \"repaid_nominal_amount\": 9940,\n  \"repayment_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repayment_method\": \"SCT\",\n  \"repayment_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"routing_number\"\n  },\n  \"repayment_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"DECLINED\",\n  \"submitted_at\": \"2021-12-30T03:08:25.653Z\",\n  \"to_pay_at\": \"1971-04-15T18:02:45.971Z\",\n  \"to_repay_at\": \"1988-08-23T19:05:39.210Z\",\n  \"borrower_financial_product_id\": null,\n  \"closed_at\": null,\n  \"contract_url\": null,\n  \"contractual_repayment_date\": null,\n  \"denial_reason\": null,\n  \"fees_estimated\": null,\n  \"fees_ongoing\": null,\n  \"guarantor\": null,\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"klUm4@hDFhgsrpxymLoUUVA.fh\",\n    \"t5x7FXGioaI6@kwvPZorIzGWKInWUDCLkWtAJAigCXr.pl\"\n  ],\n  \"paid_at\": null,\n  \"repaid_nominal_at\": null,\n  \"repayment_from\": null,\n  \"transfer_contract_url\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcd02fe1-9eb2-4c48-8e68-04c9936df8f0",
+          "name": "/loan/documents/{document_type}",
+          "request": {
+            "name": "/loan/documents/{document_type}",
+            "description": {
+              "content": "Generates a link to an archive of loan documents",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                "documents",
+                ":document_type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "document_type",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loan_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"to_pay_at_from\": null,\n  \"to_pay_at_to\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0183a6b-09ad-4c6a-bfd3-1bc8e6de78d3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    "documents",
+                    ":document_type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "document_type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loan_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"to_pay_at_from\": null,\n  \"to_pay_at_to\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"link\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "529f48b2-4452-4714-858e-fd5968b68769",
+          "name": "/loan/{loan_id}/cancel",
+          "request": {
+            "name": "/loan/{loan_id}/cancel",
+            "description": {
+              "content": "Use this function to cancel a loan proposal. Available for TO_VALIDATE,VALIDATED and SCHEDULED loans.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                ":loan_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "loan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "18f2e6ba-26e7-4c55-87a3-a1ad8eb98234",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    ":loan_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "loan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"amount\": 401,\n  \"beneficiary\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"borrower\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"currency\": \"EUR\",\n  \"deposits\": {\n    \"key_0\": {\n      \"amount\": 5595,\n      \"paid_amount\": 7758,\n      \"deposit_id\": null\n    },\n    \"key_1\": {\n      \"amount\": 9539,\n      \"paid_amount\": 6141,\n      \"deposit_id\": null\n    }\n  },\n  \"documents\": [\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    },\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    }\n  ],\n  \"earliest_to_repay_at\": \"1949-03-26T16:02:53.896Z\",\n  \"id\": \"5cdc4e65-e043-80d9-69cd-269236845d3b\",\n  \"invoice_ids\": [\n    \"56b287b9-86ae-34a0-d137-9439528d4933\",\n    \"f13c77e6-bac1-a931-5d3e-d113c08fb02c\"\n  ],\n  \"loan_from\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"name\"\n  },\n  \"loan_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"loan_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_type\": \"CREDIT_CARD_FINANCING\",\n  \"paid_interests_amount\": 981,\n  \"repaid_amount\": 5376,\n  \"repaid_nominal_amount\": 9940,\n  \"repayment_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repayment_method\": \"SCT\",\n  \"repayment_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"routing_number\"\n  },\n  \"repayment_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"DECLINED\",\n  \"submitted_at\": \"2021-12-30T03:08:25.653Z\",\n  \"to_pay_at\": \"1971-04-15T18:02:45.971Z\",\n  \"to_repay_at\": \"1988-08-23T19:05:39.210Z\",\n  \"borrower_financial_product_id\": null,\n  \"closed_at\": null,\n  \"contract_url\": null,\n  \"contractual_repayment_date\": null,\n  \"denial_reason\": null,\n  \"fees_estimated\": null,\n  \"fees_ongoing\": null,\n  \"guarantor\": null,\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"klUm4@hDFhgsrpxymLoUUVA.fh\",\n    \"t5x7FXGioaI6@kwvPZorIzGWKInWUDCLkWtAJAigCXr.pl\"\n  ],\n  \"paid_at\": null,\n  \"repaid_nominal_at\": null,\n  \"repayment_from\": null,\n  \"transfer_contract_url\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "13478458-3844-4caa-ac1b-fe4676e6721d",
+          "name": "/loan/{loan_id}/validate",
+          "request": {
+            "name": "/loan/{loan_id}/validate",
+            "description": {
+              "content": "Use this function to accept a loan proposal. Available for TO_VALIDATE loans only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                ":loan_id",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "loan_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4d428b04-321d-4f6b-9cdd-fced79f44919",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    ":loan_id",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "loan_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"amount\": 401,\n  \"beneficiary\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"borrower\": {\n    \"identifier\": \"string\",\n    \"activity_description\": null,\n    \"activity_type\": null,\n    \"address\": null,\n    \"capital\": null,\n    \"creation_date\": null,\n    \"has_ongoing_insolvency_procedure\": null,\n    \"id\": null,\n    \"identifier_type\": null,\n    \"is_active\": null,\n    \"is_diffusible\": null,\n    \"last_insolvency_procedure_closing_date\": null,\n    \"last_insolvency_procedure_open_date\": null,\n    \"last_insolvency_procedure_type\": null,\n    \"legal_form\": null,\n    \"nace_code\": null,\n    \"name\": null,\n    \"registration_body\": null,\n    \"registration_date\": null,\n    \"registry_radiation_date\": null,\n    \"share_capital\": null,\n    \"termination_date\": null,\n    \"vat_number\": null\n  },\n  \"currency\": \"EUR\",\n  \"deposits\": {\n    \"key_0\": {\n      \"amount\": 5595,\n      \"paid_amount\": 7758,\n      \"deposit_id\": null\n    },\n    \"key_1\": {\n      \"amount\": 9539,\n      \"paid_amount\": 6141,\n      \"deposit_id\": null\n    }\n  },\n  \"documents\": [\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    },\n    {\n      \"document_type\": \"pro_forma\",\n      \"document_url\": \"string\",\n      \"about_business\": null,\n      \"document_name\": null,\n      \"uploaded_at\": null,\n      \"user_input\": null\n    }\n  ],\n  \"earliest_to_repay_at\": \"1949-03-26T16:02:53.896Z\",\n  \"id\": \"5cdc4e65-e043-80d9-69cd-269236845d3b\",\n  \"invoice_ids\": [\n    \"56b287b9-86ae-34a0-d137-9439528d4933\",\n    \"f13c77e6-bac1-a931-5d3e-d113c08fb02c\"\n  ],\n  \"loan_from\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"name\"\n  },\n  \"loan_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"bic\"\n  },\n  \"loan_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"loan_type\": \"CREDIT_CARD_FINANCING\",\n  \"paid_interests_amount\": 981,\n  \"repaid_amount\": 5376,\n  \"repaid_nominal_amount\": 9940,\n  \"repayment_from_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repayment_method\": \"SCT\",\n  \"repayment_to\": {\n    \"account_number\": \"string\",\n    \"account_number_type\": \"iban\",\n    \"bank_identifier\": \"string\",\n    \"bank_identifier_type\": \"routing_number\"\n  },\n  \"repayment_to_references\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"DECLINED\",\n  \"submitted_at\": \"2021-12-30T03:08:25.653Z\",\n  \"to_pay_at\": \"1971-04-15T18:02:45.971Z\",\n  \"to_repay_at\": \"1988-08-23T19:05:39.210Z\",\n  \"borrower_financial_product_id\": null,\n  \"closed_at\": null,\n  \"contract_url\": null,\n  \"contractual_repayment_date\": null,\n  \"denial_reason\": null,\n  \"fees_estimated\": null,\n  \"fees_ongoing\": null,\n  \"guarantor\": null,\n  \"metadata\": null,\n  \"notification_emails\": [\n    \"klUm4@hDFhgsrpxymLoUUVA.fh\",\n    \"t5x7FXGioaI6@kwvPZorIzGWKInWUDCLkWtAJAigCXr.pl\"\n  ],\n  \"paid_at\": null,\n  \"repaid_nominal_at\": null,\n  \"repayment_from\": null,\n  \"transfer_contract_url\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44fd5075-8572-4469-b2d2-8eeb30316fe9",
+          "name": "/loan/repayment-terms",
+          "request": {
+            "name": "/loan/repayment-terms",
+            "description": {
+              "content": "\n<div>\n<h3>Change repayment terms of some loans</h3>\n<p>Changing the payment method and / or date is only possible on loans that are TO_REPAY or\n TO_REPAY_FEES.\n</p>\n<p>Postponing loan repayment date is only possible once. </p>\n<p>If loan is supposed to be repaid using a sepa direct-debit, you may not be able to change the\n debited account number less than 3 days before the scheduled payment date because payment has already\n been instructed. In such case you'll get a 400 error telling you that the payment cannot be\n cancelled anymore.\n</p>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loan",
+                "repayment-terms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"repayment_terms\": [\n    {\n      \"loan_id\": \"<uuid>\",\n      \"repayment_date\": \"<dateTime>\",\n      \"repayment_method\": \"<string>\",\n      \"direct_debit\": null,\n      \"reason\": null,\n      \"sct\": null\n    },\n    {\n      \"loan_id\": \"<uuid>\",\n      \"repayment_date\": \"<dateTime>\",\n      \"repayment_method\": \"<string>\",\n      \"direct_debit\": null,\n      \"reason\": null,\n      \"sct\": null\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f49ee983-913e-4c49-9f73-89f7b0087ff7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loan",
+                    "repayment-terms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"repayment_terms\": [\n    {\n      \"loan_id\": \"<uuid>\",\n      \"repayment_date\": \"<dateTime>\",\n      \"repayment_method\": \"<string>\",\n      \"direct_debit\": null,\n      \"reason\": null,\n      \"sct\": null\n    },\n    {\n      \"loan_id\": \"<uuid>\",\n      \"repayment_date\": \"<dateTime>\",\n      \"repayment_method\": \"<string>\",\n      \"direct_debit\": null,\n      \"reason\": null,\n      \"sct\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 6106,\n  \"page_size\": 6746,\n  \"data\": [\n    {\n      \"amount\": 5842,\n      \"beneficiary\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"borrower\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"currency\": \"GBP\",\n      \"deposits\": {\n        \"key_0\": {\n          \"amount\": 650,\n          \"paid_amount\": 2018,\n          \"deposit_id\": null\n        },\n        \"key_1\": {\n          \"amount\": 808,\n          \"paid_amount\": 2917,\n          \"deposit_id\": null\n        },\n        \"key_2\": {\n          \"amount\": 7774,\n          \"paid_amount\": 2631,\n          \"deposit_id\": null\n        }\n      },\n      \"documents\": [\n        {\n          \"document_type\": \"sale_purchase_agreement\",\n          \"document_url\": \"string\",\n          \"about_business\": null,\n          \"document_name\": null,\n          \"uploaded_at\": null,\n          \"user_input\": null\n        },\n        {\n          \"document_type\": \"credit_card_expenses\",\n          \"document_url\": \"string\",\n          \"about_business\": null,\n          \"document_name\": null,\n          \"uploaded_at\": null,\n          \"user_input\": null\n        }\n      ],\n      \"earliest_to_repay_at\": \"2024-11-20T05:52:47.228Z\",\n      \"id\": \"e079ed72-f9e2-f451-b1cc-020b0ffdccde\",\n      \"invoice_ids\": [\n        \"36df0638-d066-9dea-ed96-5aa43a197a74\",\n        \"1f61535b-775b-2a3c-c7f1-73ea89b8b6f5\"\n      ],\n      \"loan_from\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"name\"\n      },\n      \"loan_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"account_number\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"undefined\"\n      },\n      \"loan_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_type\": \"INVENTORY_FINANCING\",\n      \"paid_interests_amount\": 2684,\n      \"repaid_amount\": 2075,\n      \"repaid_nominal_amount\": 9559,\n      \"repayment_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"repayment_method\": \"SCT\",\n      \"repayment_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"internal_id\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"name\"\n      },\n      \"repayment_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"DELETED\",\n      \"submitted_at\": \"1947-06-30T01:06:13.033Z\",\n      \"to_pay_at\": \"1980-11-10T08:49:02.871Z\",\n      \"to_repay_at\": \"1975-07-21T12:32:19.393Z\",\n      \"borrower_financial_product_id\": null,\n      \"closed_at\": null,\n      \"contract_url\": null,\n      \"contractual_repayment_date\": null,\n      \"denial_reason\": null,\n      \"fees_estimated\": null,\n      \"fees_ongoing\": null,\n      \"guarantor\": null,\n      \"metadata\": null,\n      \"notification_emails\": [\n        \"sAevenQoC@XMxuGIYaGJqcgiQ.kbef\",\n        \"4XvYb8@XflkXcHyrdUvXPZgIbDFmtBN.tuy\"\n      ],\n      \"paid_at\": null,\n      \"repaid_nominal_at\": null,\n      \"repayment_from\": null,\n      \"transfer_contract_url\": null\n    },\n    {\n      \"amount\": 3352,\n      \"beneficiary\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"borrower\": {\n        \"identifier\": \"string\",\n        \"activity_description\": null,\n        \"activity_type\": null,\n        \"address\": null,\n        \"capital\": null,\n        \"creation_date\": null,\n        \"has_ongoing_insolvency_procedure\": null,\n        \"id\": null,\n        \"identifier_type\": null,\n        \"is_active\": null,\n        \"is_diffusible\": null,\n        \"last_insolvency_procedure_closing_date\": null,\n        \"last_insolvency_procedure_open_date\": null,\n        \"last_insolvency_procedure_type\": null,\n        \"legal_form\": null,\n        \"nace_code\": null,\n        \"name\": null,\n        \"registration_body\": null,\n        \"registration_date\": null,\n        \"registry_radiation_date\": null,\n        \"share_capital\": null,\n        \"termination_date\": null,\n        \"vat_number\": null\n      },\n      \"currency\": \"EUR\",\n      \"deposits\": {\n        \"key_0\": {\n          \"amount\": 7470,\n          \"paid_amount\": 5970,\n          \"deposit_id\": null\n        }\n      },\n      \"documents\": [\n        {\n          \"document_type\": \"public_procurement_ownership_act\",\n          \"document_url\": \"string\",\n          \"about_business\": null,\n          \"document_name\": null,\n          \"uploaded_at\": null,\n          \"user_input\": null\n        },\n        {\n          \"document_type\": \"public_procurement_single_copy\",\n          \"document_url\": \"string\",\n          \"about_business\": null,\n          \"document_name\": null,\n          \"uploaded_at\": null,\n          \"user_input\": null\n        }\n      ],\n      \"earliest_to_repay_at\": \"2023-09-21T09:36:10.415Z\",\n      \"id\": \"e550b442-0425-923f-3cc5-15c5fcd766d3\",\n      \"invoice_ids\": [\n        \"9102c4c2-9dfc-8d48-c8c8-fbcade710aca\",\n        \"3105aae7-4f1b-91cc-ea2d-83ff818d88d7\"\n      ],\n      \"loan_from\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"account_number\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"routing_number\"\n      },\n      \"loan_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"bic\"\n      },\n      \"loan_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"loan_type\": \"FUNDING_OBLIGATION_CONSOLIDATION\",\n      \"paid_interests_amount\": 3444,\n      \"repaid_amount\": 6104,\n      \"repaid_nominal_amount\": 958,\n      \"repayment_from_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"repayment_method\": \"P2P\",\n      \"repayment_to\": {\n        \"account_number\": \"string\",\n        \"account_number_type\": \"iban\",\n        \"bank_identifier\": \"string\",\n        \"bank_identifier_type\": \"undefined\"\n      },\n      \"repayment_to_references\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"TO_VALIDATE\",\n      \"submitted_at\": \"1954-01-13T12:28:48.804Z\",\n      \"to_pay_at\": \"1992-05-11T01:08:46.298Z\",\n      \"to_repay_at\": \"2025-03-25T15:21:57.427Z\",\n      \"borrower_financial_product_id\": null,\n      \"closed_at\": null,\n      \"contract_url\": null,\n      \"contractual_repayment_date\": null,\n      \"denial_reason\": null,\n      \"fees_estimated\": null,\n      \"fees_ongoing\": null,\n      \"guarantor\": null,\n      \"metadata\": null,\n      \"notification_emails\": [\n        \"Zky@WzamBWufaUVWCzyfbnIjIhMqvklPDHdQ.rl\",\n        \"EuTUnQ3Y@ytqqQHvkmmBW.dp\"\n      ],\n      \"paid_at\": null,\n      \"repaid_nominal_at\": null,\n      \"repayment_from\": null,\n      \"transfer_contract_url\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b0568649-b065-4dde-9a22-d7c8e3eba248",
+    "name": "Defacto Accounting Loan API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Defacto Accounting Invoice API",
+    "version": "v1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoice",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "/invoice/{invoice_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/invoice/:invoice_id",
+            "params": [
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get an invoice by id"
+        },
+        {
+          "info": {
+            "name": "/invoice/{invoice_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getdefacto.com/invoice/:invoice_id",
+            "params": [
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates an invoice (with status TO_SUBMIT or TO_EDIT only)"
+        },
+        {
+          "info": {
+            "name": "/invoice/{invoice_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getdefacto.com/invoice/:invoice_id",
+            "params": [
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an invoice by id"
+        },
+        {
+          "info": {
+            "name": "/invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getdefacto.com/invoices",
+            "params": [
+              {
+                "name": "buyer",
+                "value": "",
+                "type": "query",
+                "description": "Business buying a product or service from the seller."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+              },
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "linked_to_loan",
+                "value": "",
+                "type": "query",
+                "description": "If false, the invoice is not linked to any loan and has not been submitted for a loan."
+              },
+              {
+                "name": "linked_to_loan_paid_after",
+                "value": "",
+                "type": "query",
+                "description": "Filters invoices linked to a loan that was paid after the specified date (based on the loan's paid_at field). This filter is only effective when `linked_to_loan` is set to true."
+              },
+              {
+                "name": "linked_to_loan_paid_before",
+                "value": "",
+                "type": "query",
+                "description": "Filters invoices linked to a loan that was paid before the specified date (based on the loan's paid_at field). This filter is only effective when `linked_to_loan` is set to true."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to filter invoices"
+              },
+              {
+                "name": "seller",
+                "value": "",
+                "type": "query",
+                "description": "Business selling a product or service to the buyer."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "<b>TO_SUBMIT, SUBMITTED, TO_EDIT or VERIFIED</b><ul><li>TO_SUBMIT: the invoice is a draft, you can correct it and submit it when correct</li><li>SUBMITTED: the invoice has been submitted and Defacto is verifying it</li><li>TO_EDIT: the invoice has not been validated by Defacto. It should be edited before you can submit it again</li><li>VERIFIED: the invoice has been verified by Defacto. A loan can now be requested for the invoice.</li></ul>"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get your invoices"
+        },
+        {
+          "info": {
+            "name": "/invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/invoices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nCreate an invoice.\n- If you create an invoice that will need to be edited afterwards, create a draft invoice with the <code>is_draft</code> parameter. Otherwise set <code>is_draft</code> to false.\n- This endpoint requires the base64-encoded value of the PDF of the invoice. You can for example use [base64guru](https://base64.guru/converter/encode/pdf).\n"
+        },
+        {
+          "info": {
+            "name": "/invoice/{invoice_id}/submit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/invoice/:invoice_id/submit",
+            "params": [
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSubmit an invoice for validation by Defacto (with status TO_SUBMIT or TO_EDIT).\nIf some data is missing prior to validating the invoice, a 422 error will be returned with the list of the missing fields.\n"
+        },
+        {
+          "info": {
+            "name": "/invoices/upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getdefacto.com/invoices/upload",
+            "params": [
+              {
+                "name": "buyer",
+                "value": "",
+                "type": "query",
+                "description": "Business identifier of the buyer, must be in the form <business_identifier_type>-<business_identifier> such as SIREN-899021021 for a french company."
+              },
+              {
+                "name": "seller",
+                "value": "",
+                "type": "query",
+                "description": "Business identifier of the seller, must be in the form <business_identifier_type>-<business_identifier> such as SIREN-899021021 for a french company."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "metadata",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create an invoice entity from the PDF of an invoice. Send the file within a formData. The endpoint will automatically extract the invoice information and create an invoice entity from them."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

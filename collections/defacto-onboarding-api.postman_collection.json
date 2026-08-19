@@ -1,0 +1,1450 @@
+{
+  "item": [
+    {
+      "id": "a699efd1-6732-4373-a318-872101ec7fdc",
+      "name": "Onboarding",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8d68a338-7b1d-4f81-be0a-d067e3cca4ed",
+          "name": "/borrower/{borrower_id}/repayment-methods",
+          "request": {
+            "name": "/borrower/{borrower_id}/repayment-methods",
+            "description": {
+              "content": "\n<div>\n<h3>List available repayment methods for borrower.</h3>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "repayment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b1c2c73d-7de8-424c-81e5-d0eb6499210e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "repayment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 2474,\n  \"page_size\": 2826,\n  \"data\": [\n    {\n      \"is_main\": false,\n      \"payment_method\": \"P2P\",\n      \"status\": \"DEACTIVATED\",\n      \"account_to_credit\": null,\n      \"account_to_debit\": null\n    },\n    {\n      \"is_main\": false,\n      \"payment_method\": \"DIRECT_DEBIT\",\n      \"status\": \"NEW\",\n      \"account_to_credit\": null,\n      \"account_to_debit\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "905681da-b1d2-4ac2-8175-1e0155e45601",
+          "name": "/borrower/{borrower_id}/repayment-methods",
+          "request": {
+            "name": "/borrower/{borrower_id}/repayment-methods",
+            "description": {
+              "content": "\n<div>\n<h3>Add and/or choose the repayment method for borrower.</h3>\n\n<p>If payment method is \"DIRECT_DEBIT\" then the `account` parameter must not be null.</p>\n\n<p>\nIf `is_default_repayment_method` is true, then the repayment method becomes the borrower's default\nrepayment method so that upcmoing loan requests will use this payment method and account as a default.\n<br/>\n<br/>\n<i>\nPlease note: that the account defined in the `loan_to` attribute of created loans is left\nunchanged. If you want to change the destination account of a loan, you must cancel it and\nrequest a new loan.\n</i>\n</p>\n<p>\nIf `apply_to_all_active_loans` is true, then the repayment method is used for upcoming payments of\nall loans that are in TO_REPAY or TO_REPAY_FEES statuses.\n</p>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "repayment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apply_to_all_active_loans\": \"<boolean>\",\n  \"is_default_repayment_method\": \"<boolean>\",\n  \"payment_method\": \"<string>\",\n  \"from_account\": null,\n  \"name\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7cfb4ce5-868e-4a97-81b5-134f481999fd",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "repayment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apply_to_all_active_loans\": \"<boolean>\",\n  \"is_default_repayment_method\": \"<boolean>\",\n  \"payment_method\": \"<string>\",\n  \"from_account\": null,\n  \"name\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"is_main\": true,\n  \"payment_method\": \"SCT\",\n  \"status\": \"DEACTIVATED\",\n  \"account_to_credit\": null,\n  \"account_to_debit\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4cefadb-b1f8-43e9-9ab4-d9ef08becc62",
+          "name": "/borrower/{borrower_id}",
+          "request": {
+            "name": "/borrower/{borrower_id}",
+            "description": {
+              "content": "Retrieve the full profile of a borrower by ID. Returns the borrower's status, business information, accounts, compliance checks, and next actions required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3df7545-7f44-4643-9ff3-8d378d4a916e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"accounts\": [\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"account_number\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"bic\",\n      \"account_name\": null\n    },\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"iban\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"bic\",\n      \"account_name\": null\n    }\n  ],\n  \"active_enrollments\": [\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"097c4f26-434d-a38e-e7aa-db8fff7cd14a\",\n      \"entity_type\": \"BORROWER\",\n      \"id\": \"5896e9c4-4ecb-8e9b-32aa-b30a08292cc5\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    },\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"75cc0fa6-c534-057e-d8f6-1a1c3271c188\",\n      \"entity_type\": \"ONBOARDING\",\n      \"id\": \"3ae06aaa-04d8-6574-4729-9b7f8f9bf9c1\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    }\n  ],\n  \"address\": null,\n  \"can_reonboard\": false,\n  \"compliance_checks\": null,\n  \"contract_id\": null,\n  \"contract_s3_url\": null,\n  \"directors\": null,\n  \"id\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"next_actions\": null,\n  \"owner\": null,\n  \"signed_at\": null,\n  \"status\": null,\n  \"status_reason\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2f1099b-a4fe-4a62-a9c4-32eb0253fab9",
+          "name": "/borrowers",
+          "request": {
+            "name": "/borrowers",
+            "description": {
+              "content": "List all borrowers enrolled on Defacto for your account. Borrowers are companies that have been registered and can request loans through the Defacto platform. Returns a paginated list with their status, business info, accounts, and compliance data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrowers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "borrower_id",
+                  "value": "<uuid>",
+                  "description": "UUID(s) of the borrower(s) in Defacto API."
+                },
+                {
+                  "disabled": false,
+                  "key": "borrower_id",
+                  "value": "<uuid>",
+                  "description": "UUID(s) of the borrower(s) in Defacto API."
+                },
+                {
+                  "disabled": false,
+                  "key": "borrower_identifier",
+                  "value": "",
+                  "description": "Legal identifier of the business, such as its SIREN in France."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor from the previous response's next_page field. Omit to get the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_signed_at",
+                  "value": "",
+                  "description": "Filter borrowers who signed their contract on or after this datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_signed_at",
+                  "value": "",
+                  "description": "Filter borrowers who signed their contract on or before this datetime."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "55d019e3-ef04-4f16-8ccd-eadbffbf306b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrowers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "borrower_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "borrower_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "borrower_identifier",
+                      "value": ""
+                    },
+                    {
+                      "key": "cursor",
+                      "value": ""
+                    },
+                    {
+                      "key": "from_signed_at",
+                      "value": ""
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "to_signed_at",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"count\": 8890,\n  \"page_size\": 5220,\n  \"data\": [\n    {\n      \"identifier\": \"string\",\n      \"accounts\": [\n        {\n          \"account_number\": \"string\",\n          \"account_number_type\": \"iban\",\n          \"bank_identifier\": \"string\",\n          \"bank_identifier_type\": \"routing_number\",\n          \"account_name\": null\n        },\n        {\n          \"account_number\": \"string\",\n          \"account_number_type\": \"internal_id\",\n          \"bank_identifier\": \"string\",\n          \"bank_identifier_type\": \"bic\",\n          \"account_name\": null\n        }\n      ],\n      \"active_enrollments\": [\n        {\n          \"enrollment_campaign\": \"string\",\n          \"enrollment_name\": \"string\",\n          \"entity_id\": \"6b1b3eec-0348-55c1-717d-b75ff77aaf46\",\n          \"entity_type\": \"BORROWER\",\n          \"id\": \"b27cf857-46f3-9467-8b19-8cc3b52bd828\",\n          \"status\": \"string\",\n          \"agent_feedback\": null,\n          \"recommendations\": null,\n          \"submitted_at\": null\n        },\n        {\n          \"enrollment_campaign\": \"string\",\n          \"enrollment_name\": \"string\",\n          \"entity_id\": \"354cc0ab-cbdb-795c-6a01-1cab02514b42\",\n          \"entity_type\": \"BORROWER\",\n          \"id\": \"958d0b28-43f1-30cb-0448-c3118d61d3e4\",\n          \"status\": \"string\",\n          \"agent_feedback\": null,\n          \"recommendations\": null,\n          \"submitted_at\": null\n        }\n      ],\n      \"address\": null,\n      \"can_reonboard\": false,\n      \"compliance_checks\": null,\n      \"contract_id\": null,\n      \"contract_s3_url\": null,\n      \"directors\": null,\n      \"id\": null,\n      \"identifier_type\": null,\n      \"legal_form\": null,\n      \"metadata\": null,\n      \"name\": null,\n      \"next_actions\": null,\n      \"owner\": null,\n      \"signed_at\": null,\n      \"status\": null,\n      \"status_reason\": null,\n      \"vat_number\": null\n    },\n    {\n      \"identifier\": \"string\",\n      \"accounts\": [\n        {\n          \"account_number\": \"string\",\n          \"account_number_type\": \"account_number\",\n          \"bank_identifier\": \"string\",\n          \"bank_identifier_type\": \"bic\",\n          \"account_name\": null\n        },\n        {\n          \"account_number\": \"string\",\n          \"account_number_type\": \"iban\",\n          \"bank_identifier\": \"string\",\n          \"bank_identifier_type\": \"routing_number\",\n          \"account_name\": null\n        }\n      ],\n      \"active_enrollments\": [\n        {\n          \"enrollment_campaign\": \"string\",\n          \"enrollment_name\": \"string\",\n          \"entity_id\": \"8c80256a-61c3-301a-7081-a54740da462a\",\n          \"entity_type\": \"ONBOARDING\",\n          \"id\": \"6e730f9b-2985-19e6-add4-791e4e193d82\",\n          \"status\": \"string\",\n          \"agent_feedback\": null,\n          \"recommendations\": null,\n          \"submitted_at\": null\n        },\n        {\n          \"enrollment_campaign\": \"string\",\n          \"enrollment_name\": \"string\",\n          \"entity_id\": \"c4d03d8b-77de-bccf-0c9e-b421c55f177f\",\n          \"entity_type\": \"ONBOARDING\",\n          \"id\": \"f3018281-69b3-b903-06af-d8dba7d02b16\",\n          \"status\": \"string\",\n          \"agent_feedback\": null,\n          \"recommendations\": null,\n          \"submitted_at\": null\n        }\n      ],\n      \"address\": null,\n      \"can_reonboard\": false,\n      \"compliance_checks\": null,\n      \"contract_id\": null,\n      \"contract_s3_url\": null,\n      \"directors\": null,\n      \"id\": null,\n      \"identifier_type\": null,\n      \"legal_form\": null,\n      \"metadata\": null,\n      \"name\": null,\n      \"next_actions\": null,\n      \"owner\": null,\n      \"signed_at\": null,\n      \"status\": null,\n      \"status_reason\": null,\n      \"vat_number\": null\n    }\n  ],\n  \"next_page\": null,\n  \"previous_page\": null,\n  \"total\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "533207d4-a9c8-4a21-8672-5df53cb31570",
+          "name": "/borrowers",
+          "request": {
+            "name": "/borrowers",
+            "description": {
+              "content": "\n<div>\n<h3>Enroll a new borrower on Defacto.</h3>\n<p>\nThis API will create a borrower and a credit line for this borrower. More information\nin the <b>behavior</b> section below.\n</p>\n<p>\n<strong>Timeout:</strong> 30 seconds (status code will be 504 in such a case)\n</p>\n<br/>\n<h4>Required data</h4>\n<p>\nBorrower must be a commercial company -> eg. in France needs to be registered at an RCS.\n</p>\n<p>\n<b>If the borrower repays by direct debit, the following information are mandatory:</b>\n</p>\n<ul>\n<li> the director’s personal information: Name, birth date, nationality, email address and country of\nresidence of the managing director</li>\n<li>The IBAN of the borrower (please make sure that the borrower is aware\nthat direct debit is used as the repayment method).</li>\n</ul>\n<p>\nWe strongly recommend that you fill up all the information when you can, even on the sandbox.\nFor French borrowers, we manage to pull most of the director information automatically,\nhowever for other countries, this might not be the case.\nFor the borrowers that Defacto is not able to fetch the mandatory data, you need to provide them\nto ensure borrower creation. Otherwise the API will return a 400 error and list the values that it could\nnot obtain.\n</p>\n<h4>Behavior</h4>\n<p>\nThis API endpoint creates a borrower in our system,\nconfigures our system to get the repayment of the loan,\nevaluates the maximum amount of money we can lend to this company and creates a credit line for this\nborrower.\nAfter the credit line is created for this borrower, you can get it with\n<code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>. <br/>\n<b>Synchronous and asynchronous behaviors are offered.</b> </br>\n</p>\n<p>Synchronous behavior:</br></p>\n<ul>\n<li>Set <code>'wait_for_ready': true</code> to activate it</li>\n<li>\n<b>You can <code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>\nand request a loan right after you received the answer from this API endpoint</b>\n</li>\n<li>Response takes from 4 to 8 seconds</li>\n<li>\nThe API answers after the solvency of the company is evaluated and the credit line is created,\nor returns an error.\n</li>\n</ul>\n<br/>\n<p>Asynchronous behavior (default one):</p>\n<ul>\n<li>Set <code>'wait_for_ready': false</code> to activate it</li>\n</li>\n<li>\nOur system will evaluate the solvency of the company and create its credit line after answering\nthe API call.\n<li>\nSo, a loan cannot be requested right after this endpoint answers. You must wait for the creation\nof the credit line. To discover it, you can either subscribe to the CreditLine.CREATED webhook or\nregularly fetch <code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code>.\n</li>\n   <li>Response takes between 0.3 and 1.5 second.</li>\n</ul>\n<blockquote class=\"callout callout_warn\" theme=\"🚧\">\n<h3 class=\"callout-heading\">\n<span class=\"callout-icon\">🚧</span>\n<p>Careful if you subscribe to the CreditLine.CREATED webhook!</p>\n</h3>\n<p>\nIf you subscribe to the webhook, please note that there is an inconsistency in the API at the\nmoment. The webhook sends a <code>borrower_id</code> that does not correspond to the borrower id that\nyou received with this endpoint (it's rather a business_id in our DB, that you cannot fetch).\n</p>\n<p>\nSo at the moment we recommend you to\n<code>GET /credit-lines?borrower=<THE_COMPANY_NUMBER_OF_THE_BORROWER></code> for all borrowers waiting\nfor a credit line when you receive the webhook event.\n</p>\n</blockquote>\n</div>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrowers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"account_number\": null,\n  \"address\": null,\n  \"directors\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"owner\": null,\n  \"preferred_language\": null,\n  \"signed_at\": null,\n  \"vat_number\": null,\n  \"wait_for_ready\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3066e310-1abd-467f-ab91-2a541bdadeff",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrowers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"account_number\": null,\n  \"address\": null,\n  \"directors\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"owner\": null,\n  \"preferred_language\": null,\n  \"signed_at\": null,\n  \"vat_number\": null,\n  \"wait_for_ready\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"accounts\": [\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"iban\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"undefined\",\n      \"account_name\": null\n    },\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"iban\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"undefined\",\n      \"account_name\": null\n    }\n  ],\n  \"active_enrollments\": [\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"d12fbeca-4ac7-0a41-625a-002bdd3fe2e0\",\n      \"entity_type\": \"BORROWER\",\n      \"id\": \"9c5525b8-fb3b-2d82-e102-29e801e39de0\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    },\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"14386df2-7302-e9e9-41c4-7c1e1f391b4c\",\n      \"entity_type\": \"ONBOARDING\",\n      \"id\": \"c331ae0b-f9f7-5c93-b8bd-5b84f9a9b58c\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    }\n  ],\n  \"address\": null,\n  \"can_reonboard\": false,\n  \"compliance_checks\": null,\n  \"contract_id\": null,\n  \"contract_s3_url\": null,\n  \"directors\": null,\n  \"id\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"next_actions\": null,\n  \"owner\": null,\n  \"signed_at\": null,\n  \"status\": null,\n  \"status_reason\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4300ec44-ef47-4770-9e9f-aa1f04718214",
+          "name": "/business/public-data",
+          "request": {
+            "name": "/business/public-data",
+            "description": {
+              "content": "Search for borrower business information from various sources. This endpoint lets you find the right business identifier to use when onboarding a borrower or counterparty.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "public-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "identifier",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "identifier_type",
+                  "value": "hr_nummer"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "street",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "22284909-0ba4-4744-b4b3-3a306f4e7a25",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "public-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "city",
+                      "value": ""
+                    },
+                    {
+                      "key": "country",
+                      "value": ""
+                    },
+                    {
+                      "key": "identifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "identifier_type",
+                      "value": "hr_nummer"
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": ""
+                    },
+                    {
+                      "key": "street",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"name\",\n    \"address\": null,\n    \"name\": null\n  },\n  {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"siren\",\n    \"address\": null,\n    \"name\": null\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5893a289-4596-49e1-8e99-33c86aa1308f",
+          "name": "/onboarding/{onboarding_id}",
+          "request": {
+            "name": "/onboarding/{onboarding_id}",
+            "description": {
+              "content": "\n## [Partners] Follow the onboarding of a business\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\nWhen your borrower is on our web app, sharing his financial data, you might want to keep track of his onboarding.\nThis endpoints will let you get access to the onboarding status and details.\nYou'll be able to know if the borrower has shared his financial data and is ready to request loans;\nhow much does defacto proposes to lend him; and more.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "onboarding",
+                ":onboarding_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "onboarding_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "951211a8-8f08-4454-8092-9c8ce087d12f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "onboarding",
+                    ":onboarding_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "onboarding_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"id\": \"e09edae9-e5f6-245f-e95a-057f17e81bcc\",\n  \"is_expired\": true,\n  \"referral\": \"string\",\n  \"status\": \"CREATED\",\n  \"borrower_id\": null,\n  \"business\": null,\n  \"eligibility\": null,\n  \"email\": null,\n  \"email_tracking_consent\": null,\n  \"integrations\": [\n    {\n      \"id\": \"2254b5d6-93a6-0670-f777-d1c5ab2bde8b\",\n      \"is_connected\": false,\n      \"name\": \"string\"\n    },\n    {\n      \"id\": \"0e660adf-9e33-0b2b-e2f1-9ffb9422c893\",\n      \"is_connected\": false,\n      \"name\": \"string\"\n    }\n  ],\n  \"integrations_need\": null,\n  \"phone_number\": null,\n  \"preferred_language\": null,\n  \"redirect_url\": null,\n  \"reset_password_token\": null,\n  \"secure_resume_link\": null,\n  \"user\": null,\n  \"user_input\": null,\n  \"user_need\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aba08096-8260-4d60-94c5-e1fee9166130",
+          "name": "/borrower/{borrower_id}/deactivate",
+          "request": {
+            "name": "/borrower/{borrower_id}/deactivate",
+            "description": {},
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "deactivate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fb977343-ef6f-4b91-a3c9-c452f624f1c7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "deactivate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6ed1304-b399-4276-b57a-7206e8740228",
+          "name": "/borrower/{borrower_id}/owner",
+          "request": {
+            "name": "/borrower/{borrower_id}/owner",
+            "description": {
+              "content": "Create a borrower owner with identity documents",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "owner"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"birth_date\": null,\n  \"email\": null,\n  \"identity_documents\": null,\n  \"phone_number\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3a32898b-ca99-48a2-9e20-2d19b5a57e77",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "owner"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"birth_date\": null,\n  \"email\": null,\n  \"identity_documents\": null,\n  \"phone_number\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"email\": \"oHYnH5r@PZerCqWhJ.nm\",\n  \"id\": \"8b1ce91a-333f-cc40-e57a-0ce05d70ec0c\",\n  \"phone_number\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3da63426-5c2d-4d53-bf88-ab019f679563",
+          "name": "/borrower/{borrower_id}/sign",
+          "request": {
+            "name": "/borrower/{borrower_id}/sign",
+            "description": {
+              "content": "Register the date a new borrower accepted our T&Cs",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "borrower",
+                ":borrower_id",
+                "sign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "borrower_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"signed_at\": \"<dateTime>\",\n  \"wait_for_ready\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1ca209e-1cc4-4a43-a893-670b7db7aa17",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "borrower",
+                    ":borrower_id",
+                    "sign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "borrower_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"signed_at\": \"<dateTime>\",\n  \"wait_for_ready\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"accounts\": [\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"iban\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"undefined\",\n      \"account_name\": null\n    },\n    {\n      \"account_number\": \"string\",\n      \"account_number_type\": \"iban\",\n      \"bank_identifier\": \"string\",\n      \"bank_identifier_type\": \"undefined\",\n      \"account_name\": null\n    }\n  ],\n  \"active_enrollments\": [\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"d12fbeca-4ac7-0a41-625a-002bdd3fe2e0\",\n      \"entity_type\": \"BORROWER\",\n      \"id\": \"9c5525b8-fb3b-2d82-e102-29e801e39de0\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    },\n    {\n      \"enrollment_campaign\": \"string\",\n      \"enrollment_name\": \"string\",\n      \"entity_id\": \"14386df2-7302-e9e9-41c4-7c1e1f391b4c\",\n      \"entity_type\": \"ONBOARDING\",\n      \"id\": \"c331ae0b-f9f7-5c93-b8bd-5b84f9a9b58c\",\n      \"status\": \"string\",\n      \"agent_feedback\": null,\n      \"recommendations\": null,\n      \"submitted_at\": null\n    }\n  ],\n  \"address\": null,\n  \"can_reonboard\": false,\n  \"compliance_checks\": null,\n  \"contract_id\": null,\n  \"contract_s3_url\": null,\n  \"directors\": null,\n  \"id\": null,\n  \"identifier_type\": null,\n  \"legal_form\": null,\n  \"metadata\": null,\n  \"name\": null,\n  \"next_actions\": null,\n  \"owner\": null,\n  \"signed_at\": null,\n  \"status\": null,\n  \"status_reason\": null,\n  \"vat_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41fbabbd-34ab-49fa-84f8-7d52ea5b893c",
+          "name": "/onboardings",
+          "request": {
+            "name": "/onboardings",
+            "description": {
+              "content": "\n## [Partners] Start onboarding a new business\n\nIf you haven't visited the guide: [how to make your first loan?](https://developers.getdefacto.com/reference/make-your-first-loan) we recommend you to visit it first.\n\n**Timeout after**: 30 seconds (status code will be 504 in such a case)\n\nIn order to request loans you will need to have borrowers. In order to test borrower's eligibility, we'll need\nto have access to borrower business' financial data.\n\nThis can be achieved in two ways:\nEither you have this piece of information and you may use the\n[sharing business data](https://developers.getdefacto.com/reference/post_business-data-account-transactions)\nAPI documentation to do so, or you might want to rely on defacto's onboarding process to get this information.\n\nIn the later, you will need to create an onboarding for the business you want to request loans for.\n\n### Behavior\nWhen you send this API request providing business information, your referral and callback url:\nThe system will start an onboarding for you and you will get its id in the response.\n\nThen you must redirect the borrower to the onboarding tunnel so that he can select his financial\ntools and share as much data as he wants to max-out his eligible amount:\n\n- **In the normal case**, redirect him to\n  `https://app.getdefacto.com/onboarding/continue/{onboarding_id}`.\n- **When the response contains a `secure_resume_link`**, redirect him to that link *instead* of the\n  bare continue URL above. This happens when the business already has a bank-connected onboarding:\n  to avoid exposing another party's financial data, that tunnel is gated and can only be reopened by\n  a link carrying a short-lived secure token. The `secure_resume_link` is exactly that\n  pre-authenticated continue URL. It is valid for **2 hours** — if it expires, POST /onboarding again\n  to obtain a fresh one.\n\nOnce borrower has accepted defacto's T&Cs and created his account, he'll be redirected back to the redirect_url\nyou provided and if you subscribed to `CREDIT_LINE.Created` webhook you will receive it shortly.\nRead [webhook](https://developers.getdefacto.com/reference/webhooks-at-defacto) for details.\n\n### Frequently Asked Questions\n\n**How do I get onboarding results?**\nYou can use the GET /onboarding/{onboarding_id} endpoint to retrieve the onboarding results.\n\n**What should I do if the status of the onboarding is expired?**\nOnboardings last for 168 hours;\nafter what you'll have to repeat the POST /onboarding request you just made.\n\n**How do I get the borrower's ID once onboarding is `COMPLETED`?**\nYou can use the GET /onboarding/{onboarding_id} endpoint to retrieve the borrower's ID under the `borrower_id`\nattribute; or you can GET /borrowers/?identifier={business_identifier} to directly get the borrower object.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "onboardings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"preferred_language\": \"<string>\",\n  \"business\": null,\n  \"email\": null,\n  \"phone_number\": null,\n  \"redirect_url\": null,\n  \"referral\": null,\n  \"step\": null,\n  \"traceability_payload\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ff1fef6-fcc7-49d2-ab32-98323b9e2fc7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "onboardings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferred_language\": \"<string>\",\n  \"business\": null,\n  \"email\": null,\n  \"phone_number\": null,\n  \"redirect_url\": null,\n  \"referral\": null,\n  \"step\": null,\n  \"traceability_payload\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"id\": \"1e7e72d4-fc02-6e54-e075-51acd5b43c5c\",\n  \"is_expired\": true,\n  \"referral\": \"string\",\n  \"status\": \"CREATED\",\n  \"borrower_id\": null,\n  \"business\": null,\n  \"eligibility\": null,\n  \"email\": null,\n  \"email_tracking_consent\": null,\n  \"integrations\": [\n    {\n      \"id\": \"21c08662-4406-5a65-d540-5aea8d153317\",\n      \"is_connected\": false,\n      \"name\": \"string\"\n    },\n    {\n      \"id\": \"276264c9-e402-719c-c4b0-1ef472b515a8\",\n      \"is_connected\": true,\n      \"name\": \"string\"\n    }\n  ],\n  \"integrations_need\": null,\n  \"phone_number\": null,\n  \"preferred_language\": null,\n  \"redirect_url\": null,\n  \"reset_password_token\": null,\n  \"secure_resume_link\": null,\n  \"user\": null,\n  \"user_input\": null,\n  \"user_need\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ecf5cbbc-c447-44f0-bf03-586ad7c37e5e",
+    "name": "Defacto Accounting Onboarding API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}

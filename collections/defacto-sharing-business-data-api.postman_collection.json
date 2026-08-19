@@ -1,0 +1,638 @@
+{
+  "item": [
+    {
+      "id": "07fd1f02-c6be-4ca9-a7a7-942da05977fc",
+      "name": "Sharing business data",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e1ac188-d70b-4665-b852-16f07627253d",
+          "name": "/business/data/account-transactions",
+          "request": {
+            "name": "/business/data/account-transactions",
+            "description": {
+              "content": "\nUpload bank account transactions into our platform to refine borrower\ncredit line allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n\nThe <code>account</code> field of the transactions should match the <code>id</code> field of the\naccounts you share with the POST /business/data/accounts endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "data",
+                "account-transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"batch_id\": null,\n  \"end_date\": null,\n  \"start_date\": \"0001-01-01T00:00:00\",\n  \"transactions\": [\n    {\n      \"amount\": \"<integer>\",\n      \"at\": \"<dateTime>\",\n      \"account\": null,\n      \"category\": null,\n      \"counterparty_name\": null,\n      \"currency\": \"EUR\",\n      \"operation_type\": null,\n      \"provider\": null,\n      \"reference\": null,\n      \"salt_id\": null,\n      \"settled_balance\": null,\n      \"side\": null,\n      \"status\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"at\": \"<dateTime>\",\n      \"account\": null,\n      \"category\": null,\n      \"counterparty_name\": null,\n      \"currency\": \"EUR\",\n      \"operation_type\": null,\n      \"provider\": null,\n      \"reference\": null,\n      \"salt_id\": null,\n      \"settled_balance\": null,\n      \"side\": null,\n      \"status\": null\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efbba728-0d3b-4490-85a8-838ff9c6173c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "data",
+                    "account-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"batch_id\": null,\n  \"end_date\": null,\n  \"start_date\": \"0001-01-01T00:00:00\",\n  \"transactions\": [\n    {\n      \"amount\": \"<integer>\",\n      \"at\": \"<dateTime>\",\n      \"account\": null,\n      \"category\": null,\n      \"counterparty_name\": null,\n      \"currency\": \"EUR\",\n      \"operation_type\": null,\n      \"provider\": null,\n      \"reference\": null,\n      \"salt_id\": null,\n      \"settled_balance\": null,\n      \"side\": null,\n      \"status\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"at\": \"<dateTime>\",\n      \"account\": null,\n      \"category\": null,\n      \"counterparty_name\": null,\n      \"currency\": \"EUR\",\n      \"operation_type\": null,\n      \"provider\": null,\n      \"reference\": null,\n      \"salt_id\": null,\n      \"settled_balance\": null,\n      \"side\": null,\n      \"status\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bc4d91e-be07-49a9-863f-104110ea0daa",
+          "name": "/business/data/accounts",
+          "request": {
+            "name": "/business/data/accounts",
+            "description": {
+              "content": "\nUpload bank account balances into our platform to refine borrower credit\nline allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n\nThe <code>id</code> field of the accounts should match the <code>account</code> field of the\ntransactions you share with the POST /business/data/account-transactions endpoint. If you only\nhave the IBAN of the account, the IBAN being a unique identifier, you can use the IBAN in both\n<code>id</code> and <code>account_number</code>.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "data",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"accounts\": [\n    {\n      \"amount\": \"<integer>\",\n      \"id\": \"<string>\",\n      \"last_updated_at\": \"<dateTime>\",\n      \"account_name\": null,\n      \"account_number\": null,\n      \"account_number_type\": null,\n      \"bank_identifier\": null,\n      \"bank_identifier_type\": null,\n      \"provider\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"id\": \"<string>\",\n      \"last_updated_at\": \"<dateTime>\",\n      \"account_name\": null,\n      \"account_number\": null,\n      \"account_number_type\": null,\n      \"bank_identifier\": null,\n      \"bank_identifier_type\": null,\n      \"provider\": null\n    }\n  ],\n  \"batch_id\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8bb1c6f7-df2f-4c9a-b700-de59fb1145f6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "data",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"accounts\": [\n    {\n      \"amount\": \"<integer>\",\n      \"id\": \"<string>\",\n      \"last_updated_at\": \"<dateTime>\",\n      \"account_name\": null,\n      \"account_number\": null,\n      \"account_number_type\": null,\n      \"bank_identifier\": null,\n      \"bank_identifier_type\": null,\n      \"provider\": null\n    },\n    {\n      \"amount\": \"<integer>\",\n      \"id\": \"<string>\",\n      \"last_updated_at\": \"<dateTime>\",\n      \"account_name\": null,\n      \"account_number\": null,\n      \"account_number_type\": null,\n      \"bank_identifier\": null,\n      \"bank_identifier_type\": null,\n      \"provider\": null\n    }\n  ],\n  \"batch_id\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ded31e90-d655-447d-a0bd-2d826ea64477",
+          "name": "/business/data/batch-upload/{batch_id}/close",
+          "request": {
+            "name": "/business/data/batch-upload/{batch_id}/close",
+            "description": {
+              "content": "\nClose a batch of upload started with POST /business/data/batch-upload.\n\nThis operation is a required one. Otherwise no data of the batch will be used.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "data",
+                "batch-upload",
+                ":batch_id",
+                "close"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "19dfa64d-d14f-44de-acb6-63b04fad3e22",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "data",
+                    "batch-upload",
+                    ":batch_id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"business_identifier\": {\n    \"identifier\": \"string\",\n    \"identifier_type\": \"nif\"\n  },\n  \"content\": {\n    \"account_transactions\": null,\n    \"accounts\": null,\n    \"invoices\": null,\n    \"shared_data_types\": [\n      \"account_transactions\",\n      \"account_transactions\"\n    ]\n  },\n  \"context\": \"BORROWER_CREATION\",\n  \"id\": \"a776a551-691c-4dba-4e12-6ad8dd5baa34\",\n  \"status\": \"CLOSED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6082680a-7b33-4e38-baac-6adcb7403030",
+          "name": "/business/data/batch-upload",
+          "request": {
+            "name": "/business/data/batch-upload",
+            "description": {
+              "content": "\nCreate a batch to upload data about a particular business.\n\nThis endpoint returns an <code>id</code> that should be put into all /business/data/XXX endpoints.\n\n**Why use batch?**\n- with the batch, you can send accounts transactions in chunks instead of sending them all in a single API call\n- with the batch, you can share more <code>context</code> (see parameter below) with us which enables us to update credit lines more accurately\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "data",
+                "batch-upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"content\": {\n    \"account_transactions\": null,\n    \"accounts\": null,\n    \"invoices\": null,\n    \"shared_data_types\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"context\": \"<string>\",\n  \"auto_cancel_ongoing_batch_for_business\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e46e78af-63c9-4beb-8862-83680cf33b79",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "data",
+                    "batch-upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"content\": {\n    \"account_transactions\": null,\n    \"accounts\": null,\n    \"invoices\": null,\n    \"shared_data_types\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"context\": \"<string>\",\n  \"auto_cancel_ongoing_batch_for_business\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"business_identifier\": {\n    \"identifier\": \"<string>\",\n    \"identifier_type\": \"<string>\"\n  },\n  \"content\": {\n    \"account_transactions\": null,\n    \"accounts\": null,\n    \"invoices\": null,\n    \"shared_data_types\": [\n      \"accounts\",\n      \"account_transactions\"\n    ]\n  },\n  \"context\": \"DATA_REFRESH\",\n  \"id\": \"21f5447e-23e7-5329-38f4-76855c783e0b\",\n  \"status\": \"CLOSING_SCHEDULED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98c6c0b8-ab95-49e5-a0c7-4f0887179d67",
+          "name": "/business/data/invoices",
+          "request": {
+            "name": "/business/data/invoices",
+            "description": {
+              "content": "\nUpload business invoices into our platform to refine borrower credit\nline allowance.\n\nThis endpoint doesn't support updates on data already uploaded.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "data",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"batch_id\": null,\n  \"invoices\": [\n    {\n      \"buyer\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"direction\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"net_amount\": \"<integer>\",\n      \"seller\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"currency\": \"EUR\",\n      \"first_payment_at\": null,\n      \"last_payment_at\": null,\n      \"payment_method\": null,\n      \"salt_id\": null,\n      \"tax_amount\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    },\n    {\n      \"buyer\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"direction\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"net_amount\": \"<integer>\",\n      \"seller\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"currency\": \"EUR\",\n      \"first_payment_at\": null,\n      \"last_payment_at\": null,\n      \"payment_method\": null,\n      \"salt_id\": null,\n      \"tax_amount\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11575831-d331-41af-b7bf-6a093afe5768",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "data",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifier_type\": \"<string>\",\n  \"batch_id\": null,\n  \"invoices\": [\n    {\n      \"buyer\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"direction\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"net_amount\": \"<integer>\",\n      \"seller\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"currency\": \"EUR\",\n      \"first_payment_at\": null,\n      \"last_payment_at\": null,\n      \"payment_method\": null,\n      \"salt_id\": null,\n      \"tax_amount\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    },\n    {\n      \"buyer\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"direction\": \"<string>\",\n      \"due_at\": \"<dateTime>\",\n      \"invoice_number\": \"<string>\",\n      \"issued_at\": \"<dateTime>\",\n      \"net_amount\": \"<integer>\",\n      \"seller\": {\n        \"identifier\": \"<string>\",\n        \"identifier_type\": \"<string>\"\n      },\n      \"currency\": \"EUR\",\n      \"first_payment_at\": null,\n      \"last_payment_at\": null,\n      \"payment_method\": null,\n      \"salt_id\": null,\n      \"tax_amount\": null,\n      \"to_pay_amount\": null,\n      \"total_amount\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getdefacto.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "69ae86b9-387a-4613-b2b6-e03df6edb6ef",
+    "name": "Defacto Accounting Sharing business data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.\n\nContact Support:\n Email: contact@getdefacto.com",
+      "type": "text/plain"
+    }
+  }
+}
