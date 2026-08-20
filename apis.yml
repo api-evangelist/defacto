@@ -91,6 +91,8 @@ apis:
   humanURL: https://developers.getdefacto.com/
   baseURL: https://api.getdefacto.com
   tags:
+  - Credit Card
+  tags_raw:
   - Credit card
   properties:
   - type: OpenAPI
