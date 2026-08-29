@@ -246,6 +246,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/defacto-capability-edges.yml
+  name: Defacto Business Capability Map
 - type: DeveloperPortal
   url: https://developers.getdefacto.com/
 - type: Documentation

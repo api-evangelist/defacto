@@ -1,0 +1,78 @@
+slug: defacto
+provider: Defacto
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Loan
+  spec_file: defacto-loan-api-openapi.yml
+  capability_id: BC-1320
+  capability_id_l1: BC-1320
+  capability_name: Credit & Lending Management
+  confidence: 0.9
+  evidence: POST /loans; POST /loan/{loan_id}/validate; POST /loan/{loan_id}/cancel; PUT /loan/repayment-terms;
+    schemas LoanAPI, LoanInstallment, APIReadLoanDocument
+  reason: 'Plainly loan lifecycle: requesting, validating, cancelling loans, attaching loan documents
+    and setting repayment terms. Spans both origination and servicing sub-capabilities, so only the L1
+    is asserted.'
+- tag: Recollection
+  spec_file: defacto-recollection-api-openapi.yml
+  capability_id: BC-1320.40
+  capability_id_l1: BC-1320
+  capability_name: Collections & Recoveries Management
+  confidence: 0.85
+  evidence: POST /recollection-cases; schemas ApiRecollectionCase, ApiRecollectionStrategy, ApiRecollectionAction,
+    ApiCreateRecollectionInstallmentPlanRequest
+  reason: Case management for recovering amounts due, with recollection strategies, actions and restructured
+    installment plans — this is collections and recoveries on lent funds.
+- tag: Onboarding
+  spec_file: defacto-onboarding-api-openapi.yml
+  capability_id: BC-1300.10
+  capability_id_l1: BC-1300
+  capability_name: Customer Onboarding Management
+  confidence: 0.8
+  evidence: POST /borrowers; POST /onboardings; POST /borrower/{borrower_id}/owner; POST /borrower/{borrower_id}/sign;
+    schemas APIBorrower, BorrowerComplianceChecks, APIOnboardingBusiness, APICreateDirector
+  reason: Operations register borrower businesses, capture owners/directors, run compliance checks and
+    complete signature — customer onboarding and account activation for a regulated lender. Compliance-check
+    schema also touches KYC/CDD, so the sub-capability split carries some ambiguity.
+- tag: Credit card
+  spec_file: defacto-credit-card-api-openapi.yml
+  capability_id: BC-1340.60
+  capability_id_l1: BC-1340
+  capability_name: Card Issuance Management
+  confidence: 0.75
+  evidence: 'PATCH /cards/{card_id}/status; GET /cards/{card_id}/entries; schemas ApiCard, UpdateCardStatusRequest,
+    CreditBalance; description: "issue and manage credit cards"'
+  reason: Surface manages issued credit cards — listing cards, changing card status (activation/blocking),
+    issuing ephemeral keys and reading card entries. Primarily card issuance/lifecycle management; card
+    entry retrieval touches transaction processing, so confidence is not maximal on the sub-capability.
+- tag: Eligibility and credit limit
+  spec_file: defacto-eligibility-and-credit-limit-api-openapi.yml
+  capability_id: BC-1320.20
+  capability_id_l1: BC-1320
+  capability_name: Credit Underwriting & Decisioning Management
+  confidence: 0.75
+  evidence: POST /eligibility/borrower; GET /eligibility/reasons; schemas APIBorrowerEligibility, EligibilityDenialReason,
+    APICreditLine, APICreditLimit
+  reason: Operations assess borrower/beneficiary eligibility, return denial reasons and expose granted
+    credit lines — credit decisioning and limit setting. Sub-capability could also be read as origination
+    pre-screening, hence 0.75.
+- tag: Repay
+  spec_file: defacto-repay-api-openapi.yml
+  capability_id: BC-1320.30
+  capability_id_l1: BC-1320
+  capability_name: Loan Servicing Management
+  confidence: 0.7
+  evidence: POST /repay/now; schemas RepayNowRequest, RepayNowResponse
+  reason: Single operation triggers immediate repayment of outstanding financing — loan servicing (payment
+    against the loan). Thin surface, so moderate confidence.
