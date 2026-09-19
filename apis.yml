@@ -105,7 +105,7 @@ apis:
   humanURL: https://developers.getdefacto.com/
   baseURL: https://api.getdefacto.com
   tags:
-  - Credit Card
+  - Credit Cards
   tags_raw:
   - Credit card
   properties:
@@ -138,6 +138,8 @@ apis:
   humanURL: https://developers.getdefacto.com/
   baseURL: https://api.getdefacto.com
   tags:
+  - Invoices
+  tags_raw:
   - Invoice
   properties:
   - type: OpenAPI
@@ -168,6 +170,8 @@ apis:
   humanURL: https://developers.getdefacto.com/
   baseURL: https://api.getdefacto.com
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
