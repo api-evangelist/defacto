@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Defacto Accounting API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -111,6 +111,62 @@ paths:
       summary: /events
 components:
   schemas:
+    ApiLoanEventPayload:
+      properties:
+        deposit_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+        fees_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+        loan_id:
+          format: uuid
+          type: string
+        metadata:
+          additionalProperties: {}
+          type: object
+        principal_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - loan_id
+      - metadata
+      type: object
+    TypedApiPage4:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiEvent'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
     ApiEvent:
       properties:
         event_at:
@@ -148,57 +204,6 @@ components:
       - event_at
       - event_payload
       - event_type
-      type: object
-    TypedApiPage4:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/ApiEvent'
-          type: array
-        next_page:
-          default: null
-          type: string
-          nullable: true
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type: string
-          nullable: true
-        total:
-          default: null
-          type: integer
-          nullable: true
-      required:
-      - count
-      - page_size
-      type: object
-    ApiLoanEventPayload:
-      properties:
-        deposit_amount:
-          default: null
-          type: integer
-          nullable: true
-        fees_amount:
-          default: null
-          type: integer
-          nullable: true
-        loan_id:
-          format: uuid
-          type: string
-        metadata:
-          additionalProperties:
-            nullable: true
-          type: object
-        principal_amount:
-          default: null
-          type: integer
-          nullable: true
-      required:
-      - loan_id
-      - metadata
       type: object
   securitySchemes:
     Bearer:

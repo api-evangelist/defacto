@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Invoice API
+  title: Defacto Invoice API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -193,15 +193,11 @@ paths:
       operationId: get_invoices
       summary: /invoices
     post:
-      description: '
+      description: 'Create an invoice.
 
-        Create an invoice.
+        - If you create an invoice that will need to be edited afterwards, create a draft invoice with the is_draft parameter. Otherwise set is_draft to false.
 
-        - If you create an invoice that will need to be edited afterwards, create a draft invoice with the <code>is_draft</code> parameter. Otherwise set <code>is_draft</code> to false.
-
-        - This endpoint requires the base64-encoded value of the PDF of the invoice. You can for example use [base64guru](https://base64.guru/converter/encode/pdf).
-
-        '
+        - This endpoint requires the base64-encoded value of the PDF of the invoice. You can for example use base64guru.'
       requestBody:
         content:
           application/json:
@@ -222,13 +218,9 @@ paths:
       summary: /invoices
   /invoice/{invoice_id}/submit:
     post:
-      description: '
+      description: 'Submit an invoice for validation by Defacto (with status TO_SUBMIT or TO_EDIT).
 
-        Submit an invoice for validation by Defacto (with status TO_SUBMIT or TO_EDIT).
-
-        If some data is missing prior to validating the invoice, a 422 error will be returned with the list of the missing fields.
-
-        '
+        If some data is missing prior to validating the invoice, a 422 error will be returned with the list of the missing fields.'
       parameters:
       - in: path
         name: invoice_id
@@ -295,80 +287,146 @@ paths:
       summary: /invoices/upload
 components:
   schemas:
-    APICounterpartyCreation:
+    Address:
       properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-          nullable: true
-        contact:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyContact'
-          default: null
-          nullable: true
-        identifier:
-          default: null
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-          nullable: true
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type: string
-          nullable: true
-        name:
-          default: null
-          description: Legal name of the business.
-          type: string
-          nullable: true
-        vat_number:
-          default: null
-          description: VatNumber
-          type: string
-          nullable: true
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
       type: object
-    APILightAccountDetails:
+    APIDraftableInvoiceCreation:
       properties:
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          description: The type of account number (e.g. IBAN).
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
           enum:
-          - account_number
-          - iban
-          - internal_id
+          - EUR
+          - GBP
+          type:
+          - string
+          - 'null'
+        document:
+          description: PDF binary (format base64 string)
           type: string
-        bank_identifier:
-          description: The identifier of the bank.
-          type: string
-        bank_identifier_type:
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
+        due_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        invoice_number:
+          default: null
+          description: Invoice number as displayed on the invoice
+          type:
+          - string
+          - 'null'
+        is_draft:
+          default: false
+          description: True by default, set to false if you want to create and validate invoice in one API call.
+          type:
+          - boolean
+          - 'null'
+        issued_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        metadata:
+          additionalProperties: {}
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type:
+          - object
+          - 'null'
+        net_amount:
+          default: null
+          description: Amount before tax, in cents
+          type:
+          - integer
+          - 'null'
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        tax_amount:
+          default: null
+          description: Amount of tax, in cents
+          type:
+          - integer
+          - 'null'
+        to_account:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type:
+          - integer
+          - 'null'
+        total_amount:
+          default: null
+          description: Sum of net amount and tax amount, in cents
+          type:
+          - integer
+          - 'null'
       required:
-      - account_number
-      - account_number_type
-      - bank_identifier
-      - bank_identifier_type
+      - document
+      type: object
+    TypedApiPage:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIInvoice'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
       type: object
     APIInvoice:
       properties:
@@ -376,7 +434,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/APIBusinessCounterparty'
           default: null
-          nullable: true
         currency:
           default: EUR
           description: Currency of the invoice. Use ISO 4217 currency code.
@@ -386,41 +443,44 @@ components:
           type: string
         document_url:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         due_at:
           default: null
           format: date-time
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         id:
           default: null
-          nullable: true
         invoice_number:
           description: Invoice number as displayed on the invoice
           type: string
         is_draft:
           default: null
           description: True by default, set to false if you want to create and validate invoice in one API call.
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         issued_at:
           default: null
           format: date-time
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         loan_ids:
           items:
             format: uuid
             type: string
           type: array
         metadata:
-          additionalProperties:
-            nullable: true
+          additionalProperties: {}
           default: null
           description: This object is yours, it enables you to add custom data.
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         net_amount:
           description: Amount before tax, in cents
           type: integer
@@ -428,7 +488,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/APIBusinessCounterparty'
           default: null
-          nullable: true
         status:
           default: TO_SUBMIT
           description: '<b>TO_SUBMIT, SUBMITTED, TO_EDIT or VERIFIED</b><ul><li>TO_SUBMIT: the invoice is a draft, you can correct it and submit it when correct</li><li>SUBMITTED: the invoice has been submitted and Defacto is verifying it</li><li>TO_EDIT: the invoice has not been validated by Defacto. It should be edited before you can submit it again</li><li>VERIFIED: the invoice has been verified by Defacto. A loan can now be requested for the invoice.</li></ul>'
@@ -615,52 +674,34 @@ components:
           - WAITING_FOR_THIRD_PARTY_PROVIDER
           - WAIT_FOR_REPAYMENT
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         tax_amount:
           default: null
           description: Amount of tax, in cents
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         to_account_details:
           allOf:
           - $ref: '#/components/schemas/APILightAccountDetails'
           default: null
-          nullable: true
         to_pay_amount:
           default: null
           description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         total_amount:
           default: null
           description: Sum of net amount and tax amount, in cents
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - invoice_number
       - net_amount
-      type: object
-    Address:
-      properties:
-        address_line_1:
-          type: string
-          nullable: true
-        address_line_2:
-          type: string
-          nullable: true
-        city:
-          type: string
-          nullable: true
-        country:
-          type: string
-          nullable: true
-        postal_code:
-          type: string
-          nullable: true
-        state:
-          type: string
-          nullable: true
       type: object
     APIBusinessIdentifier:
       properties:
@@ -693,7 +734,6 @@ components:
           - $ref: '#/components/schemas/APIBusinessIdentifier'
           default: null
           description: The business owning the account.
-          nullable: true
         account_number:
           description: The account identifier. Only IBANs are supported at the moment.
           type: string
@@ -708,8 +748,9 @@ components:
         bank_identifier:
           default: null
           description: The identifier of the bank.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         bank_identifier_type:
           default: bic
           description: The type of bank identifier (e.g. BIC).
@@ -722,18 +763,37 @@ components:
       required:
       - account_number
       type: object
+    APICounterpartyContact:
+      properties:
+        email:
+          format: email
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
+      type: object
     APIBusinessCounterparty:
       properties:
         business_id:
           default: null
           format: uuid
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         id:
           default: null
           format: uuid
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         identifier:
           description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
@@ -753,142 +813,100 @@ components:
           - steuernummer
           - vat_number
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         name:
           default: null
           description: Legal name of the business.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         vat_number:
           default: null
           description: VatNumber
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - identifier
       type: object
-    TypedApiPage:
+    APICounterpartyCreation:
       properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APIInvoice'
-          type: array
-        next_page:
-          default: null
-          type: string
-          nullable: true
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type: string
-          nullable: true
-        total:
-          default: null
-          type: integer
-          nullable: true
-      required:
-      - count
-      - page_size
-      type: object
-    APICounterpartyContact:
-      properties:
-        email:
-          format: email
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-      required:
-      - email
-      - first_name
-      - last_name
-      - phone_number
-      type: object
-    APIDraftableInvoiceCreation:
-      properties:
-        buyer:
+        address:
           allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
+          - $ref: '#/components/schemas/Address'
           default: null
-          nullable: true
-        currency:
-          default: EUR
-          description: Currency of the invoice. Use ISO 4217 currency code.
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyContact'
+          default: null
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type:
+          - string
+          - 'null'
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
-          - EUR
-          - GBP
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      type: object
+    APILightAccountDetails:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
           type: string
-          nullable: true
-        document:
-          description: PDF binary (format base64 string)
+        account_number_type:
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
           type: string
-        due_at:
-          default: null
-          format: date-time
+        bank_identifier:
+          description: The identifier of the bank.
           type: string
-          nullable: true
-        invoice_number:
-          default: null
-          description: Invoice number as displayed on the invoice
+        bank_identifier_type:
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
           type: string
-          nullable: true
-        is_draft:
-          default: false
-          description: True by default, set to false if you want to create and validate invoice in one API call.
-          type: boolean
-          nullable: true
-        issued_at:
-          default: null
-          format: date-time
-          type: string
-          nullable: true
-        metadata:
-          additionalProperties:
-            nullable: true
-          default: null
-          description: This object is yours, it enables you to add custom data.
-          type: object
-          nullable: true
-        net_amount:
-          default: null
-          description: Amount before tax, in cents
-          type: integer
-          nullable: true
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-          nullable: true
-        tax_amount:
-          default: null
-          description: Amount of tax, in cents
-          type: integer
-          nullable: true
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/APIAccountCreation'
-          default: null
-          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
-          nullable: true
-        to_pay_amount:
-          default: null
-          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type: integer
-          nullable: true
-        total_amount:
-          default: null
-          description: Sum of net amount and tax amount, in cents
-          type: integer
-          nullable: true
       required:
-      - document
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
       type: object
   securitySchemes:
     Bearer:

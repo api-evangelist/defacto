@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Business and accounts API
+  title: Defacto Business and accounts API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -39,6 +39,28 @@ paths:
       summary: /business/{business_id}/segment
 components:
   schemas:
+    BusinessSegment:
+      properties:
+        business_id:
+          format: uuid
+          type: string
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        defacto_segment:
+          default: null
+          enum:
+          - CAT1
+          - CAT2
+          - CAT3
+          - CAT4
+          - null
+          type:
+          - string
+          - 'null'
+      required:
+      - business_id
+      - business_identifier
+      type: object
     BusinessIdentifierRequired:
       properties:
         identifier:
@@ -60,27 +82,6 @@ components:
       required:
       - identifier
       - identifier_type
-      type: object
-    BusinessSegment:
-      properties:
-        business_id:
-          format: uuid
-          type: string
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        defacto_segment:
-          default: null
-          enum:
-          - CAT1
-          - CAT2
-          - CAT3
-          - CAT4
-          - null
-          type: string
-          nullable: true
-      required:
-      - business_id
-      - business_identifier
       type: object
   securitySchemes:
     Bearer:

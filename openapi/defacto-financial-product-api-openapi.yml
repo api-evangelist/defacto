@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Financial product API
+  title: Defacto Financial product API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -18,16 +18,12 @@ tags:
 paths:
   /borrower/{borrower_id}/financial-products:
     get:
-      description: '
-
-        ## List the financial products available to the borrower.
+      description: '## List the financial products available to the borrower.
 
 
         Financial products are the product against which a borrower can submit loan requests.
 
-        Each come with its own set of rules, and balances (maximum amount available, etc.).
-
-        '
+        Each come with its own set of rules, and balances (maximum amount available, etc.).'
       parameters:
       - in: path
         name: borrower_id
@@ -49,90 +45,23 @@ paths:
       summary: /borrower/{borrower_id}/financial-products
 components:
   schemas:
-    PaymentMethodConfiguration:
-      properties:
-        direct_debit:
-          allOf:
-          - $ref: '#/components/schemas/DirectDebitConfiguration'
-          default: null
-          nullable: true
-        payment_method:
-          enum:
-          - DIRECT_DEBIT
-          - SCT
-          type: string
-        sct:
-          allOf:
-          - $ref: '#/components/schemas/SctConfiguration'
-          default: null
-          nullable: true
-      required:
-      - payment_method
-      type: object
-    DepositingRule:
-      properties:
-        base_amount:
-          enum:
-          - DUE_INTERESTS
-          - ESTIMATED_FEES
-          - FIXED_AMOUNT
-          - LOAN_AMOUNT
-          - LOAN_AMOUNT_WITH_DUE_INTERESTS
-          - LOAN_AMOUNT_WITH_ESTIMATED_FEES
-          type: string
-        depositor_role:
-          enum:
-          - BENEFICIARY
-          - BORROWER
-          - FEES_PAYER
-          - PARTNER
-          type: string
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethodConfiguration'
-        purpose:
-          enum:
-          - FEES_DEPOSIT
-          - GUARANTEE_DEPOSIT
-          - RECOLLECTION_FEES_DEPOSIT
-          type: string
-        value:
-          type: string
-      required:
-      - base_amount
-      - depositor_role
-      - purpose
-      - value
-      type: object
-    AutomaticSigner:
-      properties:
-        email:
-          type: string
-        first_name:
-          type: string
-        ip_address:
-          type: string
-        last_name:
-          type: string
-      required:
-      - email
-      - first_name
-      - ip_address
-      - last_name
-      type: object
     ApiBorrowerFinancialProduct:
       properties:
         amount_outstanding:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         amount_pending_validation:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         available_amount:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         borrower_id:
           format: uuid
           type: string
@@ -140,8 +69,9 @@ components:
           type: boolean
         fees_daily_rate:
           default: null
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         financial_product:
           $ref: '#/components/schemas/ApiBorrowerFinancialProductFinancialProduct'
         id:
@@ -149,8 +79,9 @@ components:
           type: string
         max_amount:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         status:
           enum:
           - BLOCKED
@@ -338,12 +269,14 @@ components:
           - WAITING_FOR_THIRD_PARTY_PROVIDER
           - WAIT_FOR_REPAYMENT
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         unlock_loan_request_link:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - borrower_id
       - can_request_loan
@@ -351,13 +284,215 @@ components:
       - id
       - status
       type: object
+    DepositingRule:
+      properties:
+        base_amount:
+          enum:
+          - DUE_INTERESTS
+          - ESTIMATED_FEES
+          - FIXED_AMOUNT
+          - LOAN_AMOUNT
+          - LOAN_AMOUNT_WITH_DUE_INTERESTS
+          - LOAN_AMOUNT_WITH_ESTIMATED_FEES
+          type: string
+        depositor_role:
+          enum:
+          - BENEFICIARY
+          - BORROWER
+          - FEES_PAYER
+          - PARTNER
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodConfiguration'
+        purpose:
+          enum:
+          - FEES_DEPOSIT
+          - GUARANTEE_DEPOSIT
+          - RECOLLECTION_FEES_DEPOSIT
+          type: string
+        value:
+          type: string
+      required:
+      - base_amount
+      - depositor_role
+      - purpose
+      - value
+      type: object
+    SigningField:
+      properties:
+        height:
+          default: null
+          type:
+          - integer
+          - 'null'
+        mention:
+          default: null
+          type:
+          - string
+          - 'null'
+        page:
+          type: integer
+        position_x:
+          type: integer
+        position_y:
+          type: integer
+        type:
+          default: signature
+          enum:
+          - mention
+          - signature
+        width:
+          type: integer
+      required:
+      - page
+      - position_x
+      - position_y
+      - width
+      type: object
+    FPUXConfiguration:
+      properties:
+        aggregation_scenarios:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductUxAggregationScenarioConfiguration'
+          type:
+          - array
+          - 'null'
+        fp_status_on_manual_review_eligibility:
+          default: READY
+          enum:
+          - BLOCKED
+          - CHURN
+          - CLOSED_BY_USER
+          - CREATED
+          - CUT
+          - DEACTIVATED
+          - PENDING_USER_ACTION
+          - PRODUCT_DISCONTINUED
+          - READY
+          - TO_SIGN
+          type: string
+        loan_request:
+          $ref: '#/components/schemas/FPLoanRequestConfiguration'
+      type: object
+    DirectDebitConfiguration:
+      properties:
+        from_account_details_id:
+          default: null
+          description: Account that gets debited by the SDD. Can only be None when the DepositingRule debits the borrower (the borrower account is then resolved from the loan). Required for SDD rules debiting a fixed counterparty (e.g. partner).
+      type: object
+    FPLoanRequestConfiguration:
+      properties:
+        display_available_balance:
+          default: true
+          type: boolean
+        mandatory_options:
+          items:
+            enum:
+            - beneficiaries
+            - contract
+            - counterparty
+            - payable_invoice
+            - payment_terms
+            - receivable_invoice
+            type: string
+          type: array
+        maximum_duration_in_days:
+          default: 120
+          type: integer
+        maximum_loan_amount_in_cents:
+          default: 20000000
+          type: integer
+        minimum_duration_in_days:
+          default: 3
+          type: integer
+      type: object
+    ContractGenerationSettings:
+      properties:
+        batch_max_size:
+          default: 50
+          type: integer
+        batch_signature_enabled:
+          default: false
+          type: boolean
+        synchronous_contract_generation:
+          default: true
+          type: boolean
+      type: object
+    FinancialProductUxAggregationScenarioConfiguration:
+      properties:
+        payment_aggregation_scenario:
+          default: null
+          description: Processing type for aggregation scenario
+          enum:
+          - MERGE_ONLY
+          - NET_THEN_MERGE
+          - null
+          type:
+          - string
+          - 'null'
+        payment_aggregation_timing:
+          default: null
+          description: When does the aggregation happens
+          enum:
+          - DAILY
+          - LOAN_SCHEDULE
+          - null
+          type:
+          - string
+          - 'null'
+        payment_types_to_net_and_merge:
+          default: null
+          description: If payment_aggregation_scenario is NET_AND_MERGE, this should contain the list of payment types
+          items:
+            enum:
+            - CHANNEL_VERIFICATION
+            - CHARGEBACK
+            - DEPOSIT_FUNDING
+            - DEPOSIT_RELEASE
+            - DEPOSIT_WITHDRAWAL
+            - EXTRA
+            - INTERNAL
+            - LENDER_DEBT_RESOLUTION
+            - LENDER_PREFUNDING
+            - LENDER_REPURCHASE
+            - LOAN_PAYMENT
+            - LOAN_PURCHASE
+            - PAYMENT_PROVIDER_FEES
+            - PLATFORM
+            - REFUND
+            - REPAYMENT_FEES
+            - REPAYMENT_FULL
+            - REPAYMENT_NOMINAL
+            - RETURNED
+            - REVENUE_SHARE
+            - REVERT
+            - SUBSCRIPTION
+            type: string
+          type:
+          - array
+          - 'null'
+      type: object
+    InvoiceCollateralizationRiskMitigator:
+      properties:
+        triggers:
+          items:
+            enum:
+            - BORROWER_DEFAULT
+            - BORROWER_INSOLVENCY
+            type: string
+          type: array
+      required:
+      - triggers
+      type: object
     FeesPayerConfig:
       properties:
         billed_business_id:
           default: null
           format: uuid
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         fees_payer_role:
           default: PARTNER
           enum:
@@ -373,8 +508,243 @@ components:
           - ORIGINATION_DATE
           type: string
       type: object
-    InvoiceCollateralizationRiskMitigator:
+    FinancialProductBillingConfiguration:
       properties:
+        bill_overdue_threshold_in_days:
+          default: 4
+          type: integer
+        fees_payers:
+          items:
+            $ref: '#/components/schemas/FeesPayerConfig'
+          type: array
+        loan_overdue_threshold_in_days:
+          default: 4
+          type: integer
+        penalties_disabled:
+          default: false
+          type: boolean
+      type: object
+    GuaranteeCondition:
+      properties:
+        country:
+          default: null
+          type:
+          - string
+          - 'null'
+      type: object
+    SctConfiguration:
+      properties: {}
+      type: object
+    TypedApiPage14:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiBorrowerFinancialProduct'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    FinancialProductConfiguration:
+      properties:
+        billing:
+          $ref: '#/components/schemas/FinancialProductBillingConfiguration'
+        contract_generation_settings:
+          allOf:
+          - $ref: '#/components/schemas/ContractGenerationSettings'
+          default: null
+        contract_templates:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductContractTemplate'
+          type:
+          - array
+          - 'null'
+        contract_type:
+          default: CREDIT_OPERATION
+          enum:
+          - CREDIT_OPERATION
+          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
+          - EQUITY_LOAN
+          - TRADE_RECEIVABLE
+          type: string
+        depositing_rules:
+          default: null
+          items:
+            $ref: '#/components/schemas/DepositingRule'
+          type:
+          - array
+          - 'null'
+        installments:
+          $ref: '#/components/schemas/FinancialProductInstallmentsConfiguration'
+        risk_mitigation_config:
+          allOf:
+          - $ref: '#/components/schemas/RiskMitigationConfig'
+          default: null
+        subscription:
+          $ref: '#/components/schemas/SubscriptionConfig'
+        tcs_documents:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductTcsDocument'
+          type:
+          - array
+          - 'null'
+        ux:
+          $ref: '#/components/schemas/FPUXConfiguration'
+      type: object
+    AutomaticSigner:
+      properties:
+        email:
+          type: string
+        first_name:
+          type: string
+        ip_address:
+          type: string
+        last_name:
+          type: string
+      required:
+      - email
+      - first_name
+      - ip_address
+      - last_name
+      type: object
+    FinancialProductInstallmentsConfiguration:
+      properties:
+        available_types:
+          items:
+            enum:
+            - INSTALLMENTS
+            - IN_FINE
+            type: string
+          type: array
+        maximum_reschedule_payment_in_days:
+          default: 30
+          type: integer
+        minimum_anticipate_payment_in_days:
+          default: 1
+          type: integer
+        minimum_business_days_until_due_date_to_reschedule_payment:
+          default: 1
+          type: integer
+      type: object
+    LoanGuaranteeConfiguration:
+      properties:
+        conditions:
+          items:
+            $ref: '#/components/schemas/GuaranteeCondition'
+          type: array
+        create_extra_payments:
+          default: true
+          type: boolean
+        days_late:
+          type: integer
+        email_template_id:
+          type: string
+        frequency:
+          default: null
+          enum:
+          - DAILY
+          - WEEKLY
+          - null
+          type:
+          - string
+          - 'null'
+        from_deposit_account_detail_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        from_guarantor_account_detail_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        guarantor_id:
+          format: uuid
+          type: string
+        insolvency_procedure_days_late:
+          type: integer
+        min_days_since_last_chargeback:
+          default: 1
+          type: integer
+        notification_email_addresses:
+          items:
+            format: email
+            type: string
+          type: array
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        pdf_template_id:
+          type: string
+        reference_format_customization:
+          default: null
+          description: "Customize the guarantee call reference format with this string, using curly brackets to use variables. \nAvailable variables are: \n- guarantee_call_date\n- days_late\n\nExample: 'guarantee-{days_late}-dpd' will produce rev share invoice numbers like 'guarantee-90-dpd"
+          type:
+          - string
+          - 'null'
+        schedule_guarantee_call_within_hours:
+          type: integer
+        to_account_detail_id:
+          format: uuid
+          type: string
+      required:
+      - days_late
+      - email_template_id
+      - guarantor_id
+      - insolvency_procedure_days_late
+      - notification_email_addresses
+      - payment_method
+      - pdf_template_id
+      - schedule_guarantee_call_within_hours
+      - to_account_detail_id
+      type: object
+    InsuranceRiskMitigator:
+      properties:
+        delay_to_call_insurance_after_chargeback:
+          default: null
+          description: Delay in hours before calling the insurance provider after a chargeback. If None, insurance is not called after chargeback.
+          type:
+          - integer
+          - 'null'
+        delay_to_call_insurance_on_insolvency_procedure_opening:
+          default: null
+          description: Delay in hours before calling the insurance provider when an insolvency procedure is opened. If None, insurance is not called on insolvency procedure opening.
+          type:
+          - integer
+          - 'null'
+        insurance_provider:
+          description: The insurance provider to use for risk mitigation
+          enum:
+          - ALLIANZ_TRADE
+          - CREDIT_360
+          - SANDBOX
+          type: string
         triggers:
           items:
             enum:
@@ -383,7 +753,104 @@ components:
             type: string
           type: array
       required:
+      - insurance_provider
       - triggers
+      type: object
+    ApiBorrowerFinancialProductFinancialProduct:
+      properties:
+        configuration:
+          $ref: '#/components/schemas/FinancialProductConfiguration'
+        name:
+          type: string
+        product_type:
+          enum:
+          - CREDIT_CARD_FINANCING
+          - DAILLY
+          - FLEX_FINANCING
+          - INVENTORY_FINANCING
+          - INVOICE_BASED_FINANCING
+          - PAYABLE
+          - PAYABLE_FACTORING
+          - RECEIVABLE
+          - RECEIVABLE_FACTORING
+          - SELL_IN
+          - WALLET_FINANCING
+          type: string
+      required:
+      - configuration
+      - name
+      - product_type
+      type: object
+    FinancialProductContractTemplate:
+      properties:
+        country_code:
+          type: string
+        is_default:
+          default: false
+          type: boolean
+        language_code:
+          type: string
+        signature_config:
+          allOf:
+          - $ref: '#/components/schemas/SignatureConfig'
+          default: null
+        template_id:
+          type: string
+      required:
+      - country_code
+      - language_code
+      - template_id
+      type: object
+    PaymentMethodConfiguration:
+      properties:
+        direct_debit:
+          allOf:
+          - $ref: '#/components/schemas/DirectDebitConfiguration'
+          default: null
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - SCT
+          type: string
+        sct:
+          allOf:
+          - $ref: '#/components/schemas/SctConfiguration'
+          default: null
+      required:
+      - payment_method
+      type: object
+    SignatureConfig:
+      properties:
+        automatic_signer:
+          allOf:
+          - $ref: '#/components/schemas/AutomaticSigner'
+          default: null
+        contract_template_name:
+          enum:
+          - DAILLY_CREDIT_AGREEMENT_TEMPLATE
+          - DAILLY_ESCOMPTE_TEMPLATE
+          - DIRECT_MASTER_LOAN_AGREEMENT_TEMPLATE
+          - TERMS_AND_CONDITIONS
+          type: string
+        signing_fields:
+          items:
+            $ref: '#/components/schemas/SigningField'
+          type: array
+      required:
+      - contract_template_name
+      - signing_fields
+      type: object
+    SubscriptionConfig:
+      properties:
+        monthly_fee_cents:
+          default: 0
+          type: integer
+        sdd_account_detail_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
       type: object
     FinancialProductTcsDocument:
       properties:
@@ -424,8 +891,9 @@ components:
           - SVN
           - SWE
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         document_url:
           type: string
         is_default:
@@ -433,486 +901,37 @@ components:
           type: boolean
         language:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - document_url
-      type: object
-    FinancialProductInstallmentsConfiguration:
-      properties:
-        available_types:
-          items:
-            enum:
-            - INSTALLMENTS
-            - IN_FINE
-            type: string
-          type: array
-        maximum_reschedule_payment_in_days:
-          default: 30
-          type: integer
-        minimum_anticipate_payment_in_days:
-          default: 1
-          type: integer
-        minimum_business_days_until_due_date_to_reschedule_payment:
-          default: 1
-          type: integer
-      type: object
-    SignatureConfig:
-      properties:
-        automatic_signer:
-          allOf:
-          - $ref: '#/components/schemas/AutomaticSigner'
-          default: null
-          nullable: true
-        contract_template_name:
-          enum:
-          - DAILLY_CREDIT_AGREEMENT_TEMPLATE
-          - DAILLY_ESCOMPTE_TEMPLATE
-          - DIRECT_MASTER_LOAN_AGREEMENT_TEMPLATE
-          - TERMS_AND_CONDITIONS
-          type: string
-        signing_fields:
-          items:
-            $ref: '#/components/schemas/SigningField'
-          type: array
-      required:
-      - contract_template_name
-      - signing_fields
-      type: object
-    InsuranceRiskMitigator:
-      properties:
-        delay_to_call_insurance_after_chargeback:
-          default: null
-          description: Delay in hours before calling the insurance provider after a chargeback. If None, insurance is not called after chargeback.
-          type: integer
-          nullable: true
-        delay_to_call_insurance_on_insolvency_procedure_opening:
-          default: null
-          description: Delay in hours before calling the insurance provider when an insolvency procedure is opened. If None, insurance is not called on insolvency procedure opening.
-          type: integer
-          nullable: true
-        insurance_provider:
-          description: The insurance provider to use for risk mitigation
-          enum:
-          - ALLIANZ_TRADE
-          - CREDIT_360
-          - SANDBOX
-          type: string
-        triggers:
-          items:
-            enum:
-            - BORROWER_DEFAULT
-            - BORROWER_INSOLVENCY
-            type: string
-          type: array
-      required:
-      - insurance_provider
-      - triggers
-      type: object
-    SigningField:
-      properties:
-        height:
-          default: null
-          type: integer
-          nullable: true
-        mention:
-          default: null
-          type: string
-          nullable: true
-        page:
-          type: integer
-        position_x:
-          type: integer
-        position_y:
-          type: integer
-        type:
-          default: signature
-          enum:
-          - mention
-          - signature
-        width:
-          type: integer
-      required:
-      - page
-      - position_x
-      - position_y
-      - width
-      type: object
-    SctConfiguration:
-      properties: {}
-      type: object
-    FPUXConfiguration:
-      properties:
-        aggregation_scenarios:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductUxAggregationScenarioConfiguration'
-          type: array
-          nullable: true
-        fp_status_on_manual_review_eligibility:
-          default: READY
-          enum:
-          - BLOCKED
-          - CHURN
-          - CLOSED_BY_USER
-          - CREATED
-          - CUT
-          - DEACTIVATED
-          - PENDING_USER_ACTION
-          - PRODUCT_DISCONTINUED
-          - READY
-          - TO_SIGN
-          type: string
-        loan_request:
-          $ref: '#/components/schemas/FPLoanRequestConfiguration'
-      type: object
-    FinancialProductUxAggregationScenarioConfiguration:
-      properties:
-        payment_aggregation_scenario:
-          default: null
-          description: Processing type for aggregation scenario
-          enum:
-          - MERGE_ONLY
-          - NET_THEN_MERGE
-          - null
-          type: string
-          nullable: true
-        payment_aggregation_timing:
-          default: null
-          description: When does the aggregation happens
-          enum:
-          - DAILY
-          - LOAN_SCHEDULE
-          - null
-          type: string
-          nullable: true
-        payment_types_to_net_and_merge:
-          default: null
-          description: If payment_aggregation_scenario is NET_AND_MERGE, this should contain the list of payment types
-          items:
-            enum:
-            - CHANNEL_VERIFICATION
-            - CHARGEBACK
-            - DEPOSIT_FUNDING
-            - DEPOSIT_RELEASE
-            - DEPOSIT_WITHDRAWAL
-            - EXTRA
-            - INTERNAL
-            - LENDER_DEBT_RESOLUTION
-            - LENDER_PREFUNDING
-            - LENDER_REPURCHASE
-            - LOAN_PAYMENT
-            - LOAN_PURCHASE
-            - PAYMENT_PROVIDER_FEES
-            - PLATFORM
-            - REFUND
-            - REPAYMENT_FEES
-            - REPAYMENT_FULL
-            - REPAYMENT_NOMINAL
-            - RETURNED
-            - REVENUE_SHARE
-            - REVERT
-            - SUBSCRIPTION
-            type: string
-          type: array
-          nullable: true
       type: object
     RiskMitigationConfig:
       properties:
         automatically_compute_and_deploy_max_exposure_frequency_in_days:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         guarantee_configs:
           default: null
           description: List of guarantee configurations with optional conditions to match loans
           items:
             $ref: '#/components/schemas/LoanGuaranteeConfiguration'
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
         insurance_config:
           allOf:
           - $ref: '#/components/schemas/InsuranceRiskMitigator'
           default: null
           description: Configuration for insurance-based risk mitigation
-          nullable: true
         invoice_collateralization_config:
           allOf:
           - $ref: '#/components/schemas/InvoiceCollateralizationRiskMitigator'
           default: null
           description: Configuration for invoice collateralization-based risk mitigation
-          nullable: true
-      type: object
-    ApiBorrowerFinancialProductFinancialProduct:
-      properties:
-        configuration:
-          $ref: '#/components/schemas/FinancialProductConfiguration'
-        name:
-          type: string
-        product_type:
-          enum:
-          - CREDIT_CARD_FINANCING
-          - DAILLY
-          - FLEX_FINANCING
-          - INVENTORY_FINANCING
-          - INVOICE_BASED_FINANCING
-          - PAYABLE
-          - PAYABLE_FACTORING
-          - RECEIVABLE
-          - RECEIVABLE_FACTORING
-          - SELL_IN
-          - WALLET_FINANCING
-          type: string
-      required:
-      - configuration
-      - name
-      - product_type
-      type: object
-    FinancialProductContractTemplate:
-      properties:
-        country_code:
-          type: string
-        is_default:
-          default: false
-          type: boolean
-        language_code:
-          type: string
-        signature_config:
-          allOf:
-          - $ref: '#/components/schemas/SignatureConfig'
-          default: null
-          nullable: true
-        template_id:
-          type: string
-      required:
-      - country_code
-      - language_code
-      - template_id
-      type: object
-    LoanGuaranteeConfiguration:
-      properties:
-        conditions:
-          items:
-            $ref: '#/components/schemas/GuaranteeCondition'
-          type: array
-        create_extra_payments:
-          default: true
-          type: boolean
-        days_late:
-          type: integer
-        email_template_id:
-          type: string
-        frequency:
-          default: null
-          enum:
-          - DAILY
-          - WEEKLY
-          - null
-          type: string
-          nullable: true
-        from_deposit_account_detail_id:
-          default: null
-          format: uuid
-          type: string
-          nullable: true
-        from_guarantor_account_detail_id:
-          default: null
-          format: uuid
-          type: string
-          nullable: true
-        guarantor_id:
-          format: uuid
-          type: string
-        insolvency_procedure_days_late:
-          type: integer
-        min_days_since_last_chargeback:
-          default: 1
-          type: integer
-        notification_email_addresses:
-          items:
-            format: email
-            type: string
-          type: array
-        payment_method:
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        pdf_template_id:
-          type: string
-        reference_format_customization:
-          default: null
-          description: "Customize the guarantee call reference format with this string, using curly brackets to use variables. \nAvailable variables are: \n- guarantee_call_date\n- days_late\n\nExample: 'guarantee-{days_late}-dpd' will produce rev share invoice numbers like 'guarantee-90-dpd"
-          type: string
-          nullable: true
-        schedule_guarantee_call_within_hours:
-          type: integer
-        to_account_detail_id:
-          format: uuid
-          type: string
-      required:
-      - days_late
-      - email_template_id
-      - guarantor_id
-      - insolvency_procedure_days_late
-      - notification_email_addresses
-      - payment_method
-      - pdf_template_id
-      - schedule_guarantee_call_within_hours
-      - to_account_detail_id
-      type: object
-    FPLoanRequestConfiguration:
-      properties:
-        display_available_balance:
-          default: true
-          type: boolean
-        mandatory_options:
-          items:
-            enum:
-            - beneficiaries
-            - contract
-            - counterparty
-            - payable_invoice
-            - payment_terms
-            - receivable_invoice
-            type: string
-          type: array
-        maximum_duration_in_days:
-          default: 120
-          type: integer
-        maximum_loan_amount_in_cents:
-          default: 20000000
-          type: integer
-        minimum_duration_in_days:
-          default: 3
-          type: integer
-      type: object
-    FinancialProductBillingConfiguration:
-      properties:
-        bill_overdue_threshold_in_days:
-          default: 4
-          type: integer
-        fees_payers:
-          items:
-            $ref: '#/components/schemas/FeesPayerConfig'
-          type: array
-        loan_overdue_threshold_in_days:
-          default: 4
-          type: integer
-        penalties_disabled:
-          default: false
-          type: boolean
-      type: object
-    ContractGenerationSettings:
-      properties:
-        batch_max_size:
-          default: 50
-          type: integer
-        batch_signature_enabled:
-          default: false
-          type: boolean
-        synchronous_contract_generation:
-          default: true
-          type: boolean
-      type: object
-    FinancialProductConfiguration:
-      properties:
-        billing:
-          $ref: '#/components/schemas/FinancialProductBillingConfiguration'
-        contract_generation_settings:
-          allOf:
-          - $ref: '#/components/schemas/ContractGenerationSettings'
-          default: null
-          nullable: true
-        contract_templates:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductContractTemplate'
-          type: array
-          nullable: true
-        contract_type:
-          default: CREDIT_OPERATION
-          enum:
-          - CREDIT_OPERATION
-          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
-          - EQUITY_LOAN
-          - TRADE_RECEIVABLE
-          type: string
-        depositing_rules:
-          default: null
-          items:
-            $ref: '#/components/schemas/DepositingRule'
-          type: array
-          nullable: true
-        installments:
-          $ref: '#/components/schemas/FinancialProductInstallmentsConfiguration'
-        risk_mitigation_config:
-          allOf:
-          - $ref: '#/components/schemas/RiskMitigationConfig'
-          default: null
-          nullable: true
-        subscription:
-          $ref: '#/components/schemas/SubscriptionConfig'
-        tcs_documents:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductTcsDocument'
-          type: array
-          nullable: true
-        ux:
-          $ref: '#/components/schemas/FPUXConfiguration'
-      type: object
-    TypedApiPage14:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/ApiBorrowerFinancialProduct'
-          type: array
-        next_page:
-          default: null
-          type: string
-          nullable: true
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type: string
-          nullable: true
-        total:
-          default: null
-          type: integer
-          nullable: true
-      required:
-      - count
-      - page_size
-      type: object
-    DirectDebitConfiguration:
-      properties:
-        from_account_details_id:
-          default: null
-          description: Account that gets debited by the SDD. Can only be None when the DepositingRule debits the borrower (the borrower account is then resolved from the loan). Required for SDD rules debiting a fixed counterparty (e.g. partner).
-          nullable: true
-      type: object
-    GuaranteeCondition:
-      properties:
-        country:
-          default: null
-          type: string
-          nullable: true
-      type: object
-    SubscriptionConfig:
-      properties:
-        monthly_fee_cents:
-          default: 0
-          type: integer
-        sdd_account_detail_id:
-          default: null
-          format: uuid
-          type: string
-          nullable: true
       type: object
   securitySchemes:
     Bearer:

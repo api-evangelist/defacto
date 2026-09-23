@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Translation API
+  title: Defacto Translation API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -59,22 +59,6 @@ paths:
       summary: /translation/denial-code/{code}
 components:
   schemas:
-    TranslationResult:
-      properties:
-        de:
-          type: string
-        en:
-          type: string
-        es:
-          type: string
-        fr:
-          type: string
-      required:
-      - de
-      - en
-      - es
-      - fr
-      type: object
     DataTypeInfo:
       properties:
         data_type:
@@ -106,6 +90,22 @@ components:
       - data_type
       - requires_document
       - translations
+      type: object
+    TranslationResult:
+      properties:
+        de:
+          type: string
+        en:
+          type: string
+        es:
+          type: string
+        fr:
+          type: string
+      required:
+      - de
+      - en
+      - es
+      - fr
       type: object
   securitySchemes:
     Bearer:

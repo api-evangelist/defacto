@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Counterparty API
+  title: Defacto Counterparty API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -343,8 +343,9 @@ components:
           - WAITING_FOR_THIRD_PARTY_PROVIDER
           - WAIT_FOR_REPAYMENT
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - available_amount
       - max_amount
@@ -359,18 +360,21 @@ components:
           type: array
         next_page:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         page_size:
           type: integer
         previous_page:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         total:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - count
       - page_size
@@ -378,23 +382,29 @@ components:
     Address:
       properties:
         address_line_1:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         address_line_2:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         city:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         country:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         postal_code:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         state:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       type: object
     APICounterpartyExplicitCreation:
       properties:
@@ -402,12 +412,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/Address'
           default: null
-          nullable: true
         contact:
           allOf:
           - $ref: '#/components/schemas/APICounterpartyContact'
           default: null
-          nullable: true
         identifier:
           description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
@@ -429,8 +437,9 @@ components:
         name:
           default: null
           description: Legal name of the business.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         relation_types:
           items:
             enum:
@@ -447,12 +456,30 @@ components:
         vat_number:
           default: null
           description: VatNumber
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - identifier
       - identifier_type
       - relation_types
+      type: object
+    APICounterpartyContact:
+      properties:
+        email:
+          format: email
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
       type: object
     APICounterpartyWithExposure:
       properties:
@@ -460,12 +487,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/Address'
           default: null
-          nullable: true
         contact:
           allOf:
           - $ref: '#/components/schemas/APICounterpartyContact'
           default: null
-          nullable: true
         credit_limit:
           $ref: '#/components/schemas/APICreditLimit'
         id:
@@ -508,13 +533,15 @@ components:
         selected_for_financing:
           default: null
           description: Whether this counterparty is selected for financing
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         vat_number:
           default: null
           description: VatNumber
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - credit_limit
       - id
@@ -522,23 +549,6 @@ components:
       - identifier_type
       - name
       - relation_types
-      type: object
-    APICounterpartyContact:
-      properties:
-        email:
-          format: email
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-      required:
-      - email
-      - first_name
-      - last_name
-      - phone_number
       type: object
   securitySchemes:
     Bearer:

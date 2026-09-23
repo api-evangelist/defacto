@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Credit card API
+  title: Defacto Credit card API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -201,21 +201,78 @@ paths:
       summary: /cards/{card_id}/ephemeral-key
 components:
   schemas:
-    EphemeralKeyResult:
+    CreditBalance:
       properties:
-        ephemeral_key_secret:
+        available:
+          type: integer
+        available_including_pending:
+          default: null
+          type:
+          - integer
+          - 'null'
+        currency:
           type: string
+        pending:
+          default: null
+          type:
+          - integer
+          - 'null'
+        used:
+          type: integer
+      required:
+      - available
+      - currency
+      - used
+      type: object
+    ApiCard:
+      properties:
+        balance:
+          $ref: '#/components/schemas/CreditBalance'
+        brand:
+          type: string
+        card_type:
+          default: virtual
+          type: string
+        constraints:
+          additionalProperties: {}
+          type: object
+        currency:
+          type: string
+        first_name:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          format: uuid
+          type: string
+        last4:
+          type: string
+        last_name:
+          default: null
+          type:
+          - string
+          - 'null'
         provider_account_id:
-          type: string
+          default: null
+          type:
+          - string
+          - 'null'
         provider_card_id:
-          type: string
-        publishable_key:
+          default: null
+          type:
+          - string
+          - 'null'
+        status:
           type: string
       required:
-      - ephemeral_key_secret
-      - provider_account_id
-      - provider_card_id
-      - publishable_key
+      - balance
+      - brand
+      - constraints
+      - currency
+      - id
+      - last4
+      - status
       type: object
     ApiCardEntry:
       properties:
@@ -231,20 +288,23 @@ components:
           type: string
         funding_obligation_id:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         id:
           type: string
         merchant_amount:
           default: null
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         merchant_category:
           type: string
         merchant_currency:
           default: null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         merchant_name:
           type: string
         transaction_type:
@@ -265,73 +325,21 @@ components:
       required:
       - status
       type: object
-    ApiCard:
+    EphemeralKeyResult:
       properties:
-        balance:
-          $ref: '#/components/schemas/CreditBalance'
-        brand:
+        ephemeral_key_secret:
           type: string
-        card_type:
-          default: virtual
-          type: string
-        constraints:
-          additionalProperties:
-            nullable: true
-          type: object
-        currency:
-          type: string
-        first_name:
-          default: null
-          type: string
-          nullable: true
-        id:
-          format: uuid
-          type: string
-        last4:
-          type: string
-        last_name:
-          default: null
-          type: string
-          nullable: true
         provider_account_id:
-          default: null
           type: string
-          nullable: true
         provider_card_id:
-          default: null
           type: string
-          nullable: true
-        status:
+        publishable_key:
           type: string
       required:
-      - balance
-      - brand
-      - constraints
-      - currency
-      - id
-      - last4
-      - status
-      type: object
-    CreditBalance:
-      properties:
-        available:
-          type: integer
-        available_including_pending:
-          default: null
-          type: integer
-          nullable: true
-        currency:
-          type: string
-        pending:
-          default: null
-          type: integer
-          nullable: true
-        used:
-          type: integer
-      required:
-      - available
-      - currency
-      - used
+      - ephemeral_key_secret
+      - provider_account_id
+      - provider_card_id
+      - publishable_key
       type: object
   securitySchemes:
     Bearer:

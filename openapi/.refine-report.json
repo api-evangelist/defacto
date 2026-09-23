@@ -1,24 +1,7 @@
 {
   "provider": "defacto",
   "sources": [
-    "defacto-accounting-api-openapi.yml",
-    "defacto-billing-api-openapi.yml",
-    "defacto-business-and-accounts-api-openapi.yml",
-    "defacto-counterparty-api-openapi.yml",
-    "defacto-credit-card-api-openapi.yml",
-    "defacto-eligibility-and-credit-limit-api-openapi.yml",
-    "defacto-financial-product-api-openapi.yml",
-    "defacto-invoice-api-openapi.yml",
-    "defacto-loan-api-openapi.yml",
-    "defacto-onboarding-api-openapi.yml",
-    "defacto-payment-api-openapi.yml",
-    "defacto-recollection-api-openapi.yml",
-    "defacto-repay-api-openapi.yml",
-    "defacto-sharing-business-data-api-openapi.yml",
-    "defacto-subscription-api-openapi.yml",
-    "defacto-testing-api-openapi.yml",
-    "defacto-translation-api-openapi.yml",
-    "defacto-webhook-api-openapi.yml"
+    "_original/defacto-openapi-original.json"
   ],
   "outputs": [
     "defacto-accounting-api-openapi.yml",
@@ -42,10 +25,35 @@
   ],
   "archived": [],
   "errors": [
-    "defacto-invoice-api-openapi.yml: dangling $ref: #/components/requestBodies/APIPatchInvoice",
-    "defacto-webhook-api-openapi.yml: dangling $ref: #/components/requestBodies/CreateWebhook"
+    "defacto-openapi-original.json: dangling $ref: #/components/requestBodies/APIPatchInvoice",
+    "defacto-openapi-original.json: dangling $ref: #/components/requestBodies/CreateWebhook"
   ],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "defacto-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "defacto-openapi-original.json: tagged paths POST /repay/now -> Repay",
+    "defacto-openapi-original.json: declared missing tag: Repay",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "defacto-accounting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-billing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-business-and-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-counterparty-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-credit-card-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-eligibility-and-credit-limit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-financial-product-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-invoice-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-loan-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-onboarding-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-recollection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-repay-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-sharing-business-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-subscription-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-testing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-translation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "defacto-webhook-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Defacto Accounting Testing API
+  title: Defacto Testing API
   version: v1.0.0
-  description: Defacto provides instant, embedded financing for SMBs across Europe. This REST API lets partners onboard borrowers, test eligibility and credit limits, upload business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue and manage credit cards, bill fees, and subscribe to webhooks. Reconstructed by API Evangelist from the per-operation OpenAPI fragments published on Defacto's ReadMe developer portal (developers.getdefacto.com/llms.txt). operationId values are the provider's ReadMe reference slugs; summaries are the reference page titles.
+  description: Defacto provides instant, embedded financing for SMBs across Europe.
   contact:
     email: contact@getdefacto.com
     url: https://developers.getdefacto.com/
@@ -33,17 +33,13 @@ paths:
       summary: /hello
   /sandbox/business-generator:
     get:
-      description: '
-
-        Generate a fake business for you to use in your test.
+      description: 'Generate a fake business for you to use in your test.
 
         Important, this endpoint does not create the business but simply return the payload.
 
         Call `/borrowers` to register this business and generate loan for it
 
-        Warning: these invoices and their IBANs will not work in production.
-
-        '
+        Warning: these invoices and their IBANs will not work in production.'
       parameters:
       - in: query
         name: country
@@ -82,9 +78,7 @@ paths:
       summary: /sandbox/business-generator
   /sandbox/iban-generator:
     get:
-      description: '
-
-        Generate a new IBAN that will produce a given scenario on the sandbox, for example a rejected loan.
+      description: 'Generate a new IBAN that will produce a given scenario on the sandbox, for example a rejected loan.
 
         Each IBAN can be used as the account of a single counterparty or borrower (a buyer or seller of yours).
 
@@ -92,13 +86,11 @@ paths:
 
         The BIC associated to these IBANs is FK2FACTO.
 
-        Also, if you want to test another scenario on a given business, create a new IBAN and use it in the <code>to_account</code> field of the next invoice and loan that you create for this counterparty.
+        Also, if you want to test another scenario on a given business, create a new IBAN and use it in the to_account field of the next invoice and loan that you create for this counterparty.
 
-        For more information on the scenarios of the sandbox, please refer to the <a href="https://developers.getdefacto.com/reference/testing-your-integration">Testing Multiple Scenarios & Errors</a> section.
+        For more information on the scenarios of the sandbox, please refer to the Testing Multiple Scenarios & Errors section.
 
-        Warning: these IBANs will not work in production.
-
-        '
+        Warning: these IBANs will not work in production.'
       parameters:
       - in: query
         name: country
@@ -143,9 +135,7 @@ paths:
       summary: /sandbox/iban-generator
   /sandbox/business-eligible:
     post:
-      description: '
-
-        This endpoint enables you to configure the eligibility of a business.
+      description: 'This endpoint enables you to configure the eligibility of a business.
 
         Pass NOT_ELIGIBLE to make a business non-eligible.
 
@@ -155,9 +145,7 @@ paths:
 
         (1) when the business is the borrower or
 
-        (2) when the business is on the invoice to finance but is not the borrower.
-
-        '
+        (2) when the business is on the invoice to finance but is not the borrower.'
       requestBody:
         content:
           application/json:
@@ -177,9 +165,7 @@ paths:
       summary: /sandbox/business-eligible
   /sandbox/invoice-generator:
     post:
-      description: '
-
-        !!! The documentation website is not able to display the full response of this endpoint. The use of the curl command is recommended. !!!
+      description: '!!! The documentation website is not able to display the full response of this endpoint. The use of the curl command is recommended. !!!
 
 
         Generate a fake invoice that will produce a given scenario on the sandbox, for example a rejected loan.
@@ -190,11 +176,9 @@ paths:
 
         If you want to test another scenario on a given business, create another fake invoice.
 
-        For more information on the scenarios of the sandbox, please refer to the <a href="https://developers.getdefacto.com/reference/testing-your-integration">Testing your integration</a> section.
+        For more information on the scenarios of the sandbox, please refer to the Testing your integration section.
 
-        Warning: these invoices and their IBANs will not work in production.
-
-        '
+        Warning: these invoices and their IBANs will not work in production.'
       requestBody:
         content:
           application/json:
@@ -215,35 +199,295 @@ paths:
       summary: /sandbox/invoice-generator
 components:
   schemas:
-    GeneratedInvoice:
+    APICounterpartyCreation:
       properties:
-        invoice_creation_payload:
-          $ref: '#/components/schemas/APIDraftableInvoiceCreation'
-        pdf_download_url:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyContact'
+          default: null
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type:
+          - string
+          - 'null'
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      type: object
+    GenerateIbanResponse:
+      properties:
+        iban:
           type: string
       required:
-      - invoice_creation_payload
-      - pdf_download_url
+      - iban
+      type: object
+    APIIdentityDocument:
+      properties:
+        description:
+          default: null
+          description: An optional string that describes the document.
+          type:
+          - string
+          - 'null'
+        document_binary_base64:
+          description: A string that represents the document's binary content encoded in Base64.
+          type: string
+        filename:
+          description: The name of the file, including its extension.
+          type: string
+      required:
+      - document_binary_base64
+      - filename
+      type: object
+    APIAccountCreation:
+      properties:
+        account_holder:
+          allOf:
+          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          default: null
+          description: The business owning the account.
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      type: object
+    GenerateInvoiceRequest:
+      properties:
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        country:
+          default: FRA
+          enum:
+          - BEL
+          - DEU
+          - ESP
+          - FRA
+          - GUF
+          - ISL
+          - MAF
+          - NLD
+          - REU
+          type: string
+        scenario:
+          default: SUCCESS
+          enum:
+          - CANCEL
+          - FAIL
+          - REJECT
+          - SUCCESS
+          - SUCCESS_ONE_DAY_LATER
+          type: string
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+      type: object
+    CreateAddress:
+      properties:
+        address_line_1:
+          default: null
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          default: null
+          type:
+          - string
+          - 'null'
+        city:
+          default: null
+          type:
+          - string
+          - 'null'
+        country:
+          default: null
+          type:
+          - string
+          - 'null'
+        postal_code:
+          default: null
+          maxLength: 10
+          type:
+          - string
+          - 'null'
+        state:
+          default: null
+          type:
+          - string
+          - 'null'
+      type: object
+    BirthPlace:
+      properties:
+        city:
+          default: null
+          description: City where the person was born.
+          type:
+          - string
+          - 'null'
+        country:
+          default: null
+          description: Country where the person was born. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type:
+          - string
+          - 'null'
+      type: object
+    APICreateIdentityDocuments:
+      properties:
+        custom_identity_documents:
+          default: null
+          items:
+            $ref: '#/components/schemas/APIIdentityDocument'
+          type:
+          - array
+          - 'null'
+        identity_document_back:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+        identity_document_front:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+      type: object
+    APICreateOwner:
+      properties:
+        birth_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        email:
+          default: null
+          format: email
+          type:
+          - string
+          - 'null'
+        first_name:
+          type: string
+        identity_documents:
+          allOf:
+          - $ref: '#/components/schemas/APICreateIdentityDocuments'
+          default: null
+          description: 'Owner''s identity documents: All documents must be provided as a Base64 encoded string of the document''s content.The front side of the identity document is mandatory. This can include either just the front side or both sides (recto-verso) of the identity document.The back side of the identity document is optional. You only need to provide it if you have already submitted the front side and vice versa.Additional identity documents are optional. You may submit other identity documents that you believe are relevant, such as a document used as proof of address, or one containing your code and signature.'
+        last_name:
+          type: string
+        phone_number:
+          default: null
+          description: PhoneNumber
+          type:
+          - string
+          - 'null'
+      required:
+      - first_name
+      - last_name
       type: object
     APIPostBorrower:
       properties:
         account_number:
           default: null
           description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         address:
           allOf:
           - $ref: '#/components/schemas/BusinessAddress'
           default: null
-          nullable: true
         directors:
           default: null
           items:
             $ref: '#/components/schemas/APICreateDirector'
           minItems: 1
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
         identifier:
           description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
@@ -262,53 +506,204 @@ components:
           - steuernummer
           - vat_number
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         legal_form:
           default: null
           description: Legal form of the business.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         metadata:
-          additionalProperties:
-            nullable: true
+          additionalProperties: {}
           default: null
           description: This object is yours, it enables you to add custom data.
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         name:
           default: null
           description: Legal name of the business.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         owner:
           allOf:
           - $ref: '#/components/schemas/APICreateOwner'
           default: null
           description: The person requesting subscribing to Defacto on behalf of the borrowers. Must be added as a director too
-          nullable: true
         preferred_language:
           default: null
           description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         signed_at:
           default: null
           description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
           format: date-time
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         vat_number:
           default: null
           description: VatNumber
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         wait_for_ready:
           default: false
           description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
           type: boolean
       required:
       - identifier
+      type: object
+    BusinessAddress:
+      properties:
+        address_line_1:
+          type: string
+        address_line_2:
+          default: null
+          type:
+          - string
+          - 'null'
+        city:
+          type: string
+        country:
+          type: string
+        postal_code:
+          maxLength: 10
+          type: string
+        state:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - address_line_1
+      - city
+      - country
+      - postal_code
+      type: object
+    GeneratedInvoice:
+      properties:
+        invoice_creation_payload:
+          $ref: '#/components/schemas/APIDraftableInvoiceCreation'
+        pdf_download_url:
+          type: string
+      required:
+      - invoice_creation_payload
+      - pdf_download_url
+      type: object
+    APIDraftableInvoiceCreation:
+      properties:
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
+          enum:
+          - EUR
+          - GBP
+          type:
+          - string
+          - 'null'
+        document:
+          description: PDF binary (format base64 string)
+          type: string
+        due_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        invoice_number:
+          default: null
+          description: Invoice number as displayed on the invoice
+          type:
+          - string
+          - 'null'
+        is_draft:
+          default: false
+          description: True by default, set to false if you want to create and validate invoice in one API call.
+          type:
+          - boolean
+          - 'null'
+        issued_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        metadata:
+          additionalProperties: {}
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type:
+          - object
+          - 'null'
+        net_amount:
+          default: null
+          description: Amount before tax, in cents
+          type:
+          - integer
+          - 'null'
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        tax_amount:
+          default: null
+          description: Amount of tax, in cents
+          type:
+          - integer
+          - 'null'
+        to_account:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type:
+          - integer
+          - 'null'
+        total_amount:
+          default: null
+          description: Sum of net amount and tax amount, in cents
+          type:
+          - integer
+          - 'null'
+      required:
+      - document
+      type: object
+    APIBusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
       type: object
     APICounterpartyContact:
       properties:
@@ -327,34 +722,6 @@ components:
       - last_name
       - phone_number
       type: object
-    CreateAddress:
-      properties:
-        address_line_1:
-          default: null
-          type: string
-          nullable: true
-        address_line_2:
-          default: null
-          type: string
-          nullable: true
-        city:
-          default: null
-          type: string
-          nullable: true
-        country:
-          default: null
-          type: string
-          nullable: true
-        postal_code:
-          default: null
-          maxLength: 10
-          type: string
-          nullable: true
-        state:
-          default: null
-          type: string
-          nullable: true
-      type: object
     APICreateDirector:
       properties:
         address:
@@ -362,29 +729,30 @@ components:
           - $ref: '#/components/schemas/CreateAddress'
           default: null
           description: Address of the person.
-          nullable: true
         birth_date:
           default: null
           description: Birth date of the person. (YYYY-MM-DD)
           format: date
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         birth_place:
           allOf:
           - $ref: '#/components/schemas/BirthPlace'
           default: null
           description: Birth place of the person.
-          nullable: true
         business_email:
           default: null
           format: email
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         business_phone_number:
           default: null
           description: PhoneNumber
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         entity_type:
           default: people
           enum:
@@ -429,16 +797,17 @@ components:
         first_name:
           default: null
           description: The first name of the person.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         id:
           default: null
-          nullable: true
         identifier:
           default: null
           description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         identifier_type:
           default: null
           description: Type of legal business identifier of the business, such as the SIRET in France.
@@ -455,23 +824,27 @@ components:
           - steuernummer
           - vat_number
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         last_name:
           default: null
           description: The first name of the person.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         legal_name:
           default: null
           description: Legal name of the business.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         nationality:
           default: null
           description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         role:
           default: DIRECTOR
           enum:
@@ -483,226 +856,12 @@ components:
           - $ref: '#/components/schemas/CreateAddress'
           default: null
           description: Address of the business head quarters.
-          nullable: true
         title:
           default: null
           description: Title of the person (e.g. M., Dr., etc.)
-          type: string
-          nullable: true
-      type: object
-    Address:
-      properties:
-        address_line_1:
-          type: string
-          nullable: true
-        address_line_2:
-          type: string
-          nullable: true
-        city:
-          type: string
-          nullable: true
-        country:
-          type: string
-          nullable: true
-        postal_code:
-          type: string
-          nullable: true
-        state:
-          type: string
-          nullable: true
-      type: object
-    APIDraftableInvoiceCreation:
-      properties:
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-          nullable: true
-        currency:
-          default: EUR
-          description: Currency of the invoice. Use ISO 4217 currency code.
-          enum:
-          - EUR
-          - GBP
-          type: string
-          nullable: true
-        document:
-          description: PDF binary (format base64 string)
-          type: string
-        due_at:
-          default: null
-          format: date-time
-          type: string
-          nullable: true
-        invoice_number:
-          default: null
-          description: Invoice number as displayed on the invoice
-          type: string
-          nullable: true
-        is_draft:
-          default: false
-          description: True by default, set to false if you want to create and validate invoice in one API call.
-          type: boolean
-          nullable: true
-        issued_at:
-          default: null
-          format: date-time
-          type: string
-          nullable: true
-        metadata:
-          additionalProperties:
-            nullable: true
-          default: null
-          description: This object is yours, it enables you to add custom data.
-          type: object
-          nullable: true
-        net_amount:
-          default: null
-          description: Amount before tax, in cents
-          type: integer
-          nullable: true
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-          nullable: true
-        tax_amount:
-          default: null
-          description: Amount of tax, in cents
-          type: integer
-          nullable: true
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/APIAccountCreation'
-          default: null
-          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
-          nullable: true
-        to_pay_amount:
-          default: null
-          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type: integer
-          nullable: true
-        total_amount:
-          default: null
-          description: Sum of net amount and tax amount, in cents
-          type: integer
-          nullable: true
-      required:
-      - document
-      type: object
-    APIIdentityDocument:
-      properties:
-        description:
-          default: null
-          description: An optional string that describes the document.
-          type: string
-          nullable: true
-        document_binary_base64:
-          description: A string that represents the document's binary content encoded in Base64.
-          type: string
-        filename:
-          description: The name of the file, including its extension.
-          type: string
-      required:
-      - document_binary_base64
-      - filename
-      type: object
-    GenerateInvoiceRequest:
-      properties:
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-          nullable: true
-        country:
-          default: FRA
-          enum:
-          - BEL
-          - DEU
-          - ESP
-          - FRA
-          - GUF
-          - ISL
-          - MAF
-          - NLD
-          - REU
-          type: string
-        scenario:
-          default: SUCCESS
-          enum:
-          - CANCEL
-          - FAIL
-          - REJECT
-          - SUCCESS
-          - SUCCESS_ONE_DAY_LATER
-          type: string
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-          nullable: true
-      type: object
-    BirthPlace:
-      properties:
-        city:
-          default: null
-          description: City where the person was born.
-          type: string
-          nullable: true
-        country:
-          default: null
-          description: Country where the person was born. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
-          type: string
-          nullable: true
-      type: object
-    APIBusinessIdentifier:
-      properties:
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    BusinessAddress:
-      properties:
-        address_line_1:
-          type: string
-        address_line_2:
-          default: null
-          type: string
-          nullable: true
-        city:
-          type: string
-        country:
-          type: string
-        postal_code:
-          maxLength: 10
-          type: string
-        state:
-          default: null
-          type: string
-          nullable: true
-      required:
-      - address_line_1
-      - city
-      - country
-      - postal_code
+          type:
+          - string
+          - 'null'
       type: object
     BusinessEligibleParams:
       properties:
@@ -738,149 +897,11 @@ components:
           - steuernummer
           - vat_number
           - null
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - identifier
-      type: object
-    APICounterpartyCreation:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-          nullable: true
-        contact:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyContact'
-          default: null
-          nullable: true
-        identifier:
-          default: null
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-          nullable: true
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type: string
-          nullable: true
-        name:
-          default: null
-          description: Legal name of the business.
-          type: string
-          nullable: true
-        vat_number:
-          default: null
-          description: VatNumber
-          type: string
-          nullable: true
-      type: object
-    GenerateIbanResponse:
-      properties:
-        iban:
-          type: string
-      required:
-      - iban
-      type: object
-    APICreateOwner:
-      properties:
-        birth_date:
-          default: null
-          format: date
-          type: string
-          nullable: true
-        email:
-          default: null
-          format: email
-          type: string
-          nullable: true
-        first_name:
-          type: string
-        identity_documents:
-          allOf:
-          - $ref: '#/components/schemas/APICreateIdentityDocuments'
-          default: null
-          description: 'Owner''s identity documents: All documents must be provided as a Base64 encoded string of the document''s content.The front side of the identity document is mandatory. This can include either just the front side or both sides (recto-verso) of the identity document.The back side of the identity document is optional. You only need to provide it if you have already submitted the front side and vice versa.Additional identity documents are optional. You may submit other identity documents that you believe are relevant, such as a document used as proof of address, or one containing your code and signature.'
-          nullable: true
-        last_name:
-          type: string
-        phone_number:
-          default: null
-          description: PhoneNumber
-          type: string
-          nullable: true
-      required:
-      - first_name
-      - last_name
-      type: object
-    APIAccountCreation:
-      properties:
-        account_holder:
-          allOf:
-          - $ref: '#/components/schemas/APIBusinessIdentifier'
-          default: null
-          description: The business owning the account.
-          nullable: true
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          default: iban
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          default: null
-          description: The identifier of the bank.
-          type: string
-          nullable: true
-        bank_identifier_type:
-          default: bic
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      type: object
-    APICreateIdentityDocuments:
-      properties:
-        custom_identity_documents:
-          default: null
-          items:
-            $ref: '#/components/schemas/APIIdentityDocument'
-          type: array
-          nullable: true
-        identity_document_back:
-          allOf:
-          - $ref: '#/components/schemas/APIIdentityDocument'
-          default: null
-          nullable: true
-        identity_document_front:
-          allOf:
-          - $ref: '#/components/schemas/APIIdentityDocument'
-          default: null
-          nullable: true
       type: object
   securitySchemes:
     Bearer:
