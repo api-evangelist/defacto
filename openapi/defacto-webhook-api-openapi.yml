@@ -142,7 +142,7 @@ components:
       - count
       - page_size
       type: object
-    Webhook:
+    Webhook1:
       properties:
         event_types:
           items:
@@ -198,7 +198,7 @@ components:
       - name
       - to_url
       type: object
-    Webhook1:
+    Webhook:
       properties:
         event_types:
           items:

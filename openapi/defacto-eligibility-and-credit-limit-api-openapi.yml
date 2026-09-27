@@ -231,11 +231,50 @@ paths:
       summary: /eligibility/borrower
 components:
   schemas:
-    BusinessIdentifierRequired:
+    LightBusiness:
       properties:
+        activity_description:
+          default: null
+          type:
+          - string
+          - 'null'
+        activity_type:
+          default: null
+          type:
+          - string
+          - 'null'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        capital:
+          default: null
+          type:
+          - integer
+          - 'null'
+        creation_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        has_ongoing_insolvency_procedure:
+          default: null
+          type:
+          - boolean
+          - 'null'
+        id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
         identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
         identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
           - belgium_registration_number
           - bsn
@@ -248,176 +287,92 @@ components:
           - siret
           - steuernummer
           - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    Address:
-      properties:
-        address_line_1:
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        postal_code:
-          type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-      type: object
-    TranslationResult:
-      properties:
-        de:
-          type: string
-        en:
-          type: string
-        es:
-          type: string
-        fr:
-          type: string
-      required:
-      - de
-      - en
-      - es
-      - fr
-      type: object
-    APICreditLine:
-      properties:
-        balance_available:
-          default: null
-          description: Remaining amount that can be loaned.
-          type:
-          - integer
-          - 'null'
-        balance_pending:
-          default: 0
-          description: ''
-          type: integer
-        balance_pending_validation:
-          default: 0
-          description: Amount locked because some loans are pending validation
-          type: integer
-        contract_number:
-          default: null
-          type:
-          - string
-          - 'null'
-        currency:
-          default: EUR
-          enum:
-          - EUR
-          - GBP
-          type: string
-        default_borrower:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
-          default: null
-        default_borrower_strategy:
-          default: null
-          enum:
-          - BUYER
-          - SELLER
           - null
           type:
           - string
           - 'null'
-        default_guarantor:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
+        is_active:
           default: null
-        default_loan_from:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
+          type:
+          - boolean
+          - 'null'
+        is_diffusible:
           default: null
-        default_repayment_from:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
+          type:
+          - boolean
+          - 'null'
+        last_insolvency_procedure_closing_date:
           default: null
-        default_repayment_method:
-          default: DIRECT_DEBIT
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        default_repayment_to:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          default: null
-        distribution:
-          enum:
-          - DIRECT
-          - PARTNER
-          type: string
-        end_date:
-          default: null
-          format: date-time
+          format: date
           type:
           - string
           - 'null'
-        fees_daily_rate:
+        last_insolvency_procedure_open_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        last_insolvency_procedure_type:
           default: null
           type:
-          - number
+          - string
           - 'null'
-        fees_interest_daily_rate:
-          type: number
-        fees_operating_daily_rate:
-          type: number
-        fees_payer:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
+        legal_form:
           default: null
-        id:
+          description: Legal form of the business.
+          type:
+          - string
+          - 'null'
+        nace_code:
           default: null
-        loan_contract_type:
-          enum:
-          - CREDIT_OPERATION
-          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
-          - EQUITY_LOAN
-          - TRADE_RECEIVABLE
-          type: string
-        pool_amount:
+          type:
+          - string
+          - 'null'
+        name:
           default: null
-          description: Maximum amount that can be loaned.
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        registration_body:
+          default: null
+          description: Name of the national organization where the business is registered. For example the RCS of Paris in France
+          type:
+          - string
+          - 'null'
+        registration_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        registry_radiation_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        share_capital:
+          default: null
+          description: The part of the capital of a company that comes from the issue of shares, in cents.
           type:
           - integer
           - 'null'
-        signed_at:
+        termination_date:
           default: null
-          format: date-time
+          format: date
           type:
           - string
           - 'null'
-        start_date:
-          format: date-time
-          type: string
-        vat:
+        vat_number:
           default: null
+          description: VatNumber
           type:
-          - number
+          - string
           - 'null'
       required:
-      - distribution
-      - fees_interest_daily_rate
-      - fees_operating_daily_rate
-      - loan_contract_type
-      - start_date
+      - identifier
       type: object
     ListDenialCode:
       properties:
@@ -562,50 +517,21 @@ components:
       - loan_contract_type
       - start_date
       type: object
-    SimpleEligibilityResponse:
+    TranslationResult:
       properties:
-        is_eligible:
-          description: Say if the eligibility check accepted the request or not.
-          type: boolean
-        reasons:
-          default: null
-          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
-          items:
-            $ref: '#/components/schemas/EligibilityDenialReason'
-          type:
-          - array
-          - 'null'
+        de:
+          type: string
+        en:
+          type: string
+        es:
+          type: string
+        fr:
+          type: string
       required:
-      - is_eligible
-      type: object
-    TypedApiPage8:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APICreditLine'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
+      - de
+      - en
+      - es
+      - fr
       type: object
     EligibilityDenialReason:
       properties:
@@ -790,13 +716,11 @@ components:
       required:
       - code
       type: object
-    APIBorrowerEligibility:
+    BusinessIdentifierRequired:
       properties:
         identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
         identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
           - belgium_registration_number
           - bsn
@@ -813,6 +737,158 @@ components:
       required:
       - identifier
       - identifier_type
+      type: object
+    APICreditLine:
+      properties:
+        balance_available:
+          default: null
+          description: Remaining amount that can be loaned.
+          type:
+          - integer
+          - 'null'
+        balance_pending:
+          default: 0
+          description: ''
+          type: integer
+        balance_pending_validation:
+          default: 0
+          description: Amount locked because some loans are pending validation
+          type: integer
+        contract_number:
+          default: null
+          type:
+          - string
+          - 'null'
+        currency:
+          default: EUR
+          enum:
+          - EUR
+          - GBP
+          type: string
+        default_borrower:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+        default_borrower_strategy:
+          default: null
+          enum:
+          - BUYER
+          - SELLER
+          - null
+          type:
+          - string
+          - 'null'
+        default_guarantor:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+        default_loan_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+        default_repayment_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+        default_repayment_method:
+          default: DIRECT_DEBIT
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        default_repayment_to:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+        distribution:
+          enum:
+          - DIRECT
+          - PARTNER
+          type: string
+        end_date:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        fees_daily_rate:
+          default: null
+          type:
+          - number
+          - 'null'
+        fees_interest_daily_rate:
+          type: number
+        fees_operating_daily_rate:
+          type: number
+        fees_payer:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+        id:
+          default: null
+        loan_contract_type:
+          enum:
+          - CREDIT_OPERATION
+          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
+          - EQUITY_LOAN
+          - TRADE_RECEIVABLE
+          type: string
+        pool_amount:
+          default: null
+          description: Maximum amount that can be loaned.
+          type:
+          - integer
+          - 'null'
+        signed_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        start_date:
+          format: date-time
+          type: string
+        vat:
+          default: null
+          type:
+          - number
+          - 'null'
+      required:
+      - distribution
+      - fees_interest_daily_rate
+      - fees_operating_daily_rate
+      - loan_contract_type
+      - start_date
+      type: object
+    TypedApiPage8:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APICreditLine'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
       type: object
     APILightAccountDetails:
       properties:
@@ -843,49 +919,12 @@ components:
       - bank_identifier
       - bank_identifier_type
       type: object
-    LightBusiness:
+    APIBorrowerEligibility:
       properties:
-        activity_description:
-          default: null
-          type:
-          - string
-          - 'null'
-        activity_type:
-          default: null
-          type:
-          - string
-          - 'null'
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        capital:
-          default: null
-          type:
-          - integer
-          - 'null'
-        creation_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        has_ongoing_insolvency_procedure:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
         identifier:
           description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
         identifier_type:
-          default: null
           description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
           - belgium_registration_number
@@ -899,92 +938,53 @@ components:
           - siret
           - steuernummer
           - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        is_active:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        is_diffusible:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        last_insolvency_procedure_closing_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        last_insolvency_procedure_open_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        last_insolvency_procedure_type:
-          default: null
-          type:
-          - string
-          - 'null'
-        legal_form:
-          default: null
-          description: Legal form of the business.
-          type:
-          - string
-          - 'null'
-        nace_code:
-          default: null
-          type:
-          - string
-          - 'null'
-        name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        registration_body:
-          default: null
-          description: Name of the national organization where the business is registered. For example the RCS of Paris in France
-          type:
-          - string
-          - 'null'
-        registration_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        registry_radiation_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        share_capital:
-          default: null
-          description: The part of the capital of a company that comes from the issue of shares, in cents.
-          type:
-          - integer
-          - 'null'
-        termination_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
-          type:
-          - string
-          - 'null'
+          type: string
       required:
       - identifier
+      - identifier_type
+      type: object
+    SimpleEligibilityResponse:
+      properties:
+        is_eligible:
+          description: Say if the eligibility check accepted the request or not.
+          type: boolean
+        reasons:
+          default: null
+          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
+          items:
+            $ref: '#/components/schemas/EligibilityDenialReason'
+          type:
+          - array
+          - 'null'
+      required:
+      - is_eligible
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
       type: object
   securitySchemes:
     Bearer:

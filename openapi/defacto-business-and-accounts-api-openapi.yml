@@ -39,28 +39,6 @@ paths:
       summary: /business/{business_id}/segment
 components:
   schemas:
-    BusinessSegment:
-      properties:
-        business_id:
-          format: uuid
-          type: string
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        defacto_segment:
-          default: null
-          enum:
-          - CAT1
-          - CAT2
-          - CAT3
-          - CAT4
-          - null
-          type:
-          - string
-          - 'null'
-      required:
-      - business_id
-      - business_identifier
-      type: object
     BusinessIdentifierRequired:
       properties:
         identifier:
@@ -82,6 +60,28 @@ components:
       required:
       - identifier
       - identifier_type
+      type: object
+    BusinessSegment:
+      properties:
+        business_id:
+          format: uuid
+          type: string
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        defacto_segment:
+          default: null
+          enum:
+          - CAT1
+          - CAT2
+          - CAT3
+          - CAT4
+          - null
+          type:
+          - string
+          - 'null'
+      required:
+      - business_id
+      - business_identifier
       type: object
   securitySchemes:
     Bearer:

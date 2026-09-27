@@ -46,7 +46,22 @@ specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-18'
 image: https://cdn.prod.website-files.com/65186d27d0dcf0d8e7a48388/667d3748056d46d4dca39dfc_defacto-opengraph-en.jpg
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-25
 tags:
+- Company
+- Fintech
+- Embedded Finance
+- Lending
+- Working Capital
+- Invoice Financing
+- Credit
+- B2B Payments
+- Small Business
+- France
+- Europe
+tags_raw:
 - Company
 - Fintech
 - Embedded Finance

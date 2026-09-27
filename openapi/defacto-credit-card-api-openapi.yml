@@ -201,6 +201,22 @@ paths:
       summary: /cards/{card_id}/ephemeral-key
 components:
   schemas:
+    EphemeralKeyResult:
+      properties:
+        ephemeral_key_secret:
+          type: string
+        provider_account_id:
+          type: string
+        provider_card_id:
+          type: string
+        publishable_key:
+          type: string
+      required:
+      - ephemeral_key_secret
+      - provider_account_id
+      - provider_card_id
+      - publishable_key
+      type: object
     CreditBalance:
       properties:
         available:
@@ -223,6 +239,50 @@ components:
       - available
       - currency
       - used
+      type: object
+    ApiCardEntry:
+      properties:
+        amount:
+          type: integer
+        created:
+          format: date-time
+          type: string
+        currency:
+          type: string
+        entry_type:
+          default: transaction
+          type: string
+        funding_obligation_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        merchant_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+        merchant_category:
+          type: string
+        merchant_currency:
+          default: null
+          type:
+          - string
+          - 'null'
+        merchant_name:
+          type: string
+        transaction_type:
+          type: string
+      required:
+      - amount
+      - created
+      - currency
+      - id
+      - merchant_category
+      - merchant_name
+      - transaction_type
       type: object
     ApiCard:
       properties:
@@ -274,72 +334,12 @@ components:
       - last4
       - status
       type: object
-    ApiCardEntry:
-      properties:
-        amount:
-          type: integer
-        created:
-          format: date-time
-          type: string
-        currency:
-          type: string
-        entry_type:
-          default: transaction
-          type: string
-        funding_obligation_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        merchant_amount:
-          default: null
-          type:
-          - integer
-          - 'null'
-        merchant_category:
-          type: string
-        merchant_currency:
-          default: null
-          type:
-          - string
-          - 'null'
-        merchant_name:
-          type: string
-        transaction_type:
-          type: string
-      required:
-      - amount
-      - created
-      - currency
-      - id
-      - merchant_category
-      - merchant_name
-      - transaction_type
-      type: object
     UpdateCardStatusRequest:
       properties:
         status:
           type: string
       required:
       - status
-      type: object
-    EphemeralKeyResult:
-      properties:
-        ephemeral_key_secret:
-          type: string
-        provider_account_id:
-          type: string
-        provider_card_id:
-          type: string
-        publishable_key:
-          type: string
-      required:
-      - ephemeral_key_secret
-      - provider_account_id
-      - provider_card_id
-      - publishable_key
       type: object
   securitySchemes:
     Bearer:

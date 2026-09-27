@@ -273,27 +273,119 @@ paths:
       summary: /recollection-case/{recollection_case_id}/installment-plans
 components:
   schemas:
-    BusinessIdentifierRequired:
+    ApiRecollectionStrategy:
       properties:
-        identifier:
+        id:
+          format: uuid
           type: string
-        identifier_type:
+        is_active:
+          type: boolean
+        strategy_type:
           enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
+          - INSTALLMENT_PLAN
           type: string
       required:
-      - identifier
-      - identifier_type
+      - id
+      - is_active
+      - strategy_type
+      type: object
+    ApiRecollectionAction:
+      properties:
+        action_name:
+          type: string
+        action_status:
+          enum:
+          - CANCELED
+          - DONE
+          - SCHEDULED
+          type: string
+        action_status_date:
+          format: date-time
+          type: string
+        action_status_details:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          format: uuid
+          type: string
+        original_due_at:
+          format: date-time
+          type: string
+        short_description:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - action_name
+      - action_status
+      - action_status_date
+      - id
+      - original_due_at
+      type: object
+    ApiPutRecollectionCaseRequest:
+      properties:
+        recollection_notes:
+          additionalProperties: {}
+          type: object
+      required:
+      - recollection_notes
+      type: object
+    ApiCreateRecollectionCaseRequest:
+      properties:
+        agent:
+          description: Name of the agent who is in charge of following the recollection process
+          type: string
+        debtor_business:
+          allOf:
+          - $ref: '#/components/schemas/BusinessIdentifierRequired'
+          description: Debtor business identifier who owes recollected debt
+        loan_ids:
+          description: Loans that are being recollected
+          items:
+            format: uuid
+            type: string
+          type: array
+        next_action:
+          allOf:
+          - $ref: '#/components/schemas/ApiCreateRecollectionActionRequest'
+          description: First action you will be taking to recollect the debt
+      required:
+      - agent
+      - debtor_business
+      - loan_ids
+      - next_action
+      type: object
+    TypedApiPage11:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiRecollectionCase'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
       type: object
     ApiInstallmentPlan:
       properties:
@@ -316,29 +408,6 @@ components:
       - id
       - installments
       - loan_ids
-      type: object
-    ApiCreateRecollectionInstallmentRequest:
-      properties:
-        amount:
-          description: Total amount of this installment paid by borrower
-          type: integer
-        date:
-          description: Date of payment of this installment
-          format: date-time
-          type: string
-        loans:
-          description: Detailed lettering of an installment
-          items:
-            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
-          type: array
-        recollection_fees:
-          default: 0
-          description: Share of recollection fees in installment
-          type: integer
-      required:
-      - amount
-      - date
-      - loans
       type: object
     ApiRecollectionCase:
       properties:
@@ -379,41 +448,56 @@ components:
       - past_actions
       - strategies
       type: object
-    ApiRecollectionAction:
+    BusinessIdentifierRequired:
       properties:
-        action_name:
+        identifier:
           type: string
-        action_status:
+        identifier_type:
           enum:
-          - CANCELED
-          - DONE
-          - SCHEDULED
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           type: string
-        action_status_date:
-          format: date-time
-          type: string
-        action_status_details:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    ApiRecollectionInstallmentPlan:
+      properties:
+        installment_plan_id:
           format: uuid
           type: string
-        original_due_at:
-          format: date-time
-          type: string
-        short_description:
-          default: null
-          type:
-          - string
-          - 'null'
+        recollection_case:
+          $ref: '#/components/schemas/ApiRecollectionCase'
       required:
-      - action_name
-      - action_status
-      - action_status_date
-      - id
-      - original_due_at
+      - installment_plan_id
+      - recollection_case
+      type: object
+    ApiCreateRecollectionInstallmentPlanRequest:
+      properties:
+        installments:
+          description: List of installments in installment plan
+          items:
+            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentRequest'
+          type: array
+        payment_method:
+          description: Payment method to use for requested installment plan
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+      required:
+      - installments
+      - payment_method
       type: object
     ApiCreateRecollectionInstallmentLoanRequest:
       properties:
@@ -456,105 +540,6 @@ components:
       - id
       - status
       type: object
-    ApiCreateRecollectionInstallmentPlanRequest:
-      properties:
-        installments:
-          description: List of installments in installment plan
-          items:
-            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentRequest'
-          type: array
-        payment_method:
-          description: Payment method to use for requested installment plan
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-      required:
-      - installments
-      - payment_method
-      type: object
-    ApiCreateRecollectionActionRequest:
-      properties:
-        action_name:
-          description: Name of the action to be done
-          type: string
-        due_at:
-          description: Date when the action must be done
-          format: date-time
-          type: string
-        short_description:
-          default: null
-          description: free description allowing agent to add some context and details
-          type:
-          - string
-          - 'null'
-      required:
-      - action_name
-      - due_at
-      type: object
-    TypedApiPage11:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/ApiRecollectionCase'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    ApiCreateRecollectionCaseRequest:
-      properties:
-        agent:
-          description: Name of the agent who is in charge of following the recollection process
-          type: string
-        debtor_business:
-          allOf:
-          - $ref: '#/components/schemas/BusinessIdentifierRequired'
-          description: Debtor business identifier who owes recollected debt
-        loan_ids:
-          description: Loans that are being recollected
-          items:
-            format: uuid
-            type: string
-          type: array
-        next_action:
-          allOf:
-          - $ref: '#/components/schemas/ApiCreateRecollectionActionRequest'
-          description: First action you will be taking to recollect the debt
-      required:
-      - agent
-      - debtor_business
-      - loan_ids
-      - next_action
-      type: object
-    ApiPutRecollectionCaseRequest:
-      properties:
-        recollection_notes:
-          additionalProperties: {}
-          type: object
-      required:
-      - recollection_notes
-      type: object
     APIComputeRecollectionInstallmentPlan:
       properties:
         number_of_installment:
@@ -584,32 +569,47 @@ components:
       - number_of_installment
       - start_date
       type: object
-    ApiRecollectionStrategy:
+    ApiCreateRecollectionInstallmentRequest:
       properties:
-        id:
-          format: uuid
+        amount:
+          description: Total amount of this installment paid by borrower
+          type: integer
+        date:
+          description: Date of payment of this installment
+          format: date-time
           type: string
-        is_active:
-          type: boolean
-        strategy_type:
-          enum:
-          - INSTALLMENT_PLAN
-          type: string
+        loans:
+          description: Detailed lettering of an installment
+          items:
+            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
+          type: array
+        recollection_fees:
+          default: 0
+          description: Share of recollection fees in installment
+          type: integer
       required:
-      - id
-      - is_active
-      - strategy_type
+      - amount
+      - date
+      - loans
       type: object
-    ApiRecollectionInstallmentPlan:
+    ApiCreateRecollectionActionRequest:
       properties:
-        installment_plan_id:
-          format: uuid
+        action_name:
+          description: Name of the action to be done
           type: string
-        recollection_case:
-          $ref: '#/components/schemas/ApiRecollectionCase'
+        due_at:
+          description: Date when the action must be done
+          format: date-time
+          type: string
+        short_description:
+          default: null
+          description: free description allowing agent to add some context and details
+          type:
+          - string
+          - 'null'
       required:
-      - installment_plan_id
-      - recollection_case
+      - action_name
+      - due_at
       type: object
   securitySchemes:
     Bearer:

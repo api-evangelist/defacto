@@ -38,6 +38,13 @@ paths:
       - Repay
 components:
   schemas:
+    RepayNowResponse:
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      type: object
     RepayNowRequest:
       properties:
         amount:
@@ -56,13 +63,6 @@ components:
       required:
       - amount
       - base_callback_url
-      type: object
-    RepayNowResponse:
-      properties:
-        url:
-          type: string
-      required:
-      - url
       type: object
   securitySchemes:
     Bearer:
