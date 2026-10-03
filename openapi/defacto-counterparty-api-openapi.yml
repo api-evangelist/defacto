@@ -218,121 +218,6 @@ components:
       - identifier_type
       - relation_types
       type: object
-    APICounterpartyContact:
-      properties:
-        email:
-          format: email
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-      required:
-      - email
-      - first_name
-      - last_name
-      - phone_number
-      type: object
-    TypedApiPage7:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APICounterpartyWithExposure'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    APICounterpartyWithExposure:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        contact:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyContact'
-          default: null
-        credit_limit:
-          $ref: '#/components/schemas/APICreditLimit'
-        id:
-          format: uuid
-          type: string
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-        name:
-          description: Legal name of the business.
-          type: string
-        relation_types:
-          items:
-            enum:
-            - BORROWER
-            - CLIENT
-            - DEBTOR
-            - MARKETPLACE_BUYER
-            - MARKETPLACE_SELLER
-            - SELF
-            - SUPPLIER
-            type: string
-          minItems: 1
-          type: array
-        selected_for_financing:
-          default: null
-          description: Whether this counterparty is selected for financing
-          type:
-          - boolean
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
-          type:
-          - string
-          - 'null'
-      required:
-      - credit_limit
-      - id
-      - identifier
-      - identifier_type
-      - name
-      - relation_types
-      type: object
     APICreditLimit:
       properties:
         available_amount:
@@ -549,6 +434,121 @@ components:
           type:
           - string
           - 'null'
+      type: object
+    APICounterpartyWithExposure:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyContact'
+          default: null
+        credit_limit:
+          $ref: '#/components/schemas/APICreditLimit'
+        id:
+          format: uuid
+          type: string
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        name:
+          description: Legal name of the business.
+          type: string
+        relation_types:
+          items:
+            enum:
+            - BORROWER
+            - CLIENT
+            - DEBTOR
+            - MARKETPLACE_BUYER
+            - MARKETPLACE_SELLER
+            - SELF
+            - SUPPLIER
+            type: string
+          minItems: 1
+          type: array
+        selected_for_financing:
+          default: null
+          description: Whether this counterparty is selected for financing
+          type:
+          - boolean
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      required:
+      - credit_limit
+      - id
+      - identifier
+      - identifier_type
+      - name
+      - relation_types
+      type: object
+    APICounterpartyContact:
+      properties:
+        email:
+          format: email
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
+      type: object
+    TypedApiPage7:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APICounterpartyWithExposure'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
       type: object
   securitySchemes:
     Bearer:

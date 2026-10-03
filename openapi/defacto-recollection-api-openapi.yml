@@ -273,203 +273,6 @@ paths:
       summary: /recollection-case/{recollection_case_id}/installment-plans
 components:
   schemas:
-    ApiRecollectionStrategy:
-      properties:
-        id:
-          format: uuid
-          type: string
-        is_active:
-          type: boolean
-        strategy_type:
-          enum:
-          - INSTALLMENT_PLAN
-          type: string
-      required:
-      - id
-      - is_active
-      - strategy_type
-      type: object
-    ApiRecollectionAction:
-      properties:
-        action_name:
-          type: string
-        action_status:
-          enum:
-          - CANCELED
-          - DONE
-          - SCHEDULED
-          type: string
-        action_status_date:
-          format: date-time
-          type: string
-        action_status_details:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
-          format: uuid
-          type: string
-        original_due_at:
-          format: date-time
-          type: string
-        short_description:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - action_name
-      - action_status
-      - action_status_date
-      - id
-      - original_due_at
-      type: object
-    ApiPutRecollectionCaseRequest:
-      properties:
-        recollection_notes:
-          additionalProperties: {}
-          type: object
-      required:
-      - recollection_notes
-      type: object
-    ApiCreateRecollectionCaseRequest:
-      properties:
-        agent:
-          description: Name of the agent who is in charge of following the recollection process
-          type: string
-        debtor_business:
-          allOf:
-          - $ref: '#/components/schemas/BusinessIdentifierRequired'
-          description: Debtor business identifier who owes recollected debt
-        loan_ids:
-          description: Loans that are being recollected
-          items:
-            format: uuid
-            type: string
-          type: array
-        next_action:
-          allOf:
-          - $ref: '#/components/schemas/ApiCreateRecollectionActionRequest'
-          description: First action you will be taking to recollect the debt
-      required:
-      - agent
-      - debtor_business
-      - loan_ids
-      - next_action
-      type: object
-    TypedApiPage11:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/ApiRecollectionCase'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    ApiInstallmentPlan:
-      properties:
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        id:
-          format: uuid
-          type: string
-        installments:
-          items:
-            $ref: '#/components/schemas/ApiPaymentIntent'
-          type: array
-        loan_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - business_identifier
-      - id
-      - installments
-      - loan_ids
-      type: object
-    ApiRecollectionCase:
-      properties:
-        agent:
-          type: string
-        debtor_business:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        id:
-          format: uuid
-          type: string
-        loan_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-        next_action:
-          $ref: '#/components/schemas/ApiRecollectionAction'
-        past_actions:
-          items:
-            $ref: '#/components/schemas/ApiRecollectionAction'
-          type: array
-        recollection_notes:
-          additionalProperties: {}
-          default: null
-          type:
-          - object
-          - 'null'
-        strategies:
-          items:
-            $ref: '#/components/schemas/ApiRecollectionStrategy'
-          type: array
-      required:
-      - agent
-      - debtor_business
-      - id
-      - loan_ids
-      - next_action
-      - past_actions
-      - strategies
-      type: object
-    BusinessIdentifierRequired:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
     ApiRecollectionInstallmentPlan:
       properties:
         installment_plan_id:
@@ -511,6 +314,36 @@ components:
       - amount
       - loan_id
       type: object
+    ApiInstallmentPlan:
+      properties:
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        id:
+          format: uuid
+          type: string
+        installments:
+          items:
+            $ref: '#/components/schemas/ApiPaymentIntent'
+          type: array
+        loan_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - business_identifier
+      - id
+      - installments
+      - loan_ids
+      type: object
+    ApiPutRecollectionCaseRequest:
+      properties:
+        recollection_notes:
+          additionalProperties: {}
+          type: object
+      required:
+      - recollection_notes
+      type: object
     ApiPaymentIntent:
       properties:
         amount:
@@ -540,6 +373,215 @@ components:
       - id
       - status
       type: object
+    TypedApiPage11:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiRecollectionCase'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    ApiRecollectionCase:
+      properties:
+        agent:
+          type: string
+        debtor_business:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        id:
+          format: uuid
+          type: string
+        loan_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+        next_action:
+          $ref: '#/components/schemas/ApiRecollectionAction'
+        past_actions:
+          items:
+            $ref: '#/components/schemas/ApiRecollectionAction'
+          type: array
+        recollection_notes:
+          additionalProperties: {}
+          default: null
+          type:
+          - object
+          - 'null'
+        strategies:
+          items:
+            $ref: '#/components/schemas/ApiRecollectionStrategy'
+          type: array
+      required:
+      - agent
+      - debtor_business
+      - id
+      - loan_ids
+      - next_action
+      - past_actions
+      - strategies
+      type: object
+    ApiRecollectionAction:
+      properties:
+        action_name:
+          type: string
+        action_status:
+          enum:
+          - CANCELED
+          - DONE
+          - SCHEDULED
+          type: string
+        action_status_date:
+          format: date-time
+          type: string
+        action_status_details:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          format: uuid
+          type: string
+        original_due_at:
+          format: date-time
+          type: string
+        short_description:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - action_name
+      - action_status
+      - action_status_date
+      - id
+      - original_due_at
+      type: object
+    ApiRecollectionStrategy:
+      properties:
+        id:
+          format: uuid
+          type: string
+        is_active:
+          type: boolean
+        strategy_type:
+          enum:
+          - INSTALLMENT_PLAN
+          type: string
+      required:
+      - id
+      - is_active
+      - strategy_type
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    ApiCreateRecollectionInstallmentRequest:
+      properties:
+        amount:
+          description: Total amount of this installment paid by borrower
+          type: integer
+        date:
+          description: Date of payment of this installment
+          format: date-time
+          type: string
+        loans:
+          description: Detailed lettering of an installment
+          items:
+            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
+          type: array
+        recollection_fees:
+          default: 0
+          description: Share of recollection fees in installment
+          type: integer
+      required:
+      - amount
+      - date
+      - loans
+      type: object
+    ApiCreateRecollectionCaseRequest:
+      properties:
+        agent:
+          description: Name of the agent who is in charge of following the recollection process
+          type: string
+        debtor_business:
+          allOf:
+          - $ref: '#/components/schemas/BusinessIdentifierRequired'
+          description: Debtor business identifier who owes recollected debt
+        loan_ids:
+          description: Loans that are being recollected
+          items:
+            format: uuid
+            type: string
+          type: array
+        next_action:
+          allOf:
+          - $ref: '#/components/schemas/ApiCreateRecollectionActionRequest'
+          description: First action you will be taking to recollect the debt
+      required:
+      - agent
+      - debtor_business
+      - loan_ids
+      - next_action
+      type: object
+    ApiCreateRecollectionActionRequest:
+      properties:
+        action_name:
+          description: Name of the action to be done
+          type: string
+        due_at:
+          description: Date when the action must be done
+          format: date-time
+          type: string
+        short_description:
+          default: null
+          description: free description allowing agent to add some context and details
+          type:
+          - string
+          - 'null'
+      required:
+      - action_name
+      - due_at
+      type: object
     APIComputeRecollectionInstallmentPlan:
       properties:
         number_of_installment:
@@ -568,48 +610,6 @@ components:
       required:
       - number_of_installment
       - start_date
-      type: object
-    ApiCreateRecollectionInstallmentRequest:
-      properties:
-        amount:
-          description: Total amount of this installment paid by borrower
-          type: integer
-        date:
-          description: Date of payment of this installment
-          format: date-time
-          type: string
-        loans:
-          description: Detailed lettering of an installment
-          items:
-            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
-          type: array
-        recollection_fees:
-          default: 0
-          description: Share of recollection fees in installment
-          type: integer
-      required:
-      - amount
-      - date
-      - loans
-      type: object
-    ApiCreateRecollectionActionRequest:
-      properties:
-        action_name:
-          description: Name of the action to be done
-          type: string
-        due_at:
-          description: Date when the action must be done
-          format: date-time
-          type: string
-        short_description:
-          default: null
-          description: free description allowing agent to add some context and details
-          type:
-          - string
-          - 'null'
-      required:
-      - action_name
-      - due_at
       type: object
   securitySchemes:
     Bearer:

@@ -432,160 +432,6 @@ paths:
       summary: /installment-plans
 components:
   schemas:
-    BillPayment:
-      properties:
-        amount:
-          type: integer
-        bill_id:
-          format: uuid
-          type: string
-        payment_id:
-          default: null
-      required:
-      - amount
-      - bill_id
-      type: object
-    ApiPostInstallment:
-      properties:
-        amount:
-          type: integer
-        date:
-          format: date-time
-          type: string
-        loans:
-          items:
-            $ref: '#/components/schemas/ApiPostInstallmentLoan'
-          type: array
-        reference:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - amount
-      - date
-      - loans
-      type: object
-    TypedApiPage6:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APIInstallment'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    AccountSourceInformation:
-      properties:
-        datasource_unique_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        name:
-          enum:
-          - AXONAUT_DEFACTO_API
-          - BRIDGE
-          - CEFIN_DEFACTO_API
-          - FINAPI
-          - IRMA_DEFACTO_API
-          - LEANO_DEFACTO_API
-          - LIBEO_DEFACTO_API
-          - PENNYLANE_DEFACTO_API
-          - PENNYLANE_REDSHIFT
-          - QONTO
-          - STEMSCAPE_DEFACTO_API
-          - SUPER_DEFACTO_API
-          type: string
-      required:
-      - id
-      - name
-      type: object
-    PaymentRelationApi:
-      properties:
-        bills:
-          items:
-            $ref: '#/components/schemas/BillPayment'
-          type: array
-        invoices:
-          items:
-            format: uuid
-            type: string
-          type: array
-        loans:
-          items:
-            $ref: '#/components/schemas/LoanPaymentApi'
-          type: array
-        payment_intents:
-          items:
-            $ref: '#/components/schemas/PaymentXPaymentIntentApi'
-          type: array
-        subscriptions:
-          items:
-            $ref: '#/components/schemas/SubscriptionPaymentRelation'
-          type: array
-      type: object
-    ProviderPaymentID:
-      properties:
-        failure_reason:
-          default: null
-          type:
-          - string
-          - 'null'
-        initial_payment_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        name:
-          enum:
-          - LEMONWAY
-          - MEMOBANK
-          - NUMERAL
-          - SANDBOX
-          - SWAN
-          - TEST
-          type: string
-        original_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        override_reconciliation_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        payment_id:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      type: object
     APILightAccountDetails:
       properties:
         account_number:
@@ -615,67 +461,6 @@ components:
       - bank_identifier
       - bank_identifier_type
       type: object
-    LoanPaymentApi:
-      properties:
-        amount:
-          type: integer
-        deposit_id:
-          default: null
-        loan_id:
-          format: uuid
-          type: string
-        payment_type:
-          enum:
-          - CHANNEL_VERIFICATION
-          - CHARGEBACK
-          - DEPOSIT_FUNDING
-          - DEPOSIT_RELEASE
-          - DEPOSIT_WITHDRAWAL
-          - EXTRA
-          - INTERNAL
-          - LENDER_DEBT_RESOLUTION
-          - LENDER_PREFUNDING
-          - LENDER_REPURCHASE
-          - LOAN_PAYMENT
-          - LOAN_PURCHASE
-          - PAYMENT_PROVIDER_FEES
-          - PLATFORM
-          - REFUND
-          - REPAYMENT_FEES
-          - REPAYMENT_FULL
-          - REPAYMENT_NOMINAL
-          - RETURNED
-          - REVENUE_SHARE
-          - REVERT
-          - SUBSCRIPTION
-          type: string
-      required:
-      - amount
-      - loan_id
-      - payment_type
-      type: object
-    ApiInstallmentPlan:
-      properties:
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        id:
-          format: uuid
-          type: string
-        installments:
-          items:
-            $ref: '#/components/schemas/ApiPaymentIntent'
-          type: array
-        loan_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - business_identifier
-      - id
-      - installments
-      - loan_ids
-      type: object
     BusinessIdentifierRequired:
       properties:
         identifier:
@@ -698,168 +483,18 @@ components:
       - identifier
       - identifier_type
       type: object
-    ApiPaymentIntent:
+    BillPayment:
       properties:
         amount:
           type: integer
-        date:
-          format: date-time
-          type: string
-        id:
+        bill_id:
           format: uuid
           type: string
-        status:
-          enum:
-          - CANCELED
-          - DRAFT
-          - INSTRUCTED
-          - IN_TRANSIT
-          - ISSUE_DETECTED
-          - PAID
-          - PARTIALLY_PAID
-          - PROPOSED
-          - SCHEDULED
-          - WAITING
-          type: string
+        payment_id:
+          default: null
       required:
       - amount
-      - date
-      - id
-      - status
-      type: object
-    AccountCreation:
-      properties:
-        account_holder:
-          allOf:
-          - $ref: '#/components/schemas/BusinessIdentifierRequired'
-          default: null
-        account_number:
-          type: string
-        account_number_type:
-          default: iban
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          default: null
-          type:
-          - string
-          - 'null'
-        bank_identifier_type:
-          default: bic
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-        source:
-          allOf:
-          - $ref: '#/components/schemas/AccountSourceInformation'
-          default: null
-      required:
-      - account_number
-      type: object
-    SubscriptionPaymentRelation:
-      properties:
-        amount_cents:
-          type: integer
-        subscription_id:
-          format: uuid
-          type: string
-      required:
-      - amount_cents
-      - subscription_id
-      type: object
-    ApiPostInstallmentPlan:
-      properties:
-        from_account:
-          allOf:
-          - $ref: '#/components/schemas/AccountCreation'
-          default: null
-        installments:
-          items:
-            $ref: '#/components/schemas/ApiPostInstallment'
-          type: array
-        payment_method:
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        salt_id:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - installments
-      - payment_method
-      type: object
-    ApiPostInstallmentLoan:
-      properties:
-        amount:
-          type: integer
-        loan_id:
-          format: uuid
-          type: string
-      required:
-      - amount
-      - loan_id
-      type: object
-    APIInstallment:
-      properties:
-        attempts:
-          items:
-            $ref: '#/components/schemas/APIInstallmentPaymentAttempt'
-          type: array
-        currency:
-          enum:
-          - EUR
-          - GBP
-          type: string
-        due_amount:
-          type: integer
-        from_account_detail:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          default: null
-        id:
-          format: uuid
-          type: string
-        last_repayment_date:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        paid_amount:
-          type: integer
-        payment_method:
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        reference:
-          type: string
-        scheduled_at:
-          format: date-time
-          type: string
-        to_account_detail:
-          $ref: '#/components/schemas/APILightAccountDetails'
-      required:
-      - attempts
-      - currency
-      - due_amount
-      - id
-      - paid_amount
-      - payment_method
-      - reference
-      - scheduled_at
-      - to_account_detail
+      - bill_id
       type: object
     PaymentXPaymentIntentApi:
       properties:
@@ -897,6 +532,67 @@ components:
       - amount
       - payment_intent_id
       - payment_type
+      type: object
+    ApiInstallmentPlan:
+      properties:
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        id:
+          format: uuid
+          type: string
+        installments:
+          items:
+            $ref: '#/components/schemas/ApiPaymentIntent'
+          type: array
+        loan_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - business_identifier
+      - id
+      - installments
+      - loan_ids
+      type: object
+    AccountSourceInformation:
+      properties:
+        datasource_unique_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        name:
+          enum:
+          - AXONAUT_DEFACTO_API
+          - BRIDGE
+          - CEFIN_DEFACTO_API
+          - FINAPI
+          - IRMA_DEFACTO_API
+          - LEANO_DEFACTO_API
+          - LIBEO_DEFACTO_API
+          - PENNYLANE_DEFACTO_API
+          - PENNYLANE_REDSHIFT
+          - QONTO
+          - STEMSCAPE_DEFACTO_API
+          - SUPER_DEFACTO_API
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    SubscriptionPaymentRelation:
+      properties:
+        amount_cents:
+          type: integer
+        subscription_id:
+          format: uuid
+          type: string
+      required:
+      - amount_cents
+      - subscription_id
       type: object
     APIInstallmentPaymentAttempt:
       properties:
@@ -977,6 +673,123 @@ components:
       - scheduled_at
       - status
       type: object
+    ApiPostInstallmentPlan:
+      properties:
+        from_account:
+          allOf:
+          - $ref: '#/components/schemas/AccountCreation'
+          default: null
+        installments:
+          items:
+            $ref: '#/components/schemas/ApiPostInstallment'
+          type: array
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        salt_id:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - installments
+      - payment_method
+      type: object
+    PaymentRelationApi:
+      properties:
+        bills:
+          items:
+            $ref: '#/components/schemas/BillPayment'
+          type: array
+        invoices:
+          items:
+            format: uuid
+            type: string
+          type: array
+        loans:
+          items:
+            $ref: '#/components/schemas/LoanPaymentApi'
+          type: array
+        payment_intents:
+          items:
+            $ref: '#/components/schemas/PaymentXPaymentIntentApi'
+          type: array
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/SubscriptionPaymentRelation'
+          type: array
+      type: object
+    TypedApiPage6:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIInstallment'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    LoanPaymentApi:
+      properties:
+        amount:
+          type: integer
+        deposit_id:
+          default: null
+        loan_id:
+          format: uuid
+          type: string
+        payment_type:
+          enum:
+          - CHANNEL_VERIFICATION
+          - CHARGEBACK
+          - DEPOSIT_FUNDING
+          - DEPOSIT_RELEASE
+          - DEPOSIT_WITHDRAWAL
+          - EXTRA
+          - INTERNAL
+          - LENDER_DEBT_RESOLUTION
+          - LENDER_PREFUNDING
+          - LENDER_REPURCHASE
+          - LOAN_PAYMENT
+          - LOAN_PURCHASE
+          - PAYMENT_PROVIDER_FEES
+          - PLATFORM
+          - REFUND
+          - REPAYMENT_FEES
+          - REPAYMENT_FULL
+          - REPAYMENT_NOMINAL
+          - RETURNED
+          - REVENUE_SHARE
+          - REVERT
+          - SUBSCRIPTION
+          type: string
+      required:
+      - amount
+      - loan_id
+      - payment_type
+      type: object
     TypedApiPage5:
       properties:
         count:
@@ -1005,6 +818,133 @@ components:
       required:
       - count
       - page_size
+      type: object
+    ApiPostInstallmentLoan:
+      properties:
+        amount:
+          type: integer
+        loan_id:
+          format: uuid
+          type: string
+      required:
+      - amount
+      - loan_id
+      type: object
+    AccountCreation:
+      properties:
+        account_holder:
+          allOf:
+          - $ref: '#/components/schemas/BusinessIdentifierRequired'
+          default: null
+        account_number:
+          type: string
+        account_number_type:
+          default: iban
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          default: null
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+        source:
+          allOf:
+          - $ref: '#/components/schemas/AccountSourceInformation'
+          default: null
+      required:
+      - account_number
+      type: object
+    APIInstallment:
+      properties:
+        attempts:
+          items:
+            $ref: '#/components/schemas/APIInstallmentPaymentAttempt'
+          type: array
+        currency:
+          enum:
+          - EUR
+          - GBP
+          type: string
+        due_amount:
+          type: integer
+        from_account_detail:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+        id:
+          format: uuid
+          type: string
+        last_repayment_date:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        paid_amount:
+          type: integer
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        reference:
+          type: string
+        scheduled_at:
+          format: date-time
+          type: string
+        to_account_detail:
+          $ref: '#/components/schemas/APILightAccountDetails'
+      required:
+      - attempts
+      - currency
+      - due_amount
+      - id
+      - paid_amount
+      - payment_method
+      - reference
+      - scheduled_at
+      - to_account_detail
+      type: object
+    ApiPaymentIntent:
+      properties:
+        amount:
+          type: integer
+        date:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - CANCELED
+          - DRAFT
+          - INSTRUCTED
+          - IN_TRANSIT
+          - ISSUE_DETECTED
+          - PAID
+          - PARTIALLY_PAID
+          - PROPOSED
+          - SCHEDULED
+          - WAITING
+          type: string
+      required:
+      - amount
+      - date
+      - id
+      - status
       type: object
     PaymentApi:
       properties:
@@ -1118,6 +1058,66 @@ components:
       - id
       - payment_type
       - status
+      type: object
+    ApiPostInstallment:
+      properties:
+        amount:
+          type: integer
+        date:
+          format: date-time
+          type: string
+        loans:
+          items:
+            $ref: '#/components/schemas/ApiPostInstallmentLoan'
+          type: array
+        reference:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - amount
+      - date
+      - loans
+      type: object
+    ProviderPaymentID:
+      properties:
+        failure_reason:
+          default: null
+          type:
+          - string
+          - 'null'
+        initial_payment_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        name:
+          enum:
+          - LEMONWAY
+          - MEMOBANK
+          - NUMERAL
+          - SANDBOX
+          - SWAN
+          - TEST
+          type: string
+        original_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        override_reconciliation_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        payment_id:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - name
       type: object
   securitySchemes:
     Bearer:

@@ -59,6 +59,22 @@ paths:
       summary: /translation/denial-code/{code}
 components:
   schemas:
+    TranslationResult:
+      properties:
+        de:
+          type: string
+        en:
+          type: string
+        es:
+          type: string
+        fr:
+          type: string
+      required:
+      - de
+      - en
+      - es
+      - fr
+      type: object
     DataTypeInfo:
       properties:
         data_type:
@@ -90,22 +106,6 @@ components:
       - data_type
       - requires_document
       - translations
-      type: object
-    TranslationResult:
-      properties:
-        de:
-          type: string
-        en:
-          type: string
-        es:
-          type: string
-        fr:
-          type: string
-      required:
-      - de
-      - en
-      - es
-      - fr
       type: object
   securitySchemes:
     Bearer:
