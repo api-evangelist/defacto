@@ -592,760 +592,53 @@ paths:
       summary: /onboardings
 components:
   schemas:
-    ReasonForNotConnectingBankAccount:
+    APIOnboardingCreationRequest:
       properties:
-        answer_code:
-          enum:
-          - no-access-to-company-bank-credentials
-          - not-comfortable-with-bank-account-connection
-          - other
-          - prefer-to-share-documents
-          type: string
-        comments:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - answer_code
-      type: object
-    APICreateDirector:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/CreateAddress'
-          default: null
-          description: Address of the person.
-        birth_date:
-          default: null
-          description: Birth date of the person. (YYYY-MM-DD)
-          format: date
-          type:
-          - string
-          - 'null'
-        birth_place:
-          allOf:
-          - $ref: '#/components/schemas/BirthPlace'
-          default: null
-          description: Birth place of the person.
-        business_email:
-          default: null
-          format: email
-          type:
-          - string
-          - 'null'
-        business_phone_number:
-          default: null
-          description: PhoneNumber
-          type:
-          - string
-          - 'null'
-        entity_type:
-          default: people
-          enum:
-          - account
-          - account_detail_verification
-          - bill
-          - borrower
-          - borrower_financial_product
-          - business
-          - business_exposure
-          - business_financial_product
-          - contract
-          - counterparty
-          - country
-          - credit_card
-          - credit_line
-          - data_request
-          - deposit
-          - due_interest
-          - eligibility_request
-          - enrollment
-          - entity_eligibility
-          - financial_product
-          - flag
-          - installment
-          - invoice
-          - loan
-          - loan_log
-          - mandate
-          - max_exposure_deployment
-          - onboarding
-          - onboarding_financial_product
-          - payment
-          - people
-          - rac
-          - raw_data
-          - recollection_document
-          - revenue_share
-          - sandbox_invoice
-          - underwriting_check
-          type: string
-        first_name:
-          default: null
-          description: The first name of the person.
-          type:
-          - string
-          - 'null'
-        id:
-          default: null
-        identifier:
-          default: null
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type:
-          - string
-          - 'null'
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        last_name:
-          default: null
-          description: The first name of the person.
-          type:
-          - string
-          - 'null'
-        legal_name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        nationality:
-          default: null
-          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
-          type:
-          - string
-          - 'null'
-        role:
-          default: DIRECTOR
-          enum:
-          - DIRECTOR
-          - NON_DIRECTOR
-          type: string
-        siege_address:
-          allOf:
-          - $ref: '#/components/schemas/CreateAddress'
-          default: null
-          description: Address of the business head quarters.
-        title:
-          default: null
-          description: Title of the person (e.g. M., Dr., etc.)
-          type:
-          - string
-          - 'null'
-      type: object
-    BorrowerComplianceChecks:
-      properties:
-        status:
-          enum:
-          - APPROVED
-          - PENDING_USER_ACTION
-          - REJECTED
-          - REVIEWING
-          - UNKNOWN
-          type: string
-      required:
-      - status
-      type: object
-    APIAccountCreation:
-      properties:
-        account_holder:
+        business:
           allOf:
           - $ref: '#/components/schemas/APIBusinessIdentifier'
           default: null
-          description: The business owning the account.
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          default: iban
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          default: null
-          description: The identifier of the bank.
-          type:
-          - string
-          - 'null'
-        bank_identifier_type:
-          default: bic
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      type: object
-    APIEnrollment:
-      properties:
-        agent_feedback:
-          default: null
-          type:
-          - string
-          - 'null'
-        enrollment_campaign:
-          type: string
-        enrollment_name:
-          type: string
-        entity_id:
-          format: uuid
-          type: string
-        entity_type:
-          enum:
-          - BORROWER
-          - ONBOARDING
-          type: string
-        id:
-          format: uuid
-          type: string
-        recommendations:
-          default: null
-          items: {}
-          type:
-          - array
-          - 'null'
-        status:
-          type: string
-        submitted_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - enrollment_campaign
-      - enrollment_name
-      - entity_id
-      - entity_type
-      - id
-      - status
-      type: object
-    APICreateOwner:
-      properties:
-        birth_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
+          description: Business linked to this onboarding. Required for partner onboarding.
         email:
           default: null
           format: email
           type:
           - string
           - 'null'
-        first_name:
-          type: string
-        identity_documents:
-          allOf:
-          - $ref: '#/components/schemas/APICreateIdentityDocuments'
-          default: null
-          description: 'Owner''s identity documents: All documents must be provided as a Base64 encoded string of the document''s content.The front side of the identity document is mandatory. This can include either just the front side or both sides (recto-verso) of the identity document.The back side of the identity document is optional. You only need to provide it if you have already submitted the front side and vice versa.Additional identity documents are optional. You may submit other identity documents that you believe are relevant, such as a document used as proof of address, or one containing your code and signature.'
-        last_name:
-          type: string
         phone_number:
           default: null
-          description: PhoneNumber
           type:
           - string
+          - 'null'
+        preferred_language:
+          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
+          type: string
+        redirect_url:
+          default: null
+          description: URL where to redirect borrower at end of onboarding after borrower signed the contract
+          type:
+          - string
+          - 'null'
+        referral:
+          default: null
+          description: Where the user comes from (.e.g Qonto, Google search, etc.).
+          type:
+          - string
+          - 'null'
+        step:
+          default: null
+          description: Current step of the onboarding process - usually oriented after the next user action
+          type:
+          - string
+          - 'null'
+        traceability_payload:
+          additionalProperties: {}
+          default: null
+          type:
+          - object
           - 'null'
       required:
-      - first_name
-      - last_name
-      type: object
-    Address:
-      properties:
-        address_line_1:
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        postal_code:
-          type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-      type: object
-    TypedApiPage12:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APIBorrower'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    APIOnboardingEligibilityResponse:
-      properties:
-        finished_processing:
-          type: boolean
-        id:
-          format: uuid
-          type: string
-        is_computing:
-          type: boolean
-        response:
-          allOf:
-          - $ref: '#/components/schemas/APIEligibilityResponse'
-          default: null
-        status:
-          enum:
-          - DONE
-          - PENDING_USER_ACTION
-          - PENDING_VALIDATION
-          type: string
-      required:
-      - finished_processing
-      - id
-      - is_computing
-      - status
-      type: object
-    APICreateIdentityDocuments:
-      properties:
-        custom_identity_documents:
-          default: null
-          items:
-            $ref: '#/components/schemas/APIIdentityDocument'
-          type:
-          - array
-          - 'null'
-        identity_document_back:
-          allOf:
-          - $ref: '#/components/schemas/APIIdentityDocument'
-          default: null
-        identity_document_front:
-          allOf:
-          - $ref: '#/components/schemas/APIIdentityDocument'
-          default: null
-      type: object
-    BusinessAddress:
-      properties:
-        address_line_1:
-          type: string
-        address_line_2:
-          default: null
-          type:
-          - string
-          - 'null'
-        city:
-          type: string
-        country:
-          type: string
-        postal_code:
-          maxLength: 10
-          type: string
-        state:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - address_line_1
-      - city
-      - country
-      - postal_code
-      type: object
-    CreateAddress:
-      properties:
-        address_line_1:
-          default: null
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          default: null
-          type:
-          - string
-          - 'null'
-        city:
-          default: null
-          type:
-          - string
-          - 'null'
-        country:
-          default: null
-          type:
-          - string
-          - 'null'
-        postal_code:
-          default: null
-          maxLength: 10
-          type:
-          - string
-          - 'null'
-        state:
-          default: null
-          type:
-          - string
-          - 'null'
-      type: object
-    APIDirector:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/APIAddress'
-          default: null
-          description: Address of the person.
-        birth_date:
-          default: null
-          description: Birth date of the person. (YYYY-MM-DD)
-          format: date
-          type:
-          - string
-          - 'null'
-        birth_place:
-          allOf:
-          - $ref: '#/components/schemas/BirthPlace'
-          default: null
-          description: Birth place of the person.
-        business_email:
-          default: null
-          format: email
-          type:
-          - string
-          - 'null'
-        business_phone_number:
-          default: null
-          description: PhoneNumber
-          type:
-          - string
-          - 'null'
-        entity_type:
-          default: people
-          enum:
-          - account
-          - account_detail_verification
-          - bill
-          - borrower
-          - borrower_financial_product
-          - business
-          - business_exposure
-          - business_financial_product
-          - contract
-          - counterparty
-          - country
-          - credit_card
-          - credit_line
-          - data_request
-          - deposit
-          - due_interest
-          - eligibility_request
-          - enrollment
-          - entity_eligibility
-          - financial_product
-          - flag
-          - installment
-          - invoice
-          - loan
-          - loan_log
-          - mandate
-          - max_exposure_deployment
-          - onboarding
-          - onboarding_financial_product
-          - payment
-          - people
-          - rac
-          - raw_data
-          - recollection_document
-          - revenue_share
-          - sandbox_invoice
-          - underwriting_check
-          type: string
-        first_name:
-          default: null
-          description: The first name of the person.
-          type:
-          - string
-          - 'null'
-        id:
-          default: null
-        identifier:
-          default: null
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type:
-          - string
-          - 'null'
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        last_name:
-          default: null
-          description: The first name of the person.
-          type:
-          - string
-          - 'null'
-        legal_name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        nationality:
-          default: null
-          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
-          type:
-          - string
-          - 'null'
-        role:
-          default: DIRECTOR
-          enum:
-          - DIRECTOR
-          - NON_DIRECTOR
-          type: string
-        siege_address:
-          allOf:
-          - $ref: '#/components/schemas/APIAddress'
-          default: null
-          description: Address of the business head quarters.
-        title:
-          default: null
-          description: Title of the person (e.g. M., Dr., etc.)
-          type:
-          - string
-          - 'null'
-      type: object
-    APIOwnerCreatedResponse:
-      properties:
-        email:
-          format: email
-          type: string
-        id:
-          format: uuid
-          type: string
-        phone_number:
-          description: PhoneNumber
-          type: string
-      required:
-      - email
-      - id
-      - phone_number
-      type: object
-    UserInput:
-      properties:
-        desired_amount_euros:
-          default: null
-          type:
-          - integer
-          - 'null'
-        desired_timeline:
-          default: null
-          type:
-          - string
-          - 'null'
-        frequency:
-          default: null
-          enum:
-          - permanent
-          - temporary
-          - null
-          type:
-          - string
-          - 'null'
-        immediate_need:
-          default: null
-          type:
-          - string
-          - 'null'
-        integrations_need:
-          default: null
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-        no_enrollment_category:
-          default: null
-          type:
-          - string
-          - 'null'
-        no_enrollment_detail:
-          default: null
-          type:
-          - string
-          - 'null'
-        reason_for_not_connecting_bank_account:
-          allOf:
-          - $ref: '#/components/schemas/ReasonForNotConnectingBankAccount'
-          default: null
-        user_need:
-          default: null
-          type:
-          - string
-          - 'null'
-      type: object
-    APIIntegration:
-      properties:
-        id:
-          format: uuid
-          type: string
-        is_connected:
-          type: boolean
-        name:
-          type: string
-      required:
-      - id
-      - is_connected
-      - name
-      type: object
-    APIBusinessIdentifier:
-      properties:
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    ApiPostRepaymentMethod:
-      properties:
-        apply_to_all_active_loans:
-          description: Use this account to repay active loans.
-          type: boolean
-        from_account:
-          allOf:
-          - $ref: '#/components/schemas/PublicApiAccountNumber'
-          default: null
-          description: Account information required if payment_method is DIRECT_DEBIT.
-        is_default_repayment_method:
-          description: Use this account by default for new loans repayment.
-          type: boolean
-        name:
-          default: null
-          description: Arbitrary name for this repayment method.
-          type:
-          - string
-          - 'null'
-        payment_method:
-          description: 'Payment method for the repayment account. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
-          enum:
-          - DIRECT_DEBIT
-          - SCT
-          type: string
-      required:
-      - apply_to_all_active_loans
-      - is_default_repayment_method
-      - payment_method
-      type: object
-    ApiBusinessDataSearchOutput:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-        name:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - identifier
-      - identifier_type
+      - preferred_language
       type: object
     APIRepaymentMethodDetails:
       properties:
@@ -1379,32 +672,36 @@ components:
       - payment_method
       - status
       type: object
-    APIPricingDetails:
+    APIEligibilityResponse:
       properties:
         fees_daily_rate:
+          default: null
           description: Daily interests rate in percent of owed amount.
-          type: number
-        late_daily_rate:
-          description: Daily interests rate in percent of owed amount when loan is late.
-          type: number
-      required:
-      - fees_daily_rate
-      - late_daily_rate
-      type: object
-    SignedInput:
-      properties:
-        signed_at:
-          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
-          format: date-time
-          type: string
-        wait_for_ready:
-          default: false
-          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
           type:
-          - boolean
+          - number
+          - 'null'
+        is_eligible:
+          description: Say if the eligibility check accepted the request or not.
+          type: boolean
+        max_amount:
+          default: 0
+          description: Maximum amount that can be lent, in cents.
+          type: integer
+        pricing_details:
+          allOf:
+          - $ref: '#/components/schemas/APIPricingDetails'
+          default: null
+          description: Details on proposed pricing.
+        reasons:
+          default: null
+          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
+          items:
+            $ref: '#/components/schemas/EligibilityDenialReason'
+          type:
+          - array
           - 'null'
       required:
-      - signed_at
+      - is_eligible
       type: object
     BorrowerOwner:
       properties:
@@ -1423,6 +720,90 @@ components:
       required:
       - email
       - id
+      type: object
+    TypedApiPage13:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIRepaymentMethodDetails'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    BusinessAddress:
+      properties:
+        address_line_1:
+          type: string
+        address_line_2:
+          default: null
+          type:
+          - string
+          - 'null'
+        city:
+          type: string
+        country:
+          type: string
+        postal_code:
+          maxLength: 10
+          type: string
+        state:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - address_line_1
+      - city
+      - country
+      - postal_code
+      type: object
+    OnboardingUserInfo:
+      properties:
+        email:
+          default: null
+          format: email
+          type:
+          - string
+          - 'null'
+        first_name:
+          default: null
+          type:
+          - string
+          - 'null'
+        last_name:
+          default: null
+          type:
+          - string
+          - 'null'
+        phone_number:
+          default: null
+          type:
+          - string
+          - 'null'
+        total_active_tenants:
+          type: integer
+      required:
+      - total_active_tenants
       type: object
     APIAddress:
       properties:
@@ -1457,63 +838,6 @@ components:
           type:
           - string
           - 'null'
-      type: object
-    APIEligibilityResponse:
-      properties:
-        fees_daily_rate:
-          default: null
-          description: Daily interests rate in percent of owed amount.
-          type:
-          - number
-          - 'null'
-        is_eligible:
-          description: Say if the eligibility check accepted the request or not.
-          type: boolean
-        max_amount:
-          default: 0
-          description: Maximum amount that can be lent, in cents.
-          type: integer
-        pricing_details:
-          allOf:
-          - $ref: '#/components/schemas/APIPricingDetails'
-          default: null
-          description: Details on proposed pricing.
-        reasons:
-          default: null
-          description: 'Reasons explaining why the request was rejected. If several reasons lead to a denial, the field will contain multiple objects. Empty when is_eligible: true.'
-          items:
-            $ref: '#/components/schemas/EligibilityDenialReason'
-          type:
-          - array
-          - 'null'
-      required:
-      - is_eligible
-      type: object
-    PublicApiAccountNumber:
-      properties:
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          default: iban
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - iban
-          type: string
-        bank_identifier:
-          default: null
-          description: The identifier of the bank.
-          type:
-          - string
-          - 'null'
-        bank_identifier_type:
-          default: bic
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          type: string
-      required:
-      - account_number
       type: object
     APILightAccount:
       properties:
@@ -1733,13 +1057,13 @@ components:
       required:
       - code
       type: object
-    TypedApiPage13:
+    TypedApiPage12:
       properties:
         count:
           type: integer
         data:
           items:
-            $ref: '#/components/schemas/APIRepaymentMethodDetails'
+            $ref: '#/components/schemas/APIBorrower'
           type: array
         next_page:
           default: null
@@ -1761,6 +1085,194 @@ components:
       required:
       - count
       - page_size
+      type: object
+    APIPricingDetails:
+      properties:
+        fees_daily_rate:
+          description: Daily interests rate in percent of owed amount.
+          type: number
+        late_daily_rate:
+          description: Daily interests rate in percent of owed amount when loan is late.
+          type: number
+      required:
+      - fees_daily_rate
+      - late_daily_rate
+      type: object
+    APICreateIdentityDocuments:
+      properties:
+        custom_identity_documents:
+          default: null
+          items:
+            $ref: '#/components/schemas/APIIdentityDocument'
+          type:
+          - array
+          - 'null'
+        identity_document_back:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+        identity_document_front:
+          allOf:
+          - $ref: '#/components/schemas/APIIdentityDocument'
+          default: null
+      type: object
+    APIIdentityDocument:
+      properties:
+        description:
+          default: null
+          description: An optional string that describes the document.
+          type:
+          - string
+          - 'null'
+        document_binary_base64:
+          description: A string that represents the document's binary content encoded in Base64.
+          type: string
+        filename:
+          description: The name of the file, including its extension.
+          type: string
+      required:
+      - document_binary_base64
+      - filename
+      type: object
+    ApiPostRepaymentMethod:
+      properties:
+        apply_to_all_active_loans:
+          description: Use this account to repay active loans.
+          type: boolean
+        from_account:
+          allOf:
+          - $ref: '#/components/schemas/PublicApiAccountNumber'
+          default: null
+          description: Account information required if payment_method is DIRECT_DEBIT.
+        is_default_repayment_method:
+          description: Use this account by default for new loans repayment.
+          type: boolean
+        name:
+          default: null
+          description: Arbitrary name for this repayment method.
+          type:
+          - string
+          - 'null'
+        payment_method:
+          description: 'Payment method for the repayment account. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
+          enum:
+          - DIRECT_DEBIT
+          - SCT
+          type: string
+      required:
+      - apply_to_all_active_loans
+      - is_default_repayment_method
+      - payment_method
+      type: object
+    APIIntegration:
+      properties:
+        id:
+          format: uuid
+          type: string
+        is_connected:
+          type: boolean
+        name:
+          type: string
+      required:
+      - id
+      - is_connected
+      - name
+      type: object
+    APIOnboardingBusiness:
+      properties:
+        defacto_segment:
+          default: null
+          enum:
+          - CAT1
+          - CAT2
+          - CAT3
+          - CAT4
+          - null
+          type:
+          - string
+          - 'null'
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        name:
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      - name
+      type: object
+    PublicApiAccountNumber:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - iban
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          type: string
+      required:
+      - account_number
+      type: object
+    CreateAddress:
+      properties:
+        address_line_1:
+          default: null
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          default: null
+          type:
+          - string
+          - 'null'
+        city:
+          default: null
+          type:
+          - string
+          - 'null'
+        country:
+          default: null
+          type:
+          - string
+          - 'null'
+        postal_code:
+          default: null
+          maxLength: 10
+          type:
+          - string
+          - 'null'
+        state:
+          default: null
+          type:
+          - string
+          - 'null'
       type: object
     APIOnboarding:
       properties:
@@ -1868,88 +1380,158 @@ components:
       - referral
       - status
       type: object
-    APIIdentityDocument:
+    APIDirector:
       properties:
-        description:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/APIAddress'
           default: null
-          description: An optional string that describes the document.
+          description: Address of the person.
+        birth_date:
+          default: null
+          description: Birth date of the person. (YYYY-MM-DD)
+          format: date
           type:
           - string
           - 'null'
-        document_binary_base64:
-          description: A string that represents the document's binary content encoded in Base64.
-          type: string
-        filename:
-          description: The name of the file, including its extension.
-          type: string
-      required:
-      - document_binary_base64
-      - filename
-      type: object
-    APIOnboardingCreationRequest:
-      properties:
-        business:
+        birth_place:
           allOf:
-          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          - $ref: '#/components/schemas/BirthPlace'
           default: null
-          description: Business linked to this onboarding. Required for partner onboarding.
-        email:
+          description: Birth place of the person.
+        business_email:
           default: null
           format: email
           type:
           - string
           - 'null'
-        phone_number:
+        business_phone_number:
           default: null
+          description: PhoneNumber
           type:
           - string
           - 'null'
-        preferred_language:
-          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
-          type: string
-        redirect_url:
-          default: null
-          description: URL where to redirect borrower at end of onboarding after borrower signed the contract
-          type:
-          - string
-          - 'null'
-        referral:
-          default: null
-          description: Where the user comes from (.e.g Qonto, Google search, etc.).
-          type:
-          - string
-          - 'null'
-        step:
-          default: null
-          description: Current step of the onboarding process - usually oriented after the next user action
-          type:
-          - string
-          - 'null'
-        traceability_payload:
-          additionalProperties: {}
-          default: null
-          type:
-          - object
-          - 'null'
-      required:
-      - preferred_language
-      type: object
-    APIOnboardingBusiness:
-      properties:
-        defacto_segment:
-          default: null
+        entity_type:
+          default: people
           enum:
-          - CAT1
-          - CAT2
-          - CAT3
-          - CAT4
+          - account
+          - account_detail_verification
+          - bill
+          - borrower
+          - borrower_financial_product
+          - business
+          - business_exposure
+          - business_financial_product
+          - contract
+          - counterparty
+          - country
+          - credit_card
+          - credit_line
+          - data_request
+          - deposit
+          - due_interest
+          - eligibility_request
+          - enrollment
+          - entity_eligibility
+          - financial_product
+          - flag
+          - installment
+          - invoice
+          - loan
+          - loan_log
+          - mandate
+          - max_exposure_deployment
+          - onboarding
+          - onboarding_financial_product
+          - payment
+          - people
+          - rac
+          - raw_data
+          - recollection_document
+          - revenue_share
+          - sandbox_invoice
+          - underwriting_check
+          type: string
+        first_name:
+          default: null
+          description: The first name of the person.
+          type:
+          - string
+          - 'null'
+        id:
+          default: null
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type:
+          - string
+          - 'null'
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           - null
           type:
           - string
           - 'null'
+        last_name:
+          default: null
+          description: The first name of the person.
+          type:
+          - string
+          - 'null'
+        legal_name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        nationality:
+          default: null
+          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type:
+          - string
+          - 'null'
+        role:
+          default: DIRECTOR
+          enum:
+          - DIRECTOR
+          - NON_DIRECTOR
+          type: string
+        siege_address:
+          allOf:
+          - $ref: '#/components/schemas/APIAddress'
+          default: null
+          description: Address of the business head quarters.
+        title:
+          default: null
+          description: Title of the person (e.g. M., Dr., etc.)
+          type:
+          - string
+          - 'null'
+      type: object
+    ApiBusinessDataSearchOutput:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
         identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
         identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
           - belgium_registration_number
           - bsn
@@ -1964,145 +1546,13 @@ components:
           - vat_number
           type: string
         name:
-          type: string
+          default: null
+          type:
+          - string
+          - 'null'
       required:
       - identifier
       - identifier_type
-      - name
-      type: object
-    APIPostBorrower:
-      properties:
-        account_number:
-          default: null
-          description: The account identifier. Only IBANs are supported at the moment.
-          type:
-          - string
-          - 'null'
-        address:
-          allOf:
-          - $ref: '#/components/schemas/BusinessAddress'
-          default: null
-        directors:
-          default: null
-          items:
-            $ref: '#/components/schemas/APICreateDirector'
-          minItems: 1
-          type:
-          - array
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        legal_form:
-          default: null
-          description: Legal form of the business.
-          type:
-          - string
-          - 'null'
-        metadata:
-          additionalProperties: {}
-          default: null
-          description: This object is yours, it enables you to add custom data.
-          type:
-          - object
-          - 'null'
-        name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        owner:
-          allOf:
-          - $ref: '#/components/schemas/APICreateOwner'
-          default: null
-          description: The person requesting subscribing to Defacto on behalf of the borrowers. Must be added as a director too
-        preferred_language:
-          default: null
-          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
-          type:
-          - string
-          - 'null'
-        signed_at:
-          default: null
-          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
-          format: date-time
-          type:
-          - string
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
-          type:
-          - string
-          - 'null'
-        wait_for_ready:
-          default: false
-          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
-          type: boolean
-      required:
-      - identifier
-      type: object
-    OnboardingUserInfo:
-      properties:
-        email:
-          default: null
-          format: email
-          type:
-          - string
-          - 'null'
-        first_name:
-          default: null
-          type:
-          - string
-          - 'null'
-        last_name:
-          default: null
-          type:
-          - string
-          - 'null'
-        phone_number:
-          default: null
-          type:
-          - string
-          - 'null'
-        total_active_tenants:
-          type: integer
-      required:
-      - total_active_tenants
-      type: object
-    BirthPlace:
-      properties:
-        city:
-          default: null
-          description: City where the person was born.
-          type:
-          - string
-          - 'null'
-        country:
-          default: null
-          description: Country where the person was born. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
-          type:
-          - string
-          - 'null'
       type: object
     APIBorrower:
       properties:
@@ -2417,6 +1867,556 @@ components:
           - 'null'
       required:
       - identifier
+      type: object
+    ReasonForNotConnectingBankAccount:
+      properties:
+        answer_code:
+          enum:
+          - no-access-to-company-bank-credentials
+          - not-comfortable-with-bank-account-connection
+          - other
+          - prefer-to-share-documents
+          type: string
+        comments:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - answer_code
+      type: object
+    UserInput:
+      properties:
+        desired_amount_euros:
+          default: null
+          type:
+          - integer
+          - 'null'
+        desired_timeline:
+          default: null
+          type:
+          - string
+          - 'null'
+        frequency:
+          default: null
+          enum:
+          - permanent
+          - temporary
+          - null
+          type:
+          - string
+          - 'null'
+        immediate_need:
+          default: null
+          type:
+          - string
+          - 'null'
+        integrations_need:
+          default: null
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        no_enrollment_category:
+          default: null
+          type:
+          - string
+          - 'null'
+        no_enrollment_detail:
+          default: null
+          type:
+          - string
+          - 'null'
+        reason_for_not_connecting_bank_account:
+          allOf:
+          - $ref: '#/components/schemas/ReasonForNotConnectingBankAccount'
+          default: null
+        user_need:
+          default: null
+          type:
+          - string
+          - 'null'
+      type: object
+    APICreateDirector:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/CreateAddress'
+          default: null
+          description: Address of the person.
+        birth_date:
+          default: null
+          description: Birth date of the person. (YYYY-MM-DD)
+          format: date
+          type:
+          - string
+          - 'null'
+        birth_place:
+          allOf:
+          - $ref: '#/components/schemas/BirthPlace'
+          default: null
+          description: Birth place of the person.
+        business_email:
+          default: null
+          format: email
+          type:
+          - string
+          - 'null'
+        business_phone_number:
+          default: null
+          description: PhoneNumber
+          type:
+          - string
+          - 'null'
+        entity_type:
+          default: people
+          enum:
+          - account
+          - account_detail_verification
+          - bill
+          - borrower
+          - borrower_financial_product
+          - business
+          - business_exposure
+          - business_financial_product
+          - contract
+          - counterparty
+          - country
+          - credit_card
+          - credit_line
+          - data_request
+          - deposit
+          - due_interest
+          - eligibility_request
+          - enrollment
+          - entity_eligibility
+          - financial_product
+          - flag
+          - installment
+          - invoice
+          - loan
+          - loan_log
+          - mandate
+          - max_exposure_deployment
+          - onboarding
+          - onboarding_financial_product
+          - payment
+          - people
+          - rac
+          - raw_data
+          - recollection_document
+          - revenue_share
+          - sandbox_invoice
+          - underwriting_check
+          type: string
+        first_name:
+          default: null
+          description: The first name of the person.
+          type:
+          - string
+          - 'null'
+        id:
+          default: null
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type:
+          - string
+          - 'null'
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        last_name:
+          default: null
+          description: The first name of the person.
+          type:
+          - string
+          - 'null'
+        legal_name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        nationality:
+          default: null
+          description: Nationality of the person. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type:
+          - string
+          - 'null'
+        role:
+          default: DIRECTOR
+          enum:
+          - DIRECTOR
+          - NON_DIRECTOR
+          type: string
+        siege_address:
+          allOf:
+          - $ref: '#/components/schemas/CreateAddress'
+          default: null
+          description: Address of the business head quarters.
+        title:
+          default: null
+          description: Title of the person (e.g. M., Dr., etc.)
+          type:
+          - string
+          - 'null'
+      type: object
+    APIOnboardingEligibilityResponse:
+      properties:
+        finished_processing:
+          type: boolean
+        id:
+          format: uuid
+          type: string
+        is_computing:
+          type: boolean
+        response:
+          allOf:
+          - $ref: '#/components/schemas/APIEligibilityResponse'
+          default: null
+        status:
+          enum:
+          - DONE
+          - PENDING_USER_ACTION
+          - PENDING_VALIDATION
+          type: string
+      required:
+      - finished_processing
+      - id
+      - is_computing
+      - status
+      type: object
+    APIOwnerCreatedResponse:
+      properties:
+        email:
+          format: email
+          type: string
+        id:
+          format: uuid
+          type: string
+        phone_number:
+          description: PhoneNumber
+          type: string
+      required:
+      - email
+      - id
+      - phone_number
+      type: object
+    BirthPlace:
+      properties:
+        city:
+          default: null
+          description: City where the person was born.
+          type:
+          - string
+          - 'null'
+        country:
+          default: null
+          description: Country where the person was born. Must be a ISO 3166 alpha-3 country code (e.g. FRA).
+          type:
+          - string
+          - 'null'
+      type: object
+    APIEnrollment:
+      properties:
+        agent_feedback:
+          default: null
+          type:
+          - string
+          - 'null'
+        enrollment_campaign:
+          type: string
+        enrollment_name:
+          type: string
+        entity_id:
+          format: uuid
+          type: string
+        entity_type:
+          enum:
+          - BORROWER
+          - ONBOARDING
+          type: string
+        id:
+          format: uuid
+          type: string
+        recommendations:
+          default: null
+          items: {}
+          type:
+          - array
+          - 'null'
+        status:
+          type: string
+        submitted_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - enrollment_campaign
+      - enrollment_name
+      - entity_id
+      - entity_type
+      - id
+      - status
+      type: object
+    APICreateOwner:
+      properties:
+        birth_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        email:
+          default: null
+          format: email
+          type:
+          - string
+          - 'null'
+        first_name:
+          type: string
+        identity_documents:
+          allOf:
+          - $ref: '#/components/schemas/APICreateIdentityDocuments'
+          default: null
+          description: 'Owner''s identity documents: All documents must be provided as a Base64 encoded string of the document''s content.The front side of the identity document is mandatory. This can include either just the front side or both sides (recto-verso) of the identity document.The back side of the identity document is optional. You only need to provide it if you have already submitted the front side and vice versa.Additional identity documents are optional. You may submit other identity documents that you believe are relevant, such as a document used as proof of address, or one containing your code and signature.'
+        last_name:
+          type: string
+        phone_number:
+          default: null
+          description: PhoneNumber
+          type:
+          - string
+          - 'null'
+      required:
+      - first_name
+      - last_name
+      type: object
+    BorrowerComplianceChecks:
+      properties:
+        status:
+          enum:
+          - APPROVED
+          - PENDING_USER_ACTION
+          - REJECTED
+          - REVIEWING
+          - UNKNOWN
+          type: string
+      required:
+      - status
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+      type: object
+    APIAccountCreation:
+      properties:
+        account_holder:
+          allOf:
+          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          default: null
+          description: The business owning the account.
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      type: object
+    SignedInput:
+      properties:
+        signed_at:
+          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
+          format: date-time
+          type: string
+        wait_for_ready:
+          default: false
+          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
+          type:
+          - boolean
+          - 'null'
+      required:
+      - signed_at
+      type: object
+    APIPostBorrower:
+      properties:
+        account_number:
+          default: null
+          description: The account identifier. Only IBANs are supported at the moment.
+          type:
+          - string
+          - 'null'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/BusinessAddress'
+          default: null
+        directors:
+          default: null
+          items:
+            $ref: '#/components/schemas/APICreateDirector'
+          minItems: 1
+          type:
+          - array
+          - 'null'
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        legal_form:
+          default: null
+          description: Legal form of the business.
+          type:
+          - string
+          - 'null'
+        metadata:
+          additionalProperties: {}
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type:
+          - object
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/APICreateOwner'
+          default: null
+          description: The person requesting subscribing to Defacto on behalf of the borrowers. Must be added as a director too
+        preferred_language:
+          default: null
+          description: 'Preferred language of the borrower in format ISO 639-1 (examples: [fr, en, es, de, nl]).'
+          type:
+          - string
+          - 'null'
+        signed_at:
+          default: null
+          description: datetime of the borrower's signature. Usually time the borrower clicked on our T&Cs checkbox
+          format: date-time
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+        wait_for_ready:
+          default: false
+          description: Wait for the borrower to be ready to request a first loan.Many actions have to run in the background (KYC, scoring, contract generation and so on).We recommend you to subscribe to the CreditLine.CREATED webhook in order to be notified in real time when the credit line is available.
+          type: boolean
+      required:
+      - identifier
+      type: object
+    APIBusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
       type: object
   securitySchemes:
     Bearer:

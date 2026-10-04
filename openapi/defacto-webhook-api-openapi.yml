@@ -113,34 +113,61 @@ paths:
       summary: /webhooks
 components:
   schemas:
-    TypedApiPage9:
+    Webhook:
       properties:
-        count:
-          type: integer
-        data:
+        event_types:
           items:
-            $ref: '#/components/schemas/Webhook1'
+            enum:
+            - BorrowerFinancialProductCreated
+            - BorrowerFinancialProductUpdated
+            - CounterpartyCreditLimit.CREATED
+            - CounterpartyCreditLimit.UPDATED
+            - CreditLimit.UPDATED
+            - CreditLine.BALANCE_UPDATED
+            - CreditLine.CREATED
+            - CreditLine.POOL_AMOUNT_UPDATED
+            - Invoice.DECLINED
+            - Invoice.DELETED
+            - Invoice.SUBMITTED
+            - Invoice.TO_EDIT
+            - Invoice.VERIFIED
+            - Loan.CANCELED
+            - Loan.CLOSED
+            - Loan.DECLINED
+            - Loan.DELETED
+            - Loan.INITIATED
+            - Loan.ISSUE_DETECTED
+            - Loan.PENDING_VALIDATION
+            - Loan.SCHEDULED
+            - Loan.SUBMITTED
+            - Loan.TO_REPAY
+            - Loan.TO_REPAY_FEES
+            - Loan.TO_VALIDATE
+            - Loan.VALIDATED
+            - Payment.CANCELED
+            - Payment.FAILED
+            - Payment.INSTRUCTED
+            - Payment.IN_TRANSIT
+            - Payment.PAID
+            - Payment.SCHEDULED
+            type: string
+          minItems: 1
           type: array
-        next_page:
+        id:
           default: null
+          format: uuid
           type:
           - string
           - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
+        name:
+          type: string
+        to_url:
+          format: url
+          type: string
       required:
-      - count
-      - page_size
+      - event_types
+      - name
+      - to_url
       type: object
     Webhook1:
       properties:
@@ -198,61 +225,34 @@ components:
       - name
       - to_url
       type: object
-    Webhook:
+    TypedApiPage9:
       properties:
-        event_types:
+        count:
+          type: integer
+        data:
           items:
-            enum:
-            - BorrowerFinancialProductCreated
-            - BorrowerFinancialProductUpdated
-            - CounterpartyCreditLimit.CREATED
-            - CounterpartyCreditLimit.UPDATED
-            - CreditLimit.UPDATED
-            - CreditLine.BALANCE_UPDATED
-            - CreditLine.CREATED
-            - CreditLine.POOL_AMOUNT_UPDATED
-            - Invoice.DECLINED
-            - Invoice.DELETED
-            - Invoice.SUBMITTED
-            - Invoice.TO_EDIT
-            - Invoice.VERIFIED
-            - Loan.CANCELED
-            - Loan.CLOSED
-            - Loan.DECLINED
-            - Loan.DELETED
-            - Loan.INITIATED
-            - Loan.ISSUE_DETECTED
-            - Loan.PENDING_VALIDATION
-            - Loan.SCHEDULED
-            - Loan.SUBMITTED
-            - Loan.TO_REPAY
-            - Loan.TO_REPAY_FEES
-            - Loan.TO_VALIDATE
-            - Loan.VALIDATED
-            - Payment.CANCELED
-            - Payment.FAILED
-            - Payment.INSTRUCTED
-            - Payment.IN_TRANSIT
-            - Payment.PAID
-            - Payment.SCHEDULED
-            type: string
-          minItems: 1
+            $ref: '#/components/schemas/Webhook1'
           type: array
-        id:
+        next_page:
           default: null
-          format: uuid
           type:
           - string
           - 'null'
-        name:
-          type: string
-        to_url:
-          format: url
-          type: string
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
       required:
-      - event_types
-      - name
-      - to_url
+      - count
+      - page_size
       type: object
   securitySchemes:
     Bearer:

@@ -39,28 +39,6 @@ paths:
       summary: /business/{business_id}/segment
 components:
   schemas:
-    BusinessIdentifierRequired:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
     BusinessSegment:
       properties:
         business_id:
@@ -82,6 +60,28 @@ components:
       required:
       - business_id
       - business_identifier
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
       type: object
   securitySchemes:
     Bearer:

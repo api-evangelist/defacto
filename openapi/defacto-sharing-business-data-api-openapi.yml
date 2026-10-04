@@ -163,177 +163,56 @@ paths:
       summary: /business/data/invoices
 components:
   schemas:
+    APIBatchUploadContent:
+      properties:
+        account_transactions:
+          default: null
+          items:
+            $ref: '#/components/schemas/BatchUploadContentAccountTransactionsOneAccount'
+          type:
+          - array
+          - 'null'
+        accounts:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentAccounts'
+          default: null
+        invoices:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentInvoices'
+          default: null
+        shared_data_types:
+          items:
+            enum:
+            - account_transactions
+            - accounts
+            - invoices
+            type: string
+          type: array
+      type: object
+    APICreateBatchUpload:
+      properties:
+        auto_cancel_ongoing_batch_for_business:
+          default: true
+          type: boolean
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        content:
+          $ref: '#/components/schemas/APIBatchUploadContent'
+        context:
+          enum:
+          - BORROWER_CREATION
+          - DATA_REFRESH
+          type: string
+      required:
+      - business_identifier
+      - content
+      - context
+      type: object
     BuyerBusinessIdentifier:
       properties:
         identifier:
           type: string
         identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    BatchUploadContentInvoices:
-      properties:
-        total_count:
-          type: integer
-      required:
-      - total_count
-      type: object
-    BatchUploadContentAccountTransactionsOneAccount:
-      properties:
-        account:
-          type: string
-        end_date:
-          format: date-time
-          type: string
-        start_date:
-          format: date-time
-          type: string
-      required:
-      - account
-      - end_date
-      - start_date
-      type: object
-    APIPartnerAccountTransactions:
-      properties:
-        batch_id:
-          default: null
-          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
-          format: uuid
-          type:
-          - string
-          - 'null'
-        end_date:
-          default: null
-          description: End date of the financials you're sending.
-          format: date-time
-          type:
-          - string
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-        start_date:
-          default: '0001-01-01T00:00:00'
-          description: Start date of the financials you're sending.
-          format: date-time
-          type:
-          - string
-          - 'null'
-        transactions:
-          description: List of account transactions of the business.
-          items:
-            $ref: '#/components/schemas/APIPartnerAccountTransaction'
-          type: array
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    APIPartnerBusinessInvoices:
-      properties:
-        batch_id:
-          default: null
-          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
-          format: uuid
-          type:
-          - string
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-        invoices:
-          description: List of invoices of the business.
-          items:
-            $ref: '#/components/schemas/APIPartnerBusinessInvoice'
-          type: array
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    SellerBusinessIdentifier:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    APIPartnerBusinessAccounts:
-      properties:
-        accounts:
-          description: List of accounts balances of the business.
-          items:
-            $ref: '#/components/schemas/APIPartnerBusinessAccount'
-          type: array
-        batch_id:
-          default: null
-          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
-          format: uuid
-          type:
-          - string
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
           - belgium_registration_number
           - bsn
@@ -414,35 +293,6 @@ components:
       - amount
       - id
       - last_updated_at
-      type: object
-    BatchUploadContentAccounts:
-      properties:
-        total_count:
-          type: integer
-      required:
-      - total_count
-      type: object
-    BusinessIdentifierRequired:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
       type: object
     APIPartnerAccountTransaction:
       properties:
@@ -613,50 +463,41 @@ components:
       - amount
       - at
       type: object
-    APIBatchUploadContent:
+    APIPartnerBusinessInvoices:
       properties:
-        account_transactions:
+        batch_id:
           default: null
-          items:
-            $ref: '#/components/schemas/BatchUploadContentAccountTransactionsOneAccount'
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
           type:
-          - array
+          - string
           - 'null'
-        accounts:
-          allOf:
-          - $ref: '#/components/schemas/BatchUploadContentAccounts'
-          default: null
-        invoices:
-          allOf:
-          - $ref: '#/components/schemas/BatchUploadContentInvoices'
-          default: null
-        shared_data_types:
-          items:
-            enum:
-            - account_transactions
-            - accounts
-            - invoices
-            type: string
-          type: array
-      type: object
-    APICreateBatchUpload:
-      properties:
-        auto_cancel_ongoing_batch_for_business:
-          default: true
-          type: boolean
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        content:
-          $ref: '#/components/schemas/APIBatchUploadContent'
-        context:
-          enum:
-          - BORROWER_CREATION
-          - DATA_REFRESH
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        invoices:
+          description: List of invoices of the business.
+          items:
+            $ref: '#/components/schemas/APIPartnerBusinessInvoice'
+          type: array
       required:
-      - business_identifier
-      - content
-      - context
+      - identifier
+      - identifier_type
       type: object
     APIPartnerBusinessInvoice:
       properties:
@@ -819,6 +660,27 @@ components:
       - net_amount
       - seller
       type: object
+    BatchUploadContent:
+      properties:
+        account_transactions:
+          default: null
+        accounts:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentAccounts'
+          default: null
+        invoices:
+          allOf:
+          - $ref: '#/components/schemas/BatchUploadContentInvoices'
+          default: null
+        shared_data_types:
+          items:
+            enum:
+            - account_transactions
+            - accounts
+            - invoices
+            type: string
+          type: array
+      type: object
     APIBatchUpload:
       properties:
         business_identifier:
@@ -848,26 +710,164 @@ components:
       - id
       - status
       type: object
-    BatchUploadContent:
+    APIPartnerBusinessAccounts:
       properties:
-        account_transactions:
-          default: null
         accounts:
-          allOf:
-          - $ref: '#/components/schemas/BatchUploadContentAccounts'
-          default: null
-        invoices:
-          allOf:
-          - $ref: '#/components/schemas/BatchUploadContentInvoices'
-          default: null
-        shared_data_types:
+          description: List of accounts balances of the business.
           items:
-            enum:
-            - account_transactions
-            - accounts
-            - invoices
-            type: string
+            $ref: '#/components/schemas/APIPartnerBusinessAccount'
           type: array
+        batch_id:
+          default: null
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
+          type:
+          - string
+          - 'null'
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    BatchUploadContentInvoices:
+      properties:
+        total_count:
+          type: integer
+      required:
+      - total_count
+      type: object
+    SellerBusinessIdentifier:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APIPartnerAccountTransactions:
+      properties:
+        batch_id:
+          default: null
+          description: Id of the batch you created with POST /business/data/batch-upload. This is a recommended feature.
+          format: uuid
+          type:
+          - string
+          - 'null'
+        end_date:
+          default: null
+          description: End date of the financials you're sending.
+          format: date-time
+          type:
+          - string
+          - 'null'
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+        start_date:
+          default: '0001-01-01T00:00:00'
+          description: Start date of the financials you're sending.
+          format: date-time
+          type:
+          - string
+          - 'null'
+        transactions:
+          description: List of account transactions of the business.
+          items:
+            $ref: '#/components/schemas/APIPartnerAccountTransaction'
+          type: array
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    BatchUploadContentAccounts:
+      properties:
+        total_count:
+          type: integer
+      required:
+      - total_count
+      type: object
+    BatchUploadContentAccountTransactionsOneAccount:
+      properties:
+        account:
+          type: string
+        end_date:
+          format: date-time
+          type: string
+        start_date:
+          format: date-time
+          type: string
+      required:
+      - account
+      - end_date
+      - start_date
       type: object
   securitySchemes:
     Bearer:
