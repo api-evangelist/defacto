@@ -201,28 +201,56 @@ paths:
       summary: /cards/{card_id}/ephemeral-key
 components:
   schemas:
-    CreditBalance:
+    UpdateCardStatusRequest:
       properties:
-        available:
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    ApiCardEntry:
+      properties:
+        amount:
           type: integer
-        available_including_pending:
-          default: null
-          type:
-          - integer
-          - 'null'
+        created:
+          format: date-time
+          type: string
         currency:
           type: string
-        pending:
+        entry_type:
+          default: transaction
+          type: string
+        funding_obligation_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        merchant_amount:
           default: null
           type:
           - integer
           - 'null'
-        used:
-          type: integer
+        merchant_category:
+          type: string
+        merchant_currency:
+          default: null
+          type:
+          - string
+          - 'null'
+        merchant_name:
+          type: string
+        transaction_type:
+          type: string
       required:
-      - available
+      - amount
+      - created
       - currency
-      - used
+      - id
+      - merchant_category
+      - merchant_name
+      - transaction_type
       type: object
     EphemeralKeyResult:
       properties:
@@ -290,56 +318,28 @@ components:
       - last4
       - status
       type: object
-    UpdateCardStatusRequest:
+    CreditBalance:
       properties:
-        status:
-          type: string
-      required:
-      - status
-      type: object
-    ApiCardEntry:
-      properties:
-        amount:
+        available:
           type: integer
-        created:
-          format: date-time
-          type: string
-        currency:
-          type: string
-        entry_type:
-          default: transaction
-          type: string
-        funding_obligation_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        merchant_amount:
+        available_including_pending:
           default: null
           type:
           - integer
           - 'null'
-        merchant_category:
+        currency:
           type: string
-        merchant_currency:
+        pending:
           default: null
           type:
-          - string
+          - integer
           - 'null'
-        merchant_name:
-          type: string
-        transaction_type:
-          type: string
+        used:
+          type: integer
       required:
-      - amount
-      - created
+      - available
       - currency
-      - id
-      - merchant_category
-      - merchant_name
-      - transaction_type
+      - used
       type: object
   securitySchemes:
     Bearer:

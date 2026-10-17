@@ -273,6 +273,35 @@ paths:
       summary: /recollection-case/{recollection_case_id}/installment-plans
 components:
   schemas:
+    ApiPaymentIntent:
+      properties:
+        amount:
+          type: integer
+        date:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - CANCELED
+          - DRAFT
+          - INSTRUCTED
+          - IN_TRANSIT
+          - ISSUE_DETECTED
+          - PAID
+          - PARTIALLY_PAID
+          - PROPOSED
+          - SCHEDULED
+          - WAITING
+          type: string
+      required:
+      - amount
+      - date
+      - id
+      - status
+      type: object
     ApiRecollectionInstallmentPlan:
       properties:
         installment_plan_id:
@@ -284,13 +313,57 @@ components:
       - installment_plan_id
       - recollection_case
       type: object
-    ApiPutRecollectionCaseRequest:
+    ApiCreateRecollectionInstallmentRequest:
       properties:
-        recollection_notes:
-          additionalProperties: {}
-          type: object
+        amount:
+          description: Total amount of this installment paid by borrower
+          type: integer
+        date:
+          description: Date of payment of this installment
+          format: date-time
+          type: string
+        loans:
+          description: Detailed lettering of an installment
+          items:
+            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
+          type: array
+        recollection_fees:
+          default: 0
+          description: Share of recollection fees in installment
+          type: integer
       required:
-      - recollection_notes
+      - amount
+      - date
+      - loans
+      type: object
+    TypedApiPage11:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/ApiRecollectionCase'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
       type: object
     ApiCreateRecollectionActionRequest:
       properties:
@@ -310,6 +383,53 @@ components:
       required:
       - action_name
       - due_at
+      type: object
+    ApiCreateRecollectionInstallmentPlanRequest:
+      properties:
+        installments:
+          description: List of installments in installment plan
+          items:
+            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentRequest'
+          type: array
+        payment_method:
+          description: Payment method to use for requested installment plan
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+      required:
+      - installments
+      - payment_method
+      type: object
+    APIComputeRecollectionInstallmentPlan:
+      properties:
+        number_of_installment:
+          description: Number of installments
+          type: integer
+        period:
+          enum:
+          - biweekly
+          - monthly
+          - weekly
+          type: string
+        recollection_fees:
+          default: 0
+          description: Any extra fees bound to recollection procedure
+          type: integer
+        repayment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        start_date:
+          description: First installment date
+          format: date-time
+          type: string
+      required:
+      - number_of_installment
+      - start_date
       type: object
     ApiRecollectionAction:
       properties:
@@ -346,87 +466,6 @@ components:
       - action_status_date
       - id
       - original_due_at
-      type: object
-    ApiCreateRecollectionInstallmentLoanRequest:
-      properties:
-        amount:
-          description: Amount to repay on loan in this installment
-          type: integer
-        loan_id:
-          format: uuid
-          type: string
-      required:
-      - amount
-      - loan_id
-      type: object
-    ApiInstallmentPlan:
-      properties:
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        id:
-          format: uuid
-          type: string
-        installments:
-          items:
-            $ref: '#/components/schemas/ApiPaymentIntent'
-          type: array
-        loan_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - business_identifier
-      - id
-      - installments
-      - loan_ids
-      type: object
-    TypedApiPage11:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/ApiRecollectionCase'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    ApiCreateRecollectionInstallmentPlanRequest:
-      properties:
-        installments:
-          description: List of installments in installment plan
-          items:
-            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentRequest'
-          type: array
-        payment_method:
-          description: Payment method to use for requested installment plan
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-      required:
-      - installments
-      - payment_method
       type: object
     ApiRecollectionCase:
       properties:
@@ -467,34 +506,49 @@ components:
       - past_actions
       - strategies
       type: object
-    ApiPaymentIntent:
+    ApiInstallmentPlan:
       properties:
-        amount:
-          type: integer
-        date:
-          format: date-time
-          type: string
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
         id:
           format: uuid
           type: string
-        status:
+        installments:
+          items:
+            $ref: '#/components/schemas/ApiPaymentIntent'
+          type: array
+        loan_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - business_identifier
+      - id
+      - installments
+      - loan_ids
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
           enum:
-          - CANCELED
-          - DRAFT
-          - INSTRUCTED
-          - IN_TRANSIT
-          - ISSUE_DETECTED
-          - PAID
-          - PARTIALLY_PAID
-          - PROPOSED
-          - SCHEDULED
-          - WAITING
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           type: string
       required:
-      - amount
-      - date
-      - id
-      - status
+      - identifier
+      - identifier_type
       type: object
     ApiCreateRecollectionCaseRequest:
       properties:
@@ -521,27 +575,13 @@ components:
       - loan_ids
       - next_action
       type: object
-    BusinessIdentifierRequired:
+    ApiPutRecollectionCaseRequest:
       properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
+        recollection_notes:
+          additionalProperties: {}
+          type: object
       required:
-      - identifier
-      - identifier_type
+      - recollection_notes
       type: object
     ApiRecollectionStrategy:
       properties:
@@ -559,57 +599,17 @@ components:
       - is_active
       - strategy_type
       type: object
-    APIComputeRecollectionInstallmentPlan:
-      properties:
-        number_of_installment:
-          description: Number of installments
-          type: integer
-        period:
-          enum:
-          - biweekly
-          - monthly
-          - weekly
-          type: string
-        recollection_fees:
-          default: 0
-          description: Any extra fees bound to recollection procedure
-          type: integer
-        repayment_method:
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        start_date:
-          description: First installment date
-          format: date-time
-          type: string
-      required:
-      - number_of_installment
-      - start_date
-      type: object
-    ApiCreateRecollectionInstallmentRequest:
+    ApiCreateRecollectionInstallmentLoanRequest:
       properties:
         amount:
-          description: Total amount of this installment paid by borrower
+          description: Amount to repay on loan in this installment
           type: integer
-        date:
-          description: Date of payment of this installment
-          format: date-time
+        loan_id:
+          format: uuid
           type: string
-        loans:
-          description: Detailed lettering of an installment
-          items:
-            $ref: '#/components/schemas/ApiCreateRecollectionInstallmentLoanRequest'
-          type: array
-        recollection_fees:
-          default: 0
-          description: Share of recollection fees in installment
-          type: integer
       required:
       - amount
-      - date
-      - loans
+      - loan_id
       type: object
   securitySchemes:
     Bearer:

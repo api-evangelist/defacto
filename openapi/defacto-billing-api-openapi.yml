@@ -215,101 +215,166 @@ paths:
       summary: /referrer/{referrer_id}/upload-invoice/{revenue_share_id}
 components:
   schemas:
-    PaymentIntentRelation:
+    ContractGenerationSettings:
       properties:
-        due_interests:
-          items:
-            $ref: '#/components/schemas/DueInterestXPaymentIntent'
-          type: array
-        installment_plans:
-          items:
-            $ref: '#/components/schemas/InstallmentPlanXPaymentIntent'
-          type: array
-        loans:
-          items:
-            $ref: '#/components/schemas/LoanPaymentIntent'
-          type: array
-        payments:
-          items:
-            $ref: '#/components/schemas/PaymentXPaymentIntent'
-          type: array
+        batch_max_size:
+          default: 50
+          type: integer
+        batch_signature_enabled:
+          default: false
+          type: boolean
+        synchronous_contract_generation:
+          default: true
+          type: boolean
       type: object
-    DepositingRule:
+    APILightAccountDetails:
       properties:
-        base_amount:
-          enum:
-          - DUE_INTERESTS
-          - ESTIMATED_FEES
-          - FIXED_AMOUNT
-          - LOAN_AMOUNT
-          - LOAN_AMOUNT_WITH_DUE_INTERESTS
-          - LOAN_AMOUNT_WITH_ESTIMATED_FEES
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
           type: string
-        depositor_role:
+        account_number_type:
+          description: The type of account number (e.g. IBAN).
           enum:
-          - BENEFICIARY
-          - BORROWER
-          - FEES_PAYER
-          - PARTNER
+          - account_number
+          - iban
+          - internal_id
           type: string
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethodConfiguration'
-        purpose:
+        bank_identifier:
+          description: The identifier of the bank.
+          type: string
+        bank_identifier_type:
+          description: The type of bank identifier (e.g. BIC).
           enum:
-          - FEES_DEPOSIT
-          - GUARANTEE_DEPOSIT
-          - RECOLLECTION_FEES_DEPOSIT
-          type: string
-        value:
+          - bic
+          - name
+          - routing_number
+          - undefined
           type: string
       required:
-      - base_amount
-      - depositor_role
-      - purpose
-      - value
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
       type: object
-    ReferrerConfig:
+    SignatureConfig:
       properties:
-        override_financial_products_ids:
+        automatic_signer:
+          allOf:
+          - $ref: '#/components/schemas/AutomaticSigner'
           default: null
-          items:
-            format: uuid
-            type: string
-          type:
-          - array
-          - 'null'
-        referral_code:
-          description: Main referral code for the referrer
+        contract_template_name:
+          enum:
+          - DAILLY_CREDIT_AGREEMENT_TEMPLATE
+          - DAILLY_ESCOMPTE_TEMPLATE
+          - DIRECT_MASTER_LOAN_AGREEMENT_TEMPLATE
+          - TERMS_AND_CONDITIONS
           type: string
-        referral_codes:
-          description: All list of referral codes ever used by the referrer
+        signing_fields:
           items:
+            $ref: '#/components/schemas/SigningField'
+          type: array
+      required:
+      - contract_template_name
+      - signing_fields
+      type: object
+    FinancialProductBillingConfiguration:
+      properties:
+        bill_overdue_threshold_in_days:
+          default: 4
+          type: integer
+        fees_payers:
+          items:
+            $ref: '#/components/schemas/FeesPayerConfig'
+          type: array
+        loan_overdue_threshold_in_days:
+          default: 4
+          type: integer
+        penalties_disabled:
+          default: false
+          type: boolean
+      type: object
+    InvoiceCollateralizationRiskMitigator:
+      properties:
+        triggers:
+          items:
+            enum:
+            - BORROWER_DEFAULT
+            - BORROWER_INSOLVENCY
             type: string
           type: array
-        referrer_type:
+      required:
+      - triggers
+      type: object
+    BillPayment:
+      properties:
+        amount:
+          type: integer
+        bill_id:
+          format: uuid
+          type: string
+        payment_id:
           default: null
+      required:
+      - amount
+      - bill_id
+      type: object
+    BusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
           enum:
-          - BROKER
-          - CORE_POC
-          - DISTRIBUTOR
-          - LIQUID_BROKERS_CAB
-          - LIQUID_BROKER_NETWORK
-          - LIQUID_CORPORATE_FINANCE
-          - LIQUID_DAF_CONSULTANT
-          - LIQUID_EC
-          - TECH_HYBRID
-          - TECH_LIQUID
-          - TECH_PARTNER
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           - null
           type:
           - string
           - 'null'
-        revenue_share_config:
-          allOf:
-          - $ref: '#/components/schemas/ReferrerRevenueShareConfig'
-          default: null
       required:
-      - referral_code
+      - identifier
+      type: object
+    SigningField:
+      properties:
+        height:
+          default: null
+          type:
+          - integer
+          - 'null'
+        mention:
+          default: null
+          type:
+          - string
+          - 'null'
+        page:
+          type: integer
+        position_x:
+          type: integer
+        position_y:
+          type: integer
+        type:
+          default: signature
+          enum:
+          - mention
+          - signature
+        width:
+          type: integer
+      required:
+      - page
+      - position_x
+      - position_y
+      - width
       type: object
     PaymentXPaymentIntent:
       properties:
@@ -352,63 +417,167 @@ components:
       - payment_intent_id
       - payment_type
       type: object
-    FinancialProductInstallmentsConfiguration:
+    ProviderPaymentID:
       properties:
-        available_types:
-          items:
-            enum:
-            - INSTALLMENTS
-            - IN_FINE
-            type: string
-          type: array
-        maximum_reschedule_payment_in_days:
-          default: 30
-          type: integer
-        minimum_anticipate_payment_in_days:
-          default: 1
-          type: integer
-        minimum_business_days_until_due_date_to_reschedule_payment:
-          default: 1
-          type: integer
-      type: object
-    ContractGenerationSettings:
-      properties:
-        batch_max_size:
-          default: 50
-          type: integer
-        batch_signature_enabled:
-          default: false
-          type: boolean
-        synchronous_contract_generation:
-          default: true
-          type: boolean
-      type: object
-    BusinessIdentifier:
-      properties:
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
+        failure_reason:
           default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
+          type:
+          - string
+          - 'null'
+        initial_payment_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        name:
           enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
+          - LEMONWAY
+          - MEMOBANK
+          - NUMERAL
+          - SANDBOX
+          - SWAN
+          - TEST
+          type: string
+        original_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        override_reconciliation_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        payment_id:
+          default: null
           type:
           - string
           - 'null'
       required:
-      - identifier
+      - name
+      type: object
+    FPUXConfiguration:
+      properties:
+        aggregation_scenarios:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductUxAggregationScenarioConfiguration'
+          type:
+          - array
+          - 'null'
+        fp_status_on_manual_review_eligibility:
+          default: READY
+          enum:
+          - BLOCKED
+          - CHURN
+          - CLOSED_BY_USER
+          - CREATED
+          - CUT
+          - DEACTIVATED
+          - PENDING_USER_ACTION
+          - PRODUCT_DISCONTINUED
+          - READY
+          - TO_SIGN
+          type: string
+        loan_request:
+          $ref: '#/components/schemas/FPLoanRequestConfiguration'
+      type: object
+    AccountProvider:
+      properties:
+        id:
+          type: string
+        provider:
+          enum:
+          - LEMONWAY
+          - MEMOBANK
+          - NUMERAL
+          - SANDBOX
+          - SWAN
+          - TEST
+          type: string
+      required:
+      - id
+      - provider
+      type: object
+    FinancialProductConfiguration:
+      properties:
+        billing:
+          $ref: '#/components/schemas/FinancialProductBillingConfiguration'
+        contract_generation_settings:
+          allOf:
+          - $ref: '#/components/schemas/ContractGenerationSettings'
+          default: null
+        contract_templates:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductContractTemplate'
+          type:
+          - array
+          - 'null'
+        contract_type:
+          default: CREDIT_OPERATION
+          enum:
+          - CREDIT_OPERATION
+          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
+          - EQUITY_LOAN
+          - TRADE_RECEIVABLE
+          type: string
+        depositing_rules:
+          default: null
+          items:
+            $ref: '#/components/schemas/DepositingRule'
+          type:
+          - array
+          - 'null'
+        installments:
+          $ref: '#/components/schemas/FinancialProductInstallmentsConfiguration'
+        risk_mitigation_config:
+          allOf:
+          - $ref: '#/components/schemas/RiskMitigationConfig'
+          default: null
+        subscription:
+          $ref: '#/components/schemas/SubscriptionConfig'
+        tcs_documents:
+          default: null
+          items:
+            $ref: '#/components/schemas/FinancialProductTcsDocument'
+          type:
+          - array
+          - 'null'
+        ux:
+          $ref: '#/components/schemas/FPUXConfiguration'
+      type: object
+    InsuranceRiskMitigator:
+      properties:
+        delay_to_call_insurance_after_chargeback:
+          default: null
+          description: Delay in hours before calling the insurance provider after a chargeback. If None, insurance is not called after chargeback.
+          type:
+          - integer
+          - 'null'
+        delay_to_call_insurance_on_insolvency_procedure_opening:
+          default: null
+          description: Delay in hours before calling the insurance provider when an insolvency procedure is opened. If None, insurance is not called on insolvency procedure opening.
+          type:
+          - integer
+          - 'null'
+        insurance_provider:
+          description: The insurance provider to use for risk mitigation
+          enum:
+          - ALLIANZ_TRADE
+          - CREDIT_360
+          - SANDBOX
+          type: string
+        triggers:
+          items:
+            enum:
+            - BORROWER_DEFAULT
+            - BORROWER_INSOLVENCY
+            type: string
+          type: array
+      required:
+      - insurance_provider
+      - triggers
       type: object
     ReferrerRevenueShareConfig:
       properties:
@@ -474,133 +643,17 @@ components:
       - shared_to_account
       - vat_included
       type: object
-    FeesPayerConfig:
+    InstallmentPlanXPaymentIntent:
       properties:
-        billed_business_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        fees_payer_role:
-          default: PARTNER
-          enum:
-          - BENEFICIARY
-          - BORROWER
-          - GUARANTOR
-          - PARTNER
-          type: string
-        interests_tracking_time:
-          default: ORIGINATION_DATE
-          enum:
-          - MONTHLY
-          - ORIGINATION_DATE
-          type: string
-      type: object
-    SctConfiguration:
-      properties: {}
-      type: object
-    FinancialProductContractTemplate:
-      properties:
-        country_code:
-          type: string
-        is_default:
-          default: false
-          type: boolean
-        language_code:
-          type: string
-        signature_config:
-          allOf:
-          - $ref: '#/components/schemas/SignatureConfig'
-          default: null
-        template_id:
-          type: string
-      required:
-      - country_code
-      - language_code
-      - template_id
-      type: object
-    DueInterestXPaymentIntent:
-      properties:
-        due_interest_id:
+        installment_plan_id:
           format: uuid
           type: string
         payment_intent_id:
           format: uuid
           type: string
       required:
-      - due_interest_id
+      - installment_plan_id
       - payment_intent_id
-      type: object
-    APIBill:
-      properties:
-        amends_bill_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        billed_borrower_id:
-          default: null
-        billed_business:
-          $ref: '#/components/schemas/BusinessIdentifier'
-        document_url:
-          default: null
-          type:
-          - string
-          - 'null'
-        due_date:
-          format: date-time
-          type: string
-        email_sent_to_payer_on:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        end_date:
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        invoice:
-          allOf:
-          - $ref: '#/components/schemas/APIInvoice'
-          default: null
-        invoice_number:
-          default: null
-          type:
-          - string
-          - 'null'
-        payment:
-          $ref: '#/components/schemas/PaymentApi'
-        ran_at:
-          format: date-time
-          type: string
-        start_date:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - GENERATED
-          - INVALID
-          - PAID
-          - SENT_TO_PAYER
-          - TO_PAY
-          - VALIDATED
-          type: string
-        to_pay_amount:
-          type: integer
-      required:
-      - billed_business
-      - due_date
-      - end_date
-      - id
-      - payment
-      - ran_at
-      - start_date
-      - status
-      - to_pay_amount
       type: object
     FinancialProductTcsDocument:
       properties:
@@ -657,36 +710,13 @@ components:
       required:
       - document_url
       type: object
-    SigningField:
+    GuaranteeCondition:
       properties:
-        height:
-          default: null
-          type:
-          - integer
-          - 'null'
-        mention:
+        country:
           default: null
           type:
           - string
           - 'null'
-        page:
-          type: integer
-        position_x:
-          type: integer
-        position_y:
-          type: integer
-        type:
-          default: signature
-          enum:
-          - mention
-          - signature
-        width:
-          type: integer
-      required:
-      - page
-      - position_x
-      - position_y
-      - width
       type: object
     FPLoanRequestConfiguration:
       properties:
@@ -714,8 +744,126 @@ components:
           default: 3
           type: integer
       type: object
-    APILightAccountDetails:
+    PaymentMethodConfiguration:
       properties:
+        direct_debit:
+          allOf:
+          - $ref: '#/components/schemas/DirectDebitConfiguration'
+          default: null
+        payment_method:
+          enum:
+          - DIRECT_DEBIT
+          - SCT
+          type: string
+        sct:
+          allOf:
+          - $ref: '#/components/schemas/SctConfiguration'
+          default: null
+      required:
+      - payment_method
+      type: object
+    PaymentIntentRelation:
+      properties:
+        due_interests:
+          items:
+            $ref: '#/components/schemas/DueInterestXPaymentIntent'
+          type: array
+        installment_plans:
+          items:
+            $ref: '#/components/schemas/InstallmentPlanXPaymentIntent'
+          type: array
+        loans:
+          items:
+            $ref: '#/components/schemas/LoanPaymentIntent'
+          type: array
+        payments:
+          items:
+            $ref: '#/components/schemas/PaymentXPaymentIntent'
+          type: array
+      type: object
+    PublicApiAccountNumber:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - iban
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          type: string
+      required:
+      - account_number
+      type: object
+    DueInterestXPaymentIntent:
+      properties:
+        due_interest_id:
+          format: uuid
+          type: string
+        payment_intent_id:
+          format: uuid
+          type: string
+      required:
+      - due_interest_id
+      - payment_intent_id
+      type: object
+    SubscriptionConfig:
+      properties:
+        monthly_fee_cents:
+          default: 0
+          type: integer
+        sdd_account_detail_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+      type: object
+    TypedApiPage10:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/APIBill'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    AccountDetails:
+      properties:
+        account_id:
+          default: null
         account_number:
           description: The account identifier. Only IBANs are supported at the moment.
           type: string
@@ -737,55 +885,133 @@ components:
           - routing_number
           - undefined
           type: string
+        id:
+          default: null
+        providers:
+          additionalProperties:
+            $ref: '#/components/schemas/AccountProvider'
+          default: null
+          type:
+          - object
+          - 'null'
+        type:
+          default: null
+          enum:
+          - DEFAULT
+          - STRIPE_CONNECTED_ACCOUNT
+          - TECHNICAL_WALLET
+          - VIRTUAL
+          - null
+          type:
+          - string
+          - 'null'
       required:
       - account_number
       - account_number_type
       - bank_identifier
       - bank_identifier_type
       type: object
-    FinancialProduct:
+    BusinessIdentifierWithName:
       properties:
-        configuration:
-          $ref: '#/components/schemas/FinancialProductConfiguration'
-        id:
-          format: uuid
+        identifier:
           type: string
-        lender_id:
-          format: uuid
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           type: string
         name:
           type: string
-        product_type:
-          enum:
-          - CREDIT_CARD_FINANCING
-          - DAILLY
-          - FLEX_FINANCING
-          - INVENTORY_FINANCING
-          - INVOICE_BASED_FINANCING
-          - PAYABLE
-          - PAYABLE_FACTORING
-          - RECEIVABLE
-          - RECEIVABLE_FACTORING
-          - SELL_IN
-          - WALLET_FINANCING
-          type: string
-        rac_id:
-          format: uuid
-          type: string
       required:
-      - id
-      - lender_id
+      - identifier
+      - identifier_type
       - name
-      - product_type
-      - rac_id
       type: object
-    GuaranteeCondition:
+    ApiRevenueShare:
       properties:
-        country:
+        document_url:
           default: null
           type:
           - string
           - 'null'
+        email_sent_on:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        email_sent_to:
+          default: null
+          items:
+            format: email
+            type: string
+          type:
+          - array
+          - 'null'
+        end_date:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        payment:
+          allOf:
+          - $ref: '#/components/schemas/PaymentApi'
+          default: null
+        payment_intent:
+          allOf:
+          - $ref: '#/components/schemas/PaymentIntent'
+          default: null
+        revenue_shared_with_business:
+          $ref: '#/components/schemas/BusinessIdentifierWithName'
+        start_date:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - CREATED
+          - DELETED
+          - PAID
+          - SENT_BY_EMAIL
+          type: string
+      required:
+      - end_date
+      - id
+      - revenue_shared_with_business
+      - start_date
+      - status
+      type: object
+    FeesPayerConfig:
+      properties:
+        billed_business_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        fees_payer_role:
+          default: PARTNER
+          enum:
+          - BENEFICIARY
+          - BORROWER
+          - GUARANTOR
+          - PARTNER
+          type: string
+        interests_tracking_time:
+          default: ORIGINATION_DATE
+          enum:
+          - MONTHLY
+          - ORIGINATION_DATE
+          type: string
       type: object
     PaymentApi:
       properties:
@@ -900,287 +1126,27 @@ components:
       - payment_type
       - status
       type: object
-    SignatureConfig:
-      properties:
-        automatic_signer:
-          allOf:
-          - $ref: '#/components/schemas/AutomaticSigner'
-          default: null
-        contract_template_name:
-          enum:
-          - DAILLY_CREDIT_AGREEMENT_TEMPLATE
-          - DAILLY_ESCOMPTE_TEMPLATE
-          - DIRECT_MASTER_LOAN_AGREEMENT_TEMPLATE
-          - TERMS_AND_CONDITIONS
-          type: string
-        signing_fields:
-          items:
-            $ref: '#/components/schemas/SigningField'
-          type: array
-      required:
-      - contract_template_name
-      - signing_fields
+    SctConfiguration:
+      properties: {}
       type: object
-    AccountProvider:
+    FinancialProductInstallmentsConfiguration:
       properties:
-        id:
-          type: string
-        provider:
-          enum:
-          - LEMONWAY
-          - MEMOBANK
-          - NUMERAL
-          - SANDBOX
-          - SWAN
-          - TEST
-          type: string
-      required:
-      - id
-      - provider
-      type: object
-    ApiRevenueShare:
-      properties:
-        document_url:
-          default: null
-          type:
-          - string
-          - 'null'
-        email_sent_on:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        email_sent_to:
-          default: null
-          items:
-            format: email
-            type: string
-          type:
-          - array
-          - 'null'
-        end_date:
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        payment:
-          allOf:
-          - $ref: '#/components/schemas/PaymentApi'
-          default: null
-        payment_intent:
-          allOf:
-          - $ref: '#/components/schemas/PaymentIntent'
-          default: null
-        revenue_shared_with_business:
-          $ref: '#/components/schemas/BusinessIdentifierWithName'
-        start_date:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - CREATED
-          - DELETED
-          - PAID
-          - SENT_BY_EMAIL
-          type: string
-      required:
-      - end_date
-      - id
-      - revenue_shared_with_business
-      - start_date
-      - status
-      type: object
-    PublicApiAccountNumber:
-      properties:
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          default: iban
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - iban
-          type: string
-        bank_identifier:
-          default: null
-          description: The identifier of the bank.
-          type:
-          - string
-          - 'null'
-        bank_identifier_type:
-          default: bic
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          type: string
-      required:
-      - account_number
-      type: object
-    BillPayment:
-      properties:
-        amount:
-          type: integer
-        bill_id:
-          format: uuid
-          type: string
-        payment_id:
-          default: null
-      required:
-      - amount
-      - bill_id
-      type: object
-    InsuranceRiskMitigator:
-      properties:
-        delay_to_call_insurance_after_chargeback:
-          default: null
-          description: Delay in hours before calling the insurance provider after a chargeback. If None, insurance is not called after chargeback.
-          type:
-          - integer
-          - 'null'
-        delay_to_call_insurance_on_insolvency_procedure_opening:
-          default: null
-          description: Delay in hours before calling the insurance provider when an insolvency procedure is opened. If None, insurance is not called on insolvency procedure opening.
-          type:
-          - integer
-          - 'null'
-        insurance_provider:
-          description: The insurance provider to use for risk mitigation
-          enum:
-          - ALLIANZ_TRADE
-          - CREDIT_360
-          - SANDBOX
-          type: string
-        triggers:
+        available_types:
           items:
             enum:
-            - BORROWER_DEFAULT
-            - BORROWER_INSOLVENCY
+            - INSTALLMENTS
+            - IN_FINE
             type: string
           type: array
-      required:
-      - insurance_provider
-      - triggers
-      type: object
-    ProviderPaymentID:
-      properties:
-        failure_reason:
-          default: null
-          type:
-          - string
-          - 'null'
-        initial_payment_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        name:
-          enum:
-          - LEMONWAY
-          - MEMOBANK
-          - NUMERAL
-          - SANDBOX
-          - SWAN
-          - TEST
-          type: string
-        original_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        override_reconciliation_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        payment_id:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      type: object
-    PaymentRelationApi:
-      properties:
-        bills:
-          items:
-            $ref: '#/components/schemas/BillPayment'
-          type: array
-        invoices:
-          items:
-            format: uuid
-            type: string
-          type: array
-        loans:
-          items:
-            $ref: '#/components/schemas/LoanPaymentApi'
-          type: array
-        payment_intents:
-          items:
-            $ref: '#/components/schemas/PaymentXPaymentIntentApi'
-          type: array
-        subscriptions:
-          items:
-            $ref: '#/components/schemas/SubscriptionPaymentRelation'
-          type: array
-      type: object
-    ApiReferrer:
-      properties:
-        business_id:
-          format: uuid
-          type: string
-        business_identifier:
-          $ref: '#/components/schemas/BusinessIdentifierRequired'
-        config:
-          $ref: '#/components/schemas/ReferrerConfig'
-        distribution_id:
-          format: uuid
-          type: string
-        financial_products:
-          items:
-            $ref: '#/components/schemas/FinancialProduct'
-          type: array
-        id:
-          format: uuid
-          type: string
-        name:
-          default: null
-          type:
-          - string
-          - 'null'
-        referrer_type:
-          default: null
-          enum:
-          - BROKER
-          - CORE_POC
-          - DISTRIBUTOR
-          - LIQUID_BROKERS_CAB
-          - LIQUID_BROKER_NETWORK
-          - LIQUID_CORPORATE_FINANCE
-          - LIQUID_DAF_CONSULTANT
-          - LIQUID_EC
-          - TECH_HYBRID
-          - TECH_LIQUID
-          - TECH_PARTNER
-          - null
-          type:
-          - string
-          - 'null'
-        shared_to_account_detail_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-      required:
-      - business_id
-      - business_identifier
-      - config
-      - distribution_id
-      - financial_products
-      - id
+        maximum_reschedule_payment_in_days:
+          default: 30
+          type: integer
+        minimum_anticipate_payment_in_days:
+          default: 1
+          type: integer
+        minimum_business_days_until_due_date_to_reschedule_payment:
+          default: 1
+          type: integer
       type: object
     APIInvoice:
       properties:
@@ -1494,74 +1460,6 @@ components:
       - payment_intent_id
       - payment_type
       type: object
-    LoanPaymentApi:
-      properties:
-        amount:
-          type: integer
-        deposit_id:
-          default: null
-        loan_id:
-          format: uuid
-          type: string
-        payment_type:
-          enum:
-          - CHANNEL_VERIFICATION
-          - CHARGEBACK
-          - DEPOSIT_FUNDING
-          - DEPOSIT_RELEASE
-          - DEPOSIT_WITHDRAWAL
-          - EXTRA
-          - INTERNAL
-          - LENDER_DEBT_RESOLUTION
-          - LENDER_PREFUNDING
-          - LENDER_REPURCHASE
-          - LOAN_PAYMENT
-          - LOAN_PURCHASE
-          - PAYMENT_PROVIDER_FEES
-          - PLATFORM
-          - REFUND
-          - REPAYMENT_FEES
-          - REPAYMENT_FULL
-          - REPAYMENT_NOMINAL
-          - RETURNED
-          - REVENUE_SHARE
-          - REVERT
-          - SUBSCRIPTION
-          type: string
-      required:
-      - amount
-      - loan_id
-      - payment_type
-      type: object
-    TypedApiPage10:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/APIBill'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
     APIBillSentByPartnerRequest:
       properties:
         sent_on:
@@ -1576,57 +1474,6 @@ components:
       required:
       - sent_on
       - to_email_addresses
-      type: object
-    BusinessIdentifierWithName:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-        name:
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      - name
-      type: object
-    RiskMitigationConfig:
-      properties:
-        automatically_compute_and_deploy_max_exposure_frequency_in_days:
-          default: null
-          type:
-          - integer
-          - 'null'
-        guarantee_configs:
-          default: null
-          description: List of guarantee configurations with optional conditions to match loans
-          items:
-            $ref: '#/components/schemas/LoanGuaranteeConfiguration'
-          type:
-          - array
-          - 'null'
-        insurance_config:
-          allOf:
-          - $ref: '#/components/schemas/InsuranceRiskMitigator'
-          default: null
-          description: Configuration for insurance-based risk mitigation
-        invoice_collateralization_config:
-          allOf:
-          - $ref: '#/components/schemas/InvoiceCollateralizationRiskMitigator'
-          default: null
-          description: Configuration for invoice collateralization-based risk mitigation
       type: object
     PaymentIntent:
       properties:
@@ -1745,17 +1592,29 @@ components:
       - to_account_details
       - to_business_id
       type: object
-    InvoiceCollateralizationRiskMitigator:
+    PaymentRelationApi:
       properties:
-        triggers:
+        bills:
           items:
-            enum:
-            - BORROWER_DEFAULT
-            - BORROWER_INSOLVENCY
+            $ref: '#/components/schemas/BillPayment'
+          type: array
+        invoices:
+          items:
+            format: uuid
             type: string
           type: array
-      required:
-      - triggers
+        loans:
+          items:
+            $ref: '#/components/schemas/LoanPaymentApi'
+          type: array
+        payment_intents:
+          items:
+            $ref: '#/components/schemas/PaymentXPaymentIntentApi'
+          type: array
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/SubscriptionPaymentRelation'
+          type: array
       type: object
     BrokerTrack:
       properties:
@@ -1777,6 +1636,271 @@ components:
       - tier
       - track
       type: object
+    SubscriptionPaymentRelation:
+      properties:
+        amount_cents:
+          type: integer
+        subscription_id:
+          format: uuid
+          type: string
+      required:
+      - amount_cents
+      - subscription_id
+      type: object
+    LoanPaymentApi:
+      properties:
+        amount:
+          type: integer
+        deposit_id:
+          default: null
+        loan_id:
+          format: uuid
+          type: string
+        payment_type:
+          enum:
+          - CHANNEL_VERIFICATION
+          - CHARGEBACK
+          - DEPOSIT_FUNDING
+          - DEPOSIT_RELEASE
+          - DEPOSIT_WITHDRAWAL
+          - EXTRA
+          - INTERNAL
+          - LENDER_DEBT_RESOLUTION
+          - LENDER_PREFUNDING
+          - LENDER_REPURCHASE
+          - LOAN_PAYMENT
+          - LOAN_PURCHASE
+          - PAYMENT_PROVIDER_FEES
+          - PLATFORM
+          - REFUND
+          - REPAYMENT_FEES
+          - REPAYMENT_FULL
+          - REPAYMENT_NOMINAL
+          - RETURNED
+          - REVENUE_SHARE
+          - REVERT
+          - SUBSCRIPTION
+          type: string
+      required:
+      - amount
+      - loan_id
+      - payment_type
+      type: object
+    RiskMitigationConfig:
+      properties:
+        automatically_compute_and_deploy_max_exposure_frequency_in_days:
+          default: null
+          type:
+          - integer
+          - 'null'
+        guarantee_configs:
+          default: null
+          description: List of guarantee configurations with optional conditions to match loans
+          items:
+            $ref: '#/components/schemas/LoanGuaranteeConfiguration'
+          type:
+          - array
+          - 'null'
+        insurance_config:
+          allOf:
+          - $ref: '#/components/schemas/InsuranceRiskMitigator'
+          default: null
+          description: Configuration for insurance-based risk mitigation
+        invoice_collateralization_config:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceCollateralizationRiskMitigator'
+          default: null
+          description: Configuration for invoice collateralization-based risk mitigation
+      type: object
+    AutomaticSigner:
+      properties:
+        email:
+          type: string
+        first_name:
+          type: string
+        ip_address:
+          type: string
+        last_name:
+          type: string
+      required:
+      - email
+      - first_name
+      - ip_address
+      - last_name
+      type: object
+    DirectDebitConfiguration:
+      properties:
+        from_account_details_id:
+          default: null
+          description: Account that gets debited by the SDD. Can only be None when the DepositingRule debits the borrower (the borrower account is then resolved from the loan). Required for SDD rules debiting a fixed counterparty (e.g. partner).
+      type: object
+    FinancialProductContractTemplate:
+      properties:
+        country_code:
+          type: string
+        is_default:
+          default: false
+          type: boolean
+        language_code:
+          type: string
+        signature_config:
+          allOf:
+          - $ref: '#/components/schemas/SignatureConfig'
+          default: null
+        template_id:
+          type: string
+      required:
+      - country_code
+      - language_code
+      - template_id
+      type: object
+    LoanPaymentIntent:
+      properties:
+        amount:
+          type: integer
+        bill_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        deposit_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        loan_id:
+          format: uuid
+          type: string
+        payment_intent_id:
+          format: uuid
+          type: string
+        payment_type:
+          enum:
+          - CHANNEL_VERIFICATION
+          - CHARGEBACK
+          - DEPOSIT_FUNDING
+          - DEPOSIT_RELEASE
+          - DEPOSIT_WITHDRAWAL
+          - EXTRA
+          - INTERNAL
+          - LENDER_DEBT_RESOLUTION
+          - LENDER_PREFUNDING
+          - LENDER_REPURCHASE
+          - LOAN_PAYMENT
+          - LOAN_PURCHASE
+          - PAYMENT_PROVIDER_FEES
+          - PLATFORM
+          - REFUND
+          - REPAYMENT_FEES
+          - REPAYMENT_FULL
+          - REPAYMENT_NOMINAL
+          - RETURNED
+          - REVENUE_SHARE
+          - REVERT
+          - SUBSCRIPTION
+          type: string
+      required:
+      - amount
+      - loan_id
+      - payment_intent_id
+      - payment_type
+      type: object
+    ReferrerConfig:
+      properties:
+        override_financial_products_ids:
+          default: null
+          items:
+            format: uuid
+            type: string
+          type:
+          - array
+          - 'null'
+        referral_code:
+          description: Main referral code for the referrer
+          type: string
+        referral_codes:
+          description: All list of referral codes ever used by the referrer
+          items:
+            type: string
+          type: array
+        referrer_type:
+          default: null
+          enum:
+          - BROKER
+          - CORE_POC
+          - DISTRIBUTOR
+          - LIQUID_BROKERS_CAB
+          - LIQUID_BROKER_NETWORK
+          - LIQUID_CORPORATE_FINANCE
+          - LIQUID_DAF_CONSULTANT
+          - LIQUID_EC
+          - TECH_HYBRID
+          - TECH_LIQUID
+          - TECH_PARTNER
+          - null
+          type:
+          - string
+          - 'null'
+        revenue_share_config:
+          allOf:
+          - $ref: '#/components/schemas/ReferrerRevenueShareConfig'
+          default: null
+      required:
+      - referral_code
+      type: object
+    APIBusinessCounterparty:
+      properties:
+        business_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      required:
+      - identifier
+      type: object
     ExecutionRule:
       properties:
         frequency:
@@ -1790,17 +1914,97 @@ components:
       required:
       - interval
       type: object
-    InstallmentPlanXPaymentIntent:
+    BusinessIdentifierRequired:
       properties:
-        installment_plan_id:
-          format: uuid
+        identifier:
           type: string
-        payment_intent_id:
-          format: uuid
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
           type: string
       required:
-      - installment_plan_id
-      - payment_intent_id
+      - identifier
+      - identifier_type
+      type: object
+    APIBill:
+      properties:
+        amends_bill_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        billed_borrower_id:
+          default: null
+        billed_business:
+          $ref: '#/components/schemas/BusinessIdentifier'
+        document_url:
+          default: null
+          type:
+          - string
+          - 'null'
+        due_date:
+          format: date-time
+          type: string
+        email_sent_to_payer_on:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        end_date:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        invoice:
+          allOf:
+          - $ref: '#/components/schemas/APIInvoice'
+          default: null
+        invoice_number:
+          default: null
+          type:
+          - string
+          - 'null'
+        payment:
+          $ref: '#/components/schemas/PaymentApi'
+        ran_at:
+          format: date-time
+          type: string
+        start_date:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - GENERATED
+          - INVALID
+          - PAID
+          - SENT_TO_PAYER
+          - TO_PAY
+          - VALIDATED
+          type: string
+        to_pay_amount:
+          type: integer
+      required:
+      - billed_business
+      - due_date
+      - end_date
+      - id
+      - payment
+      - ran_at
+      - start_date
+      - status
+      - to_pay_amount
       type: object
     LoanGuaranteeConfiguration:
       properties:
@@ -1879,74 +2083,131 @@ components:
       - schedule_guarantee_call_within_hours
       - to_account_detail_id
       type: object
-    PaymentMethodConfiguration:
+    FinancialProduct:
       properties:
-        direct_debit:
-          allOf:
-          - $ref: '#/components/schemas/DirectDebitConfiguration'
-          default: null
-        payment_method:
-          enum:
-          - DIRECT_DEBIT
-          - SCT
+        configuration:
+          $ref: '#/components/schemas/FinancialProductConfiguration'
+        id:
+          format: uuid
           type: string
-        sct:
-          allOf:
-          - $ref: '#/components/schemas/SctConfiguration'
-          default: null
+        lender_id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        product_type:
+          enum:
+          - CREDIT_CARD_FINANCING
+          - DAILLY
+          - FLEX_FINANCING
+          - INVENTORY_FINANCING
+          - INVOICE_BASED_FINANCING
+          - PAYABLE
+          - PAYABLE_FACTORING
+          - RECEIVABLE
+          - RECEIVABLE_FACTORING
+          - SELL_IN
+          - WALLET_FINANCING
+          type: string
+        rac_id:
+          format: uuid
+          type: string
       required:
-      - payment_method
+      - id
+      - lender_id
+      - name
+      - product_type
+      - rac_id
       type: object
-    APIBusinessCounterparty:
+    ApiReferrer:
       properties:
         business_id:
-          default: null
           format: uuid
-          type:
-          - string
-          - 'null'
-        id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
           type: string
-        identifier_type:
+        business_identifier:
+          $ref: '#/components/schemas/BusinessIdentifierRequired'
+        config:
+          $ref: '#/components/schemas/ReferrerConfig'
+        distribution_id:
+          format: uuid
+          type: string
+        financial_products:
+          items:
+            $ref: '#/components/schemas/FinancialProduct'
+          type: array
+        id:
+          format: uuid
+          type: string
+        name:
           default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
+          type:
+          - string
+          - 'null'
+        referrer_type:
+          default: null
           enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
+          - BROKER
+          - CORE_POC
+          - DISTRIBUTOR
+          - LIQUID_BROKERS_CAB
+          - LIQUID_BROKER_NETWORK
+          - LIQUID_CORPORATE_FINANCE
+          - LIQUID_DAF_CONSULTANT
+          - LIQUID_EC
+          - TECH_HYBRID
+          - TECH_LIQUID
+          - TECH_PARTNER
           - null
           type:
           - string
           - 'null'
-        name:
+        shared_to_account_detail_id:
           default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
+          format: uuid
           type:
           - string
           - 'null'
       required:
-      - identifier
+      - business_id
+      - business_identifier
+      - config
+      - distribution_id
+      - financial_products
+      - id
+      type: object
+    DepositingRule:
+      properties:
+        base_amount:
+          enum:
+          - DUE_INTERESTS
+          - ESTIMATED_FEES
+          - FIXED_AMOUNT
+          - LOAN_AMOUNT
+          - LOAN_AMOUNT_WITH_DUE_INTERESTS
+          - LOAN_AMOUNT_WITH_ESTIMATED_FEES
+          type: string
+        depositor_role:
+          enum:
+          - BENEFICIARY
+          - BORROWER
+          - FEES_PAYER
+          - PARTNER
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodConfiguration'
+        purpose:
+          enum:
+          - FEES_DEPOSIT
+          - GUARANTEE_DEPOSIT
+          - RECOLLECTION_FEES_DEPOSIT
+          type: string
+        value:
+          type: string
+      required:
+      - base_amount
+      - depositor_role
+      - purpose
+      - value
       type: object
     FinancialProductUxAggregationScenarioConfiguration:
       properties:
@@ -2001,267 +2262,6 @@ components:
           type:
           - array
           - 'null'
-      type: object
-    FinancialProductBillingConfiguration:
-      properties:
-        bill_overdue_threshold_in_days:
-          default: 4
-          type: integer
-        fees_payers:
-          items:
-            $ref: '#/components/schemas/FeesPayerConfig'
-          type: array
-        loan_overdue_threshold_in_days:
-          default: 4
-          type: integer
-        penalties_disabled:
-          default: false
-          type: boolean
-      type: object
-    AutomaticSigner:
-      properties:
-        email:
-          type: string
-        first_name:
-          type: string
-        ip_address:
-          type: string
-        last_name:
-          type: string
-      required:
-      - email
-      - first_name
-      - ip_address
-      - last_name
-      type: object
-    BusinessIdentifierRequired:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    FinancialProductConfiguration:
-      properties:
-        billing:
-          $ref: '#/components/schemas/FinancialProductBillingConfiguration'
-        contract_generation_settings:
-          allOf:
-          - $ref: '#/components/schemas/ContractGenerationSettings'
-          default: null
-        contract_templates:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductContractTemplate'
-          type:
-          - array
-          - 'null'
-        contract_type:
-          default: CREDIT_OPERATION
-          enum:
-          - CREDIT_OPERATION
-          - CREDIT_OPERATION_WITH_TRADE_RECEIVABLE_GUARANTEE
-          - EQUITY_LOAN
-          - TRADE_RECEIVABLE
-          type: string
-        depositing_rules:
-          default: null
-          items:
-            $ref: '#/components/schemas/DepositingRule'
-          type:
-          - array
-          - 'null'
-        installments:
-          $ref: '#/components/schemas/FinancialProductInstallmentsConfiguration'
-        risk_mitigation_config:
-          allOf:
-          - $ref: '#/components/schemas/RiskMitigationConfig'
-          default: null
-        subscription:
-          $ref: '#/components/schemas/SubscriptionConfig'
-        tcs_documents:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductTcsDocument'
-          type:
-          - array
-          - 'null'
-        ux:
-          $ref: '#/components/schemas/FPUXConfiguration'
-      type: object
-    FPUXConfiguration:
-      properties:
-        aggregation_scenarios:
-          default: null
-          items:
-            $ref: '#/components/schemas/FinancialProductUxAggregationScenarioConfiguration'
-          type:
-          - array
-          - 'null'
-        fp_status_on_manual_review_eligibility:
-          default: READY
-          enum:
-          - BLOCKED
-          - CHURN
-          - CLOSED_BY_USER
-          - CREATED
-          - CUT
-          - DEACTIVATED
-          - PENDING_USER_ACTION
-          - PRODUCT_DISCONTINUED
-          - READY
-          - TO_SIGN
-          type: string
-        loan_request:
-          $ref: '#/components/schemas/FPLoanRequestConfiguration'
-      type: object
-    SubscriptionPaymentRelation:
-      properties:
-        amount_cents:
-          type: integer
-        subscription_id:
-          format: uuid
-          type: string
-      required:
-      - amount_cents
-      - subscription_id
-      type: object
-    LoanPaymentIntent:
-      properties:
-        amount:
-          type: integer
-        bill_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        deposit_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        loan_id:
-          format: uuid
-          type: string
-        payment_intent_id:
-          format: uuid
-          type: string
-        payment_type:
-          enum:
-          - CHANNEL_VERIFICATION
-          - CHARGEBACK
-          - DEPOSIT_FUNDING
-          - DEPOSIT_RELEASE
-          - DEPOSIT_WITHDRAWAL
-          - EXTRA
-          - INTERNAL
-          - LENDER_DEBT_RESOLUTION
-          - LENDER_PREFUNDING
-          - LENDER_REPURCHASE
-          - LOAN_PAYMENT
-          - LOAN_PURCHASE
-          - PAYMENT_PROVIDER_FEES
-          - PLATFORM
-          - REFUND
-          - REPAYMENT_FEES
-          - REPAYMENT_FULL
-          - REPAYMENT_NOMINAL
-          - RETURNED
-          - REVENUE_SHARE
-          - REVERT
-          - SUBSCRIPTION
-          type: string
-      required:
-      - amount
-      - loan_id
-      - payment_intent_id
-      - payment_type
-      type: object
-    DirectDebitConfiguration:
-      properties:
-        from_account_details_id:
-          default: null
-          description: Account that gets debited by the SDD. Can only be None when the DepositingRule debits the borrower (the borrower account is then resolved from the loan). Required for SDD rules debiting a fixed counterparty (e.g. partner).
-      type: object
-    SubscriptionConfig:
-      properties:
-        monthly_fee_cents:
-          default: 0
-          type: integer
-        sdd_account_detail_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-      type: object
-    AccountDetails:
-      properties:
-        account_id:
-          default: null
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          description: The identifier of the bank.
-          type: string
-        bank_identifier_type:
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-        id:
-          default: null
-        providers:
-          additionalProperties:
-            $ref: '#/components/schemas/AccountProvider'
-          default: null
-          type:
-          - object
-          - 'null'
-        type:
-          default: null
-          enum:
-          - DEFAULT
-          - STRIPE_CONNECTED_ACCOUNT
-          - TECHNICAL_WALLET
-          - VIRTUAL
-          - null
-          type:
-          - string
-          - 'null'
-      required:
-      - account_number
-      - account_number_type
-      - bank_identifier
-      - bank_identifier_type
       type: object
   securitySchemes:
     Bearer:

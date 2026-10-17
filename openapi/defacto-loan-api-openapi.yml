@@ -492,6 +492,171 @@ paths:
       summary: /loan/repayment-terms
 components:
   schemas:
+    APIBusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    APISalePurchaseAgreementAttachmentInformation:
+      properties:
+        asset_description:
+          default: null
+          description: A human readable description of the asset sold
+          type:
+          - string
+          - 'null'
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        document_binary_base64:
+          description: Base64 encoded content of the document
+          type: string
+        document_name:
+          description: Name of the document with the file extension
+          type: string
+        sale_date:
+          default: null
+          description: When the final sale is to occur
+          format: date-time
+          type:
+          - string
+          - 'null'
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        third_party:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        transaction_price:
+          allOf:
+          - $ref: '#/components/schemas/AmountWithCurrency'
+          default: null
+          description: Amount of the transaction in cents
+      required:
+      - document_binary_base64
+      - document_name
+      type: object
+    DebitedAccountNumber:
+      properties:
+        account_number:
+          type: string
+        account_number_type:
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          type: string
+        bank_identifier_type:
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
+      type: object
+    APIInvoiceInformationAllOptional:
+      properties:
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
+          enum:
+          - EUR
+          - GBP
+          type:
+          - string
+          - 'null'
+        due_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        invoice_number:
+          default: null
+          description: Invoice number as displayed on the invoice
+          type:
+          - string
+          - 'null'
+        issued_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        net_amount:
+          default: null
+          description: Amount before tax, in cents
+          type:
+          - integer
+          - 'null'
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        tax_amount:
+          default: null
+          description: Amount of tax, in cents
+          type:
+          - integer
+          - 'null'
+        to_account:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type:
+          - integer
+          - 'null'
+        total_amount:
+          default: null
+          description: Sum of net amount and tax amount, in cents
+          type:
+          - integer
+          - 'null'
+      type: object
+    ApiLoanDocuments:
+      properties:
+        link:
+          type: string
+      required:
+      - link
+      type: object
     TypedApiPage2:
       properties:
         count:
@@ -521,34 +686,124 @@ components:
       - count
       - page_size
       type: object
-    BusinessIdentifier:
+    LoanApiEvent:
       properties:
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
+        entity_type:
           enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
+          - account
+          - account_detail_verification
+          - bill
+          - borrower
+          - borrower_financial_product
+          - business
+          - business_exposure
+          - business_financial_product
+          - contract
+          - counterparty
+          - country
+          - credit_card
+          - credit_line
+          - data_request
+          - deposit
+          - due_interest
+          - eligibility_request
+          - enrollment
+          - entity_eligibility
+          - financial_product
+          - flag
+          - installment
+          - invoice
+          - loan
+          - loan_log
+          - mandate
+          - max_exposure_deployment
+          - onboarding
+          - onboarding_financial_product
+          - payment
+          - people
+          - rac
+          - raw_data
+          - recollection_document
+          - revenue_share
+          - sandbox_invoice
+          - underwriting_check
+          type: string
+        payload:
+          additionalProperties: {}
+          type: object
+        status:
+          enum:
+          - CANCELED
+          - CLOSED
+          - DECLINED
+          - DELETED
+          - INITIATED
+          - ISSUE_DETECTED
+          - PENDING_VALIDATION
+          - SCHEDULED
+          - SUBMITTED
+          - TO_REPAY
+          - TO_REPAY_FEES
+          - TO_VALIDATE
+          - VALIDATED
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+        transition_name:
+          default: null
           type:
           - string
           - 'null'
       required:
-      - identifier
+      - entity_type
+      - status
       type: object
-    APICounterpartyCreation:
+    APICreditCardExpensesInformation:
+      properties:
+        counterparty:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          description: 'Counterparty associated with the credit card expenses. Note: all expenses must be related to the same counterparty.'
+        expenses:
+          description: List of individual credit card expense details.
+          items:
+            $ref: '#/components/schemas/APICreditCardExpenseDetail'
+          type: array
+      required:
+      - counterparty
+      - expenses
+      type: object
+    TypedApiPage1:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/MinimalLoanAPI'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    CounterpartyCreation:
       properties:
         address:
           allOf:
@@ -595,6 +850,369 @@ components:
           type:
           - string
           - 'null'
+      type: object
+    APILightAccountDetails:
+      properties:
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          description: The identifier of the bank.
+          type: string
+        bank_identifier_type:
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
+      type: object
+    APILoanDocumentToCreate:
+      properties:
+        additional_document_data:
+          additionalProperties: {}
+          default: null
+          description: Any additional structured data about the provided document
+          type:
+          - object
+          - 'null'
+        description:
+          default: null
+          description: A human readable description of the document
+          type:
+          - string
+          - 'null'
+        document_binary_base64:
+          type: string
+        document_name:
+          description: Name of the document with the file extension
+          type: string
+        document_type:
+          enum:
+          - credit_card_expenses
+          - invoice
+          - pro_forma
+          - public_procurement_ownership_act
+          - public_procurement_single_copy
+          - sale_purchase_agreement
+          - time_sheet
+          type: string
+        invoice:
+          allOf:
+          - $ref: '#/components/schemas/APIInvoiceInformationAllOptional'
+          default: null
+        pro_forma:
+          allOf:
+          - $ref: '#/components/schemas/APIInvoiceInformationAllOptional'
+          default: null
+        public_procurement_single_copy:
+          allOf:
+          - $ref: '#/components/schemas/APIPublicProcurementSingleCopyInformation'
+          default: null
+        sale_purchase_agreement:
+          allOf:
+          - $ref: '#/components/schemas/APISalePurchaseAgreementInformation'
+          default: null
+      required:
+      - document_binary_base64
+      - document_name
+      - document_type
+      type: object
+    APIReadLoanDocument:
+      properties:
+        about_business:
+          allOf:
+          - $ref: '#/components/schemas/BusinessIdentifierRequired'
+          default: null
+        document_name:
+          default: null
+          description: Name of the document with the file extension
+          type:
+          - string
+          - 'null'
+        document_type:
+          enum:
+          - credit_card_expenses
+          - invoice
+          - pro_forma
+          - public_procurement_ownership_act
+          - public_procurement_single_copy
+          - sale_purchase_agreement
+          - time_sheet
+          type: string
+        document_url:
+          type: string
+        uploaded_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        user_input:
+          additionalProperties: {}
+          default: null
+          type:
+          - object
+          - 'null'
+      required:
+      - document_type
+      - document_url
+      type: object
+    BusinessIdentifier:
+      properties:
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+      required:
+      - identifier
+      type: object
+    LoanDepositedAmounts:
+      properties:
+        amount:
+          type: integer
+        deposit_id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        paid_amount:
+          type: integer
+      required:
+      - amount
+      - paid_amount
+      type: object
+    LightBusiness:
+      properties:
+        activity_description:
+          default: null
+          type:
+          - string
+          - 'null'
+        activity_type:
+          default: null
+          type:
+          - string
+          - 'null'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        capital:
+          default: null
+          type:
+          - integer
+          - 'null'
+        creation_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        has_ongoing_insolvency_procedure:
+          default: null
+          type:
+          - boolean
+          - 'null'
+        id:
+          default: null
+          format: uuid
+          type:
+          - string
+          - 'null'
+        identifier:
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type: string
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        is_active:
+          default: null
+          type:
+          - boolean
+          - 'null'
+        is_diffusible:
+          default: null
+          type:
+          - boolean
+          - 'null'
+        last_insolvency_procedure_closing_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        last_insolvency_procedure_open_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        last_insolvency_procedure_type:
+          default: null
+          type:
+          - string
+          - 'null'
+        legal_form:
+          default: null
+          description: Legal form of the business.
+          type:
+          - string
+          - 'null'
+        nace_code:
+          default: null
+          type:
+          - string
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        registration_body:
+          default: null
+          description: Name of the national organization where the business is registered. For example the RCS of Paris in France
+          type:
+          - string
+          - 'null'
+        registration_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        registry_radiation_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        share_capital:
+          default: null
+          description: The part of the capital of a company that comes from the issue of shares, in cents.
+          type:
+          - integer
+          - 'null'
+        termination_date:
+          default: null
+          format: date
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      required:
+      - identifier
+      type: object
+    LoanInstallment:
+      properties:
+        amount:
+          type: integer
+        date:
+          format: date-time
+          type: string
+      required:
+      - amount
+      - date
+      type: object
+    APICreditCardExpenseDetail:
+      properties:
+        amount:
+          description: Amount of the credit card expense in cents.
+          type: integer
+        card_identification:
+          additionalProperties: {}
+          default: null
+          description: 'Identification details of the credit card used for the expense (e.g. masked card number, card reference). Format might be {"last_four_digits": "1234", "card_reference": "Corporate Card"}'
+          type:
+          - object
+          - 'null'
+        date_time:
+          description: Date and time when the credit card expense was incurred.
+          format: date-time
+          type: string
+        merchant:
+          additionalProperties: {}
+          default: null
+          description: Information identifying the place where the credit card expense was made.
+          type:
+          - object
+          - 'null'
+        user:
+          additionalProperties: {}
+          default: null
+          description: 'Information about the user who made the credit card expense. Format might be {"name": "John Doe", "email": "john.doe@example.com"}'
+          type:
+          - object
+          - 'null'
+      required:
+      - amount
+      - date_time
+      type: object
+    APITimeSheetInformation:
+      properties:
+        document_binary_base64:
+          description: Base64 encoded content of the document
+          type: string
+        document_name:
+          description: Name of the document with the file extension
+          type: string
+      required:
+      - document_binary_base64
+      - document_name
       type: object
     APIPostLoan:
       properties:
@@ -721,6 +1339,162 @@ components:
       - to_pay_at
       - to_repay_at
       type: object
+    APIRequiredInvoiceCreation:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        buyer:
+          $ref: '#/components/schemas/CounterpartyCreation'
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
+          enum:
+          - EUR
+          - GBP
+          type:
+          - string
+          - 'null'
+        document:
+          description: PDF binary (format base64 string)
+          type: string
+        due_at:
+          format: date-time
+          type: string
+        invoice_number:
+          description: Invoice number as displayed on the invoice
+          type: string
+        invoice_type:
+          default: USER
+          enum:
+          - DEFACTO
+          - USER
+          type:
+          - string
+          - 'null'
+        issued_at:
+          format: date-time
+          type: string
+        metadata:
+          additionalProperties: {}
+          default: null
+          description: This object is yours, it enables you to add custom data.
+          type:
+          - object
+          - 'null'
+        net_amount:
+          default: null
+          description: Amount before tax, in cents
+          type:
+          - integer
+          - 'null'
+        seller:
+          $ref: '#/components/schemas/CounterpartyCreation'
+        tax_amount:
+          default: null
+          description: Amount of tax, in cents
+          type:
+          - integer
+          - 'null'
+        to_account:
+          allOf:
+          - $ref: '#/components/schemas/APIAccountCreation'
+          default: null
+          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type:
+          - integer
+          - 'null'
+        total_amount:
+          description: Sum of net amount and tax amount, in cents
+          type: integer
+      required:
+      - buyer
+      - document
+      - due_at
+      - invoice_number
+      - issued_at
+      - seller
+      - total_amount
+      type: object
+    APIPublicProcurementOwnershipActInformation:
+      properties:
+        act_date:
+          description: Date the public procurement ownership act was emitted.
+          format: date-time
+          type: string
+        contract_identifier:
+          description: Identifier of the public procurement ownership act contract
+          type: string
+        document_binary_base64:
+          default: null
+          description: Base64 encoded content of the document
+          type:
+          - string
+          - 'null'
+        document_name:
+          default: null
+          description: Name of the document with the file extension
+          type:
+          - string
+          - 'null'
+      required:
+      - act_date
+      - contract_identifier
+      type: object
+    ApiFetchLoanDocuments:
+      properties:
+        loan_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+        to_pay_at_from:
+          default: null
+          description: Returns loans where pay_at field is greater or equal to this date.
+          format: date-time
+          type:
+          - string
+          - 'null'
+        to_pay_at_to:
+          default: null
+          description: Returns loans where pay_at field is lower to this date.
+          format: date-time
+          type:
+          - string
+          - 'null'
+      type: object
+    AccountSourceInformation:
+      properties:
+        datasource_unique_id:
+          default: null
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        name:
+          enum:
+          - AXONAUT_DEFACTO_API
+          - BRIDGE
+          - CEFIN_DEFACTO_API
+          - FINAPI
+          - IRMA_DEFACTO_API
+          - LEANO_DEFACTO_API
+          - LIBEO_DEFACTO_API
+          - PENNYLANE_DEFACTO_API
+          - PENNYLANE_REDSHIFT
+          - QONTO
+          - STEMSCAPE_DEFACTO_API
+          - SUPER_DEFACTO_API
+          type: string
+      required:
+      - id
+      - name
+      type: object
     APILoanAttachmentToCreate:
       properties:
         additional_document_data:
@@ -777,50 +1551,751 @@ components:
       required:
       - document_type
       type: object
-    APITimeSheetInformation:
+    CreditedAccountNumber:
       properties:
+        account_number:
+          type: string
+        account_number_type:
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          type: string
+        bank_identifier_type:
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      - account_number_type
+      - bank_identifier
+      - bank_identifier_type
+      type: object
+    SCTRepaymentMethod:
+      properties:
+        to_account:
+          allOf:
+          - $ref: '#/components/schemas/CreditedAccountNumber'
+          description: Bank account to send the loan repayment to
+      required:
+      - to_account
+      type: object
+    TypedApiPage3:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/LoanAPI'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
+    RepaymentTerms:
+      properties:
+        direct_debit:
+          allOf:
+          - $ref: '#/components/schemas/DirectDebitRepaymentMethod'
+          default: null
+          description: SEPA Direct Debit account information. Required if repayment method is set to DIRECT_DEBIT - must be left to null otherwise.
+        loan_id:
+          format: uuid
+          type: string
+        reason:
+          default: null
+          description: reason for the repayment terms change
+          enum:
+          - LOAN_REPAYMENT_BY_PAY_BY_LINK
+          - null
+          type:
+          - string
+          - 'null'
+        repayment_date:
+          description: Loan reimbursement estimated date
+          format: date-time
+          type: string
+        repayment_method:
+          description: 'Payment method that should be used to repay this loan. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        sct:
+          allOf:
+          - $ref: '#/components/schemas/SCTRepaymentMethod'
+          default: null
+          description: SEPA Credit Transfer account information. Required if repayment method is set to SCT - must be left to null otherwise. Replacement of the SCT account number is limited to super users.
+      required:
+      - loan_id
+      - repayment_date
+      - repayment_method
+      type: object
+    APIInvoiceAttachmentInformation:
+      properties:
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        currency:
+          default: EUR
+          description: Currency of the invoice. Use ISO 4217 currency code.
+          enum:
+          - EUR
+          - GBP
+          type:
+          - string
+          - 'null'
         document_binary_base64:
           description: Base64 encoded content of the document
           type: string
         document_name:
           description: Name of the document with the file extension
           type: string
-      required:
-      - document_binary_base64
-      - document_name
-      type: object
-    APISalePurchaseAgreementInformation:
-      properties:
-        asset_description:
+        due_at:
           default: null
-          description: A human readable description of the asset sold
-          type:
-          - string
-          - 'null'
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        sale_date:
-          default: null
-          description: When the final sale is to occur
           format: date-time
           type:
           - string
+          - 'null'
+        invoice_number:
+          default: null
+          description: Invoice number as displayed on the invoice
+          type:
+          - string
+          - 'null'
+        issued_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        net_amount:
+          default: null
+          description: Amount before tax, in cents
+          type:
+          - integer
           - 'null'
         seller:
           allOf:
           - $ref: '#/components/schemas/APICounterpartyCreation'
           default: null
-        third_party:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
+        tax_amount:
           default: null
-        transaction_price:
+          description: Amount of tax, in cents
+          type:
+          - integer
+          - 'null'
+        to_account:
           allOf:
-          - $ref: '#/components/schemas/AmountWithCurrency'
+          - $ref: '#/components/schemas/APIAccountCreation'
           default: null
-          description: Amount of the transaction in cents
+          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
+        to_pay_amount:
+          default: null
+          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
+          type:
+          - integer
+          - 'null'
+        total_amount:
+          default: null
+          description: Sum of net amount and tax amount, in cents
+          type:
+          - integer
+          - 'null'
+      required:
+      - document_binary_base64
+      - document_name
+      type: object
+    APICounterpartyCreation:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          default: null
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyContact'
+          default: null
+        identifier:
+          default: null
+          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
+          type:
+          - string
+          - 'null'
+        identifier_type:
+          default: null
+          description: Type of legal business identifier of the business, such as the SIRET in France.
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          - null
+          type:
+          - string
+          - 'null'
+        name:
+          default: null
+          description: Legal name of the business.
+          type:
+          - string
+          - 'null'
+        vat_number:
+          default: null
+          description: VatNumber
+          type:
+          - string
+          - 'null'
+      type: object
+    APIPatchLoan:
+      properties:
+        amount:
+          default: null
+          description: 'Loan amount in cents. Maximum: 200,000 €.'
+          type:
+          - integer
+          - 'null'
+        lender_id:
+          default: null
+          description: Defacto ID for the entity lending the money
+        loan_to:
+          allOf:
+          - $ref: '#/components/schemas/AccountCreation'
+          default: null
+          description: Bank account receiving the money of the loan
+        loan_to_references:
+          default: null
+          description: References in the transfer of the loan payment, on the account receiving the money
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        metadata:
+          additionalProperties: {}
+          default: null
+          type:
+          - object
+          - 'null'
+        repayment_method:
+          default: null
+          description: 'Payment method that should be used to repay this loan. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
+          enum:
+          - DIRECT_DEBIT
+          - SCT
+          - null
+          type:
+          - string
+          - 'null'
+        repayment_to_references:
+          description: References in the transfer of the loan repayment, on the account receiving the money
+          items:
+            type: string
+          type: array
+        to_pay_at:
+          default: null
+          description: Loan disbursement estimated date
+          format: date-time
+          type:
+          - string
+          - 'null'
+        to_repay_at:
+          default: null
+          description: Loan reimbursement estimated date
+          format: date-time
+          type:
+          - string
+          - 'null'
+        transfer_contract_url:
+          default: null
+          description: URL of the contract for loans that have been transferred to another lender
+          type:
+          - string
+          - 'null'
+      type: object
+    DirectDebitRepaymentMethod:
+      properties:
+        from_account:
+          allOf:
+          - $ref: '#/components/schemas/DebitedAccountNumber'
+          description: Bank account repaying the loan
+      required:
+      - from_account
+      type: object
+    APIAccountCreation:
+      properties:
+        account_holder:
+          allOf:
+          - $ref: '#/components/schemas/APIBusinessIdentifier'
+          default: null
+          description: The business owning the account.
+        account_number:
+          description: The account identifier. Only IBANs are supported at the moment.
+          type: string
+        account_number_type:
+          default: iban
+          description: The type of account number (e.g. IBAN).
+          enum:
+          - account_number
+          - iban
+          - internal_id
+          type: string
+        bank_identifier:
+          default: null
+          description: The identifier of the bank.
+          type:
+          - string
+          - 'null'
+        bank_identifier_type:
+          default: bic
+          description: The type of bank identifier (e.g. BIC).
+          enum:
+          - bic
+          - name
+          - routing_number
+          - undefined
+          type: string
+      required:
+      - account_number
+      type: object
+    APILoanSetRepaymentTerms:
+      properties:
+        repayment_terms:
+          items:
+            $ref: '#/components/schemas/RepaymentTerms'
+          type: array
+      required:
+      - repayment_terms
+      type: object
+    MinimalLoanAPI:
+      properties:
+        amount:
+          description: 'Loan amount in cents. Maximum: 200,000 €.'
+          type: integer
+        beneficiary:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          description: Entity receiving the money
+        borrower:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          description: Entity legally contracting the loan
+        borrower_financial_product_id:
+          default: null
+          description: Specify your borrower financial product to use. This field is required only if you propose multiple financial products (which is rare)
+          format: uuid
+          type:
+          - string
+          - 'null'
+        closed_at:
+          default: null
+          description: Loan full repayment date
+          format: date-time
+          type:
+          - string
+          - 'null'
+        contract_url:
+          default: null
+          type:
+          - string
+          - 'null'
+        contractual_repayment_date:
+          default: null
+          description: Loan repayment date at the time the loan contract was signed
+          format: date-time
+          type:
+          - string
+          - 'null'
+        currency:
+          description: ISO 4217 currency code.
+          enum:
+          - EUR
+          - GBP
+          type: string
+        denial_reason:
+          default: null
+          enum:
+          - ACTIVITY_DOCUMENTS_REQUIRED
+          - ACTIVITY_NOT_ELIGIBLE_BORROWER
+          - ALREADY_USING_FACTORING_OR_DAILLY
+          - AMOUNT_SUPERIOR_TO_AVAILABLE_BALANCE
+          - AVERAGE_INVOICE_SIZE_TOO_HIGH
+          - BLACKLISTED_FACTORED_COUNTERPARTY
+          - BORROWER_AND_COUNTERPARTY_HAVE_COMMON_DIRECTOR
+          - BORROWER_CHURNED
+          - BORROWER_DEFAULTED
+          - BORROWER_STATUS
+          - BORROWER_TO_SIGN
+          - BUSINESS_AGE_BELOW_THRESHOLD
+          - BUSINESS_AML_EXTREME_RISK
+          - BUSINESS_COMPLIANCE_ISSUE_DETECTED
+          - BUSINESS_HARD_COLLECTION
+          - BUSINESS_HAS_NO_PROFESSIONAL_EMAIL
+          - BUSINESS_INSOLVENCY_PROCEDURE_EXISTS
+          - BUSINESS_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - BUSINESS_LEGAL_FORM_NOT_ELIGIBLE
+          - BUSINESS_MISSING_INFORMATION
+          - BUSINESS_NOT_DIFFUSIBLE
+          - BUSINESS_NOT_REGISTERED
+          - BUSINESS_NOT_REGISTERED_TO_RCS
+          - BUSINESS_NOT_REGISTERED_TO_RCS_OR_RNE
+          - BUSINESS_RADIATED
+          - BUSINESS_REGION_NOT_COVERED
+          - BUSINESS_UNKNOWN
+          - BUSINESS_UNKNOWN_BUYER
+          - BUSINESS_UNKNOWN_SELLER
+          - CAPPING_EXCEEDED
+          - CASHED_IN_NOT_REPAID
+          - CCSF_TRANSACTION_DETECTED
+          - CCSF_TRANSACTION_PENDING_DATA_REQUEST
+          - CCSF_TRANSACTION_WAITING_END_INSTALLMENT_PLAN
+          - COUNTERPARTY_DATA_MISSING
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_EXISTS
+          - COUNTERPARTY_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
+          - COUNTERPARTY_KPI_MISSING
+          - COUNTERPARTY_NOT_REGISTERED
+          - COUNTERPARTY_NOT_SELECTED_FOR_FINANCING
+          - COUNTRY_CAPPING_EXCEEDED
+          - COUNTRY_NOT_ELIGIBLE_BORROWER
+          - COUNTRY_NOT_ELIGIBLE_COUNTERPARTY
+          - CREDIT_RISK_NOT_ELIGIBLE
+          - CREDIT_RISK_NOT_ELIGIBLE_COUNTERPARTY
+          - DATA_STILL_REFRESHING
+          - DEBT_ARREARS_PENDING_GRACE_PERIOD
+          - DEPRECATED_LATE_REPAYMENT
+          - DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - DOUBLE_MOBILIZATION
+          - DPD_15_LATE_REPAYMENT_BORROWER
+          - DPD_15_LATE_REPAYMENT_BUYER
+          - DPD_15_LATE_REPAYMENT_SELLER
+          - ELLISPHERE_RISK_INDEX
+          - EXCEEDED_PARTNER_CREDIT_LINE
+          - EXCESSIVE_AMOUNT_LOAN_REQUEST
+          - EXCESSIVE_DURATION_LOAN_REQUEST
+          - EXPOSURE_TOO_OLD
+          - FILL_INVOICE_BUYER_INFORMATION
+          - FILL_INVOICE_SELLER_INFORMATION
+          - FINANCIAL_PRODUCT_DEACTIVATED
+          - FINANCIAL_PRODUCT_NOT_IN_RELEASE
+          - FINANCIAL_STATEMENT_BAD_KPI
+          - FINANCIAL_STATEMENT_PARSING_ISSUE
+          - HIGH_BUSINESS_RISK_INDEX
+          - HIGH_LOAN_DEFAULT_INDEX
+          - HIGH_LYSTA_RISK_INDEX
+          - INDUSTRY_CODE_NOT_ELIGIBLE_BORROWER
+          - INDUSTRY_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - INSOLVENCY_EARLY_SIGNAL_DETECTED
+          - INSOLVENCY_PROCEDURE_EXISTS_BORROWER
+          - INSOLVENCY_PROCEDURE_EXISTS_BUYER
+          - INSOLVENCY_PROCEDURE_EXISTS_SELLER
+          - INSTALLMENT_PLAN_DETECTED_FOR_TAX
+          - INSTALLMENT_PLAN_DETECTED_FOR_URSSAF
+          - INSURANCE_QUOTE_EXPIRED
+          - INVOICE_ALREADY_FINANCED
+          - INVOICE_AUTO_LIQUIDATION
+          - INVOICE_BLACKLIST_WORDS
+          - INVOICE_COMPLIANCE_ISSUE_DETECTED
+          - INVOICE_DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
+          - INVOICE_LME_NON_COMPLIANT
+          - INVOICE_MISSING_ACCOUNT_NUMBER
+          - INVOICE_MISSING_LEGAL_MENTION
+          - INVOICE_MULTIPLE_STAGE
+          - INVOICE_NON_ELIGIBLE_USE_CASE
+          - INVOICE_NOT_ELIGIBLE_TO_CREDIT_INSURANCE
+          - INVOICE_NOT_ISSUED_YET
+          - INVOICE_NOT_RELATED_TO_WCR
+          - INVOICE_OVERDUE
+          - INVOICE_PAYABLE_BORROWER_IS_ACCOUNT_HOLDER
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_LIVE_CONNECTION
+          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_MANDATE
+          - INVOICE_RECEIVABLE_BORROWER_IS_NOT_ACCOUNT_HOLDER
+          - INVOICE_REPAYMENT_DATE_TOO_FAR_60D
+          - KPI_MISSING
+          - KPI_SCREENING_NOT_ELIGIBLE_BORROWER
+          - KYB_PENDING
+          - KYB_PENDING_USER_ACTION
+          - KYC_PENDING
+          - KYC_PENDING_USER_ACTION
+          - LATE_REPAYMENT_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BORROWER
+          - LEGAL_FORM_NOT_ELIGIBLE_BUYER
+          - LEGAL_FORM_NOT_ELIGIBLE_COUNTERPARTY
+          - LINKED_BUSINESS_IS_BLOCKED
+          - LOAN_REQUEST_EXPIRED
+          - LOW_CASH_BALANCE
+          - LOW_FREE_CASH_FLOW
+          - MAX_AMOUNT_EXCEEDED
+          - MAX_AMOUNT_EXCEEDED_BORROWER
+          - MAX_AMOUNT_EXCEEDED_BUYER
+          - MAX_AMOUNT_EXCEEDED_SELLER
+          - MISSING_COUNTERPARTY_CONTACT_INFORMATION
+          - MISSING_PUBLIC_PROCUREMENT_DOCUMENT
+          - NEED_BANKING_INTEGRATION
+          - NOT_AN_INVOICE
+          - NOT_DIFFUSIBLE_BUYER
+          - NOT_DIFFUSIBLE_SELLER
+          - NOT_ENOUGH_DATA
+          - NOT_PRE_ELIGIBLE_SPV
+          - NOT_REGISTERED_BUYER
+          - NOT_REGISTERED_SELLER
+          - NO_TAX_PAYMENT_FOUND
+          - NO_URSSAF_PAYMENTS_FOUND
+          - NO_URSSAF_PAYMENT_FOUND
+          - OFFBOARDED
+          - ORANGE_FLAG_TRANSACTIONS
+          - OTHER_BUSINESS_FROM_DIRECTOR_HAS_INSOLVENCY_PROCEDURE
+          - OUTDATED_DATA
+          - OUTDATED_INVOICE
+          - OUTDATED_INVOICE_2WEEKS
+          - OUTDATED_INVOICE_3WEEKS
+          - OVERDRAFT_REQUIRED
+          - PLEASE_RECONNECT_BANK_ACCOUNTS
+          - POSTAL_CODE_NOT_ELIGIBLE_BORROWER
+          - POSTAL_CODE_NOT_ELIGIBLE_COUNTERPARTY
+          - PROACTIVE_RECOLLECTION
+          - PRUDENTIAL_EXPOSURE_EXCEEDED
+          - QONTO_INTEGRATION_GERMAN_USER_DOES_NOT_HAVE_4_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_HAVE_6_MONTHS_OF_HISTORY
+          - QONTO_INTEGRATION_USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - RECENT_DEBT_ARREARS_KO
+          - RECENT_DEBT_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_REVENUE_DROP
+          - RECENT_SEIZURE_DETECTED
+          - RECENT_TAX_ARREARS_PENDING_DATA_REQUEST
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS
+          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS_PENDING_DATA_REQUEST
+          - RECENT_URSSAF_ARREARS_PENDING_DATA_REQUEST
+          - RED_FLAG_TRANSACTIONS
+          - RELATED_COUNTERPARTY_HAS_FLAG
+          - RELATED_COUNTERPARTY_IS_LATE
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BORROWER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUSINESS
+          - REMOVED_FROM_COMMERCIAL_REGISTER_BUYER
+          - REMOVED_FROM_COMMERCIAL_REGISTER_SELLER
+          - REPAYMENT_CONCENTRATION_IS_TOO_HIGH
+          - REQUIRED_FINANCIAL_STATEMENT
+          - RISK_SCORE_DOWNGRADING
+          - SMALL_RECURRING_AMOUNT_DETECTED_FOR_URSSAF
+          - TOO_LONG
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT
+          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT_BANK_IDENTIFIER
+          - UNAUTHORIZED_LOAN_PAYMENT_BENEFICIARY
+          - URSSAF_PAYMENTS_STOPPED
+          - USER_DOES_NOT_MEET_MINIMUM_MAX_AMOUNT_SIZE
+          - USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
+          - WAITING_FOR_THIRD_PARTY_PROVIDER
+          - WAIT_FOR_REPAYMENT
+          - null
+          type:
+          - string
+          - 'null'
+        deposits:
+          additionalProperties:
+            $ref: '#/components/schemas/LoanDepositedAmounts'
+          description: List of deposits made and/or pending on the loan. Deposits can be funded by borrower, loan beneficiary or guarantor and serves as safety measures in case of default.
+          type: object
+        earliest_to_repay_at:
+          description: Loan reimbursement earliest possible date
+          format: date-time
+          type: string
+        fees_estimated:
+          default: null
+          description: In cents (estimated loan duration * interest * amount)
+          type:
+          - integer
+          - 'null'
+        fees_ongoing:
+          default: null
+          description: Fees if you repay today. In cents (current duration * interest * amount)
+          type:
+          - integer
+          - 'null'
+        guarantor:
+          allOf:
+          - $ref: '#/components/schemas/LightBusiness'
+          default: null
+          description: Entity legally responsible to payback the loan
+        id:
+          format: uuid
+          type: string
+        invoice_ids:
+          description: Invoices already uploaded that the loan should finance
+          items:
+            format: uuid
+            type: string
+          type: array
+        loan_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          description: Bank account used to transfer the amount of the loan to the borrower
+        loan_from_references:
+          description: References in the transfer of the loan payment, on the account sending the money
+          items:
+            type: string
+          type: array
+        loan_to:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          description: Bank account receiving the money of the loan
+        loan_to_references:
+          description: References in the transfer of the loan payment, on the account receiving the money
+          items:
+            type: string
+          type: array
+        loan_type:
+          enum:
+          - CREDIT_CARD_FINANCING
+          - FUNDING_OBLIGATION_CONSOLIDATION
+          - INVENTORY_FINANCING
+          - INVOICE_BASED_FINANCING
+          - WALLET_FINANCING
+          type: string
+        metadata:
+          additionalProperties: {}
+          default: null
+          type:
+          - object
+          - 'null'
+        notification_emails:
+          items:
+            format: email
+            type: string
+          type: array
+        paid_at:
+          default: null
+          description: Loan disbursement date
+          format: date-time
+          type:
+          - string
+          - 'null'
+        paid_interests_amount:
+          description: Amount of interests that has been paid in cents.
+          type: integer
+        repaid_amount:
+          description: Sum of all amounts repaid by the borrower for both principal and interests, in cents
+          type: integer
+        repaid_nominal_amount:
+          description: Amount of the loan principal that has been repaid in cents.
+          type: integer
+        repaid_nominal_at:
+          default: null
+          format: date-time
+          type:
+          - string
+          - 'null'
+        repayment_from:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          default: null
+          description: Bank account repaying the loan
+        repayment_from_references:
+          description: References in the transfer of the loan repayment, on the account sending the money
+          items:
+            type: string
+          type: array
+        repayment_method:
+          enum:
+          - DIRECT_DEBIT
+          - P2P
+          - SCT
+          type: string
+        repayment_to:
+          allOf:
+          - $ref: '#/components/schemas/APILightAccountDetails'
+          description: Bank account to send the loan repayment to
+        repayment_to_references:
+          description: References in the transfer of the loan repayment, on the account receiving the money
+          items:
+            type: string
+          type: array
+        status:
+          enum:
+          - CANCELED
+          - CLOSED
+          - DECLINED
+          - DELETED
+          - INITIATED
+          - ISSUE_DETECTED
+          - PENDING_VALIDATION
+          - SCHEDULED
+          - SUBMITTED
+          - TO_REPAY
+          - TO_REPAY_FEES
+          - TO_VALIDATE
+          - VALIDATED
+          type: string
+        submitted_at:
+          format: date-time
+          type: string
+        to_pay_at:
+          description: Loan disbursement estimated date
+          format: date-time
+          type: string
+        to_repay_at:
+          description: Loan reimbursement estimated date
+          format: date-time
+          type: string
+        transfer_contract_url:
+          default: null
+          type:
+          - string
+          - 'null'
+      required:
+      - amount
+      - beneficiary
+      - borrower
+      - currency
+      - deposits
+      - earliest_to_repay_at
+      - id
+      - invoice_ids
+      - loan_from
+      - loan_from_references
+      - loan_to
+      - loan_to_references
+      - loan_type
+      - paid_interests_amount
+      - repaid_amount
+      - repaid_nominal_amount
+      - repayment_from_references
+      - repayment_method
+      - repayment_to
+      - repayment_to_references
+      - status
+      - submitted_at
+      - to_pay_at
+      - to_repay_at
       type: object
     AccountCreation:
       properties:
@@ -857,127 +2332,103 @@ components:
       required:
       - account_number
       type: object
-    APILoanDocumentToCreate:
+    APIPublicProcurementSingleCopyInformation:
       properties:
-        additional_document_data:
-          additionalProperties: {}
-          default: null
-          description: Any additional structured data about the provided document
-          type:
-          - object
-          - 'null'
-        description:
-          default: null
-          description: A human readable description of the document
-          type:
-          - string
-          - 'null'
-        document_binary_base64:
+        contract_identifier:
+          description: Identifier of the public procurement single copy contract
           type: string
-        document_name:
-          description: Name of the document with the file extension
-          type: string
-        document_type:
-          enum:
-          - credit_card_expenses
-          - invoice
-          - pro_forma
-          - public_procurement_ownership_act
-          - public_procurement_single_copy
-          - sale_purchase_agreement
-          - time_sheet
-          type: string
-        invoice:
-          allOf:
-          - $ref: '#/components/schemas/APIInvoiceInformationAllOptional'
+        contract_publication_date:
           default: null
-        pro_forma:
-          allOf:
-          - $ref: '#/components/schemas/APIInvoiceInformationAllOptional'
-          default: null
-        public_procurement_single_copy:
-          allOf:
-          - $ref: '#/components/schemas/APIPublicProcurementSingleCopyInformation'
-          default: null
-        sale_purchase_agreement:
-          allOf:
-          - $ref: '#/components/schemas/APISalePurchaseAgreementInformation'
-          default: null
-      required:
-      - document_binary_base64
-      - document_name
-      - document_type
-      type: object
-    TypedApiPage1:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/MinimalLoanAPI'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    APISalePurchaseAgreementAttachmentInformation:
-      properties:
-        asset_description:
-          default: null
-          description: A human readable description of the asset sold
-          type:
-          - string
-          - 'null'
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        document_binary_base64:
-          description: Base64 encoded content of the document
-          type: string
-        document_name:
-          description: Name of the document with the file extension
-          type: string
-        sale_date:
-          default: null
-          description: When the final sale is to occur
+          description: Publication date of the public procurement single copy contract
           format: date-time
           type:
           - string
           - 'null'
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
+        contract_undertaking_date:
+          description: Date the public procurement contract was undertaken.
+          format: date-time
+          type: string
+        document_binary_base64:
           default: null
-        third_party:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
+          description: Base64 encoded content of the document
+          type:
+          - string
+          - 'null'
+        document_name:
           default: null
-        transaction_price:
-          allOf:
-          - $ref: '#/components/schemas/AmountWithCurrency'
-          default: null
-          description: Amount of the transaction in cents
+          description: Name of the document with the file extension
+          type:
+          - string
+          - 'null'
       required:
-      - document_binary_base64
-      - document_name
+      - contract_identifier
+      - contract_undertaking_date
+      type: object
+    APICounterpartyContact:
+      properties:
+        email:
+          format: email
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
+      type: object
+    BusinessIdentifierRequired:
+      properties:
+        identifier:
+          type: string
+        identifier_type:
+          enum:
+          - belgium_registration_number
+          - bsn
+          - cif
+          - hr_nummer
+          - kvk
+          - name
+          - nif
+          - siren
+          - siret
+          - steuernummer
+          - vat_number
+          type: string
+      required:
+      - identifier
+      - identifier_type
+      type: object
+    Address:
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
       type: object
     LoanAPI:
       properties:
@@ -1384,1466 +2835,6 @@ components:
       - to_pay_at
       - to_repay_at
       type: object
-    APIReadLoanDocument:
-      properties:
-        about_business:
-          allOf:
-          - $ref: '#/components/schemas/BusinessIdentifierRequired'
-          default: null
-        document_name:
-          default: null
-          description: Name of the document with the file extension
-          type:
-          - string
-          - 'null'
-        document_type:
-          enum:
-          - credit_card_expenses
-          - invoice
-          - pro_forma
-          - public_procurement_ownership_act
-          - public_procurement_single_copy
-          - sale_purchase_agreement
-          - time_sheet
-          type: string
-        document_url:
-          type: string
-        uploaded_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        user_input:
-          additionalProperties: {}
-          default: null
-          type:
-          - object
-          - 'null'
-      required:
-      - document_type
-      - document_url
-      type: object
-    DirectDebitRepaymentMethod:
-      properties:
-        from_account:
-          allOf:
-          - $ref: '#/components/schemas/DebitedAccountNumber'
-          description: Bank account repaying the loan
-      required:
-      - from_account
-      type: object
-    DebitedAccountNumber:
-      properties:
-        account_number:
-          type: string
-        account_number_type:
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          type: string
-        bank_identifier_type:
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      - account_number_type
-      - bank_identifier
-      - bank_identifier_type
-      type: object
-    CounterpartyCreation:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        contact:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyContact'
-          default: null
-        identifier:
-          default: null
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type:
-          - string
-          - 'null'
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
-          type:
-          - string
-          - 'null'
-      type: object
-    LoanInstallment:
-      properties:
-        amount:
-          type: integer
-        date:
-          format: date-time
-          type: string
-      required:
-      - amount
-      - date
-      type: object
-    APIRequiredInvoiceCreation:
-      properties:
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        buyer:
-          $ref: '#/components/schemas/CounterpartyCreation'
-        currency:
-          default: EUR
-          description: Currency of the invoice. Use ISO 4217 currency code.
-          enum:
-          - EUR
-          - GBP
-          type:
-          - string
-          - 'null'
-        document:
-          description: PDF binary (format base64 string)
-          type: string
-        due_at:
-          format: date-time
-          type: string
-        invoice_number:
-          description: Invoice number as displayed on the invoice
-          type: string
-        invoice_type:
-          default: USER
-          enum:
-          - DEFACTO
-          - USER
-          type:
-          - string
-          - 'null'
-        issued_at:
-          format: date-time
-          type: string
-        metadata:
-          additionalProperties: {}
-          default: null
-          description: This object is yours, it enables you to add custom data.
-          type:
-          - object
-          - 'null'
-        net_amount:
-          default: null
-          description: Amount before tax, in cents
-          type:
-          - integer
-          - 'null'
-        seller:
-          $ref: '#/components/schemas/CounterpartyCreation'
-        tax_amount:
-          default: null
-          description: Amount of tax, in cents
-          type:
-          - integer
-          - 'null'
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/APIAccountCreation'
-          default: null
-          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
-        to_pay_amount:
-          default: null
-          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type:
-          - integer
-          - 'null'
-        total_amount:
-          description: Sum of net amount and tax amount, in cents
-          type: integer
-      required:
-      - buyer
-      - document
-      - due_at
-      - invoice_number
-      - issued_at
-      - seller
-      - total_amount
-      type: object
-    APICreditCardExpensesInformation:
-      properties:
-        counterparty:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          description: 'Counterparty associated with the credit card expenses. Note: all expenses must be related to the same counterparty.'
-        expenses:
-          description: List of individual credit card expense details.
-          items:
-            $ref: '#/components/schemas/APICreditCardExpenseDetail'
-          type: array
-      required:
-      - counterparty
-      - expenses
-      type: object
-    APILightAccountDetails:
-      properties:
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          description: The identifier of the bank.
-          type: string
-        bank_identifier_type:
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      - account_number_type
-      - bank_identifier
-      - bank_identifier_type
-      type: object
-    APIInvoiceAttachmentInformation:
-      properties:
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        currency:
-          default: EUR
-          description: Currency of the invoice. Use ISO 4217 currency code.
-          enum:
-          - EUR
-          - GBP
-          type:
-          - string
-          - 'null'
-        document_binary_base64:
-          description: Base64 encoded content of the document
-          type: string
-        document_name:
-          description: Name of the document with the file extension
-          type: string
-        due_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        invoice_number:
-          default: null
-          description: Invoice number as displayed on the invoice
-          type:
-          - string
-          - 'null'
-        issued_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        net_amount:
-          default: null
-          description: Amount before tax, in cents
-          type:
-          - integer
-          - 'null'
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        tax_amount:
-          default: null
-          description: Amount of tax, in cents
-          type:
-          - integer
-          - 'null'
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/APIAccountCreation'
-          default: null
-          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
-        to_pay_amount:
-          default: null
-          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type:
-          - integer
-          - 'null'
-        total_amount:
-          default: null
-          description: Sum of net amount and tax amount, in cents
-          type:
-          - integer
-          - 'null'
-      required:
-      - document_binary_base64
-      - document_name
-      type: object
-    SCTRepaymentMethod:
-      properties:
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/CreditedAccountNumber'
-          description: Bank account to send the loan repayment to
-      required:
-      - to_account
-      type: object
-    APIInvoiceInformationAllOptional:
-      properties:
-        buyer:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        currency:
-          default: EUR
-          description: Currency of the invoice. Use ISO 4217 currency code.
-          enum:
-          - EUR
-          - GBP
-          type:
-          - string
-          - 'null'
-        due_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        invoice_number:
-          default: null
-          description: Invoice number as displayed on the invoice
-          type:
-          - string
-          - 'null'
-        issued_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        net_amount:
-          default: null
-          description: Amount before tax, in cents
-          type:
-          - integer
-          - 'null'
-        seller:
-          allOf:
-          - $ref: '#/components/schemas/APICounterpartyCreation'
-          default: null
-        tax_amount:
-          default: null
-          description: Amount of tax, in cents
-          type:
-          - integer
-          - 'null'
-        to_account:
-          allOf:
-          - $ref: '#/components/schemas/APIAccountCreation'
-          default: null
-          description: Beneficiary account as mentioned on the invoice. Note that this does not determine the account where the loan payment will be made.That is done separately when calling the POST /loans endpoint.
-        to_pay_amount:
-          default: null
-          description: Remaining amount due by buyer to seller, in cents. Set at 0 for fully paid invoices.
-          type:
-          - integer
-          - 'null'
-        total_amount:
-          default: null
-          description: Sum of net amount and tax amount, in cents
-          type:
-          - integer
-          - 'null'
-      type: object
-    ApiFetchLoanDocuments:
-      properties:
-        loan_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-        to_pay_at_from:
-          default: null
-          description: Returns loans where pay_at field is greater or equal to this date.
-          format: date-time
-          type:
-          - string
-          - 'null'
-        to_pay_at_to:
-          default: null
-          description: Returns loans where pay_at field is lower to this date.
-          format: date-time
-          type:
-          - string
-          - 'null'
-      type: object
-    APICounterpartyContact:
-      properties:
-        email:
-          format: email
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-      required:
-      - email
-      - first_name
-      - last_name
-      - phone_number
-      type: object
-    APICreditCardExpenseDetail:
-      properties:
-        amount:
-          description: Amount of the credit card expense in cents.
-          type: integer
-        card_identification:
-          additionalProperties: {}
-          default: null
-          description: 'Identification details of the credit card used for the expense (e.g. masked card number, card reference). Format might be {"last_four_digits": "1234", "card_reference": "Corporate Card"}'
-          type:
-          - object
-          - 'null'
-        date_time:
-          description: Date and time when the credit card expense was incurred.
-          format: date-time
-          type: string
-        merchant:
-          additionalProperties: {}
-          default: null
-          description: Information identifying the place where the credit card expense was made.
-          type:
-          - object
-          - 'null'
-        user:
-          additionalProperties: {}
-          default: null
-          description: 'Information about the user who made the credit card expense. Format might be {"name": "John Doe", "email": "john.doe@example.com"}'
-          type:
-          - object
-          - 'null'
-      required:
-      - amount
-      - date_time
-      type: object
-    MinimalLoanAPI:
-      properties:
-        amount:
-          description: 'Loan amount in cents. Maximum: 200,000 €.'
-          type: integer
-        beneficiary:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
-          description: Entity receiving the money
-        borrower:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
-          description: Entity legally contracting the loan
-        borrower_financial_product_id:
-          default: null
-          description: Specify your borrower financial product to use. This field is required only if you propose multiple financial products (which is rare)
-          format: uuid
-          type:
-          - string
-          - 'null'
-        closed_at:
-          default: null
-          description: Loan full repayment date
-          format: date-time
-          type:
-          - string
-          - 'null'
-        contract_url:
-          default: null
-          type:
-          - string
-          - 'null'
-        contractual_repayment_date:
-          default: null
-          description: Loan repayment date at the time the loan contract was signed
-          format: date-time
-          type:
-          - string
-          - 'null'
-        currency:
-          description: ISO 4217 currency code.
-          enum:
-          - EUR
-          - GBP
-          type: string
-        denial_reason:
-          default: null
-          enum:
-          - ACTIVITY_DOCUMENTS_REQUIRED
-          - ACTIVITY_NOT_ELIGIBLE_BORROWER
-          - ALREADY_USING_FACTORING_OR_DAILLY
-          - AMOUNT_SUPERIOR_TO_AVAILABLE_BALANCE
-          - AVERAGE_INVOICE_SIZE_TOO_HIGH
-          - BLACKLISTED_FACTORED_COUNTERPARTY
-          - BORROWER_AND_COUNTERPARTY_HAVE_COMMON_DIRECTOR
-          - BORROWER_CHURNED
-          - BORROWER_DEFAULTED
-          - BORROWER_STATUS
-          - BORROWER_TO_SIGN
-          - BUSINESS_AGE_BELOW_THRESHOLD
-          - BUSINESS_AML_EXTREME_RISK
-          - BUSINESS_COMPLIANCE_ISSUE_DETECTED
-          - BUSINESS_HARD_COLLECTION
-          - BUSINESS_HAS_NO_PROFESSIONAL_EMAIL
-          - BUSINESS_INSOLVENCY_PROCEDURE_EXISTS
-          - BUSINESS_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
-          - BUSINESS_LEGAL_FORM_NOT_ELIGIBLE
-          - BUSINESS_MISSING_INFORMATION
-          - BUSINESS_NOT_DIFFUSIBLE
-          - BUSINESS_NOT_REGISTERED
-          - BUSINESS_NOT_REGISTERED_TO_RCS
-          - BUSINESS_NOT_REGISTERED_TO_RCS_OR_RNE
-          - BUSINESS_RADIATED
-          - BUSINESS_REGION_NOT_COVERED
-          - BUSINESS_UNKNOWN
-          - BUSINESS_UNKNOWN_BUYER
-          - BUSINESS_UNKNOWN_SELLER
-          - CAPPING_EXCEEDED
-          - CASHED_IN_NOT_REPAID
-          - CCSF_TRANSACTION_DETECTED
-          - CCSF_TRANSACTION_PENDING_DATA_REQUEST
-          - CCSF_TRANSACTION_WAITING_END_INSTALLMENT_PLAN
-          - COUNTERPARTY_DATA_MISSING
-          - COUNTERPARTY_INSOLVENCY_PROCEDURE_EXISTS
-          - COUNTERPARTY_INSOLVENCY_PROCEDURE_UNKNOWN_STATUS
-          - COUNTERPARTY_KPI_MISSING
-          - COUNTERPARTY_NOT_REGISTERED
-          - COUNTERPARTY_NOT_SELECTED_FOR_FINANCING
-          - COUNTRY_CAPPING_EXCEEDED
-          - COUNTRY_NOT_ELIGIBLE_BORROWER
-          - COUNTRY_NOT_ELIGIBLE_COUNTERPARTY
-          - CREDIT_RISK_NOT_ELIGIBLE
-          - CREDIT_RISK_NOT_ELIGIBLE_COUNTERPARTY
-          - DATA_STILL_REFRESHING
-          - DEBT_ARREARS_PENDING_GRACE_PERIOD
-          - DEPRECATED_LATE_REPAYMENT
-          - DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
-          - DOUBLE_MOBILIZATION
-          - DPD_15_LATE_REPAYMENT_BORROWER
-          - DPD_15_LATE_REPAYMENT_BUYER
-          - DPD_15_LATE_REPAYMENT_SELLER
-          - ELLISPHERE_RISK_INDEX
-          - EXCEEDED_PARTNER_CREDIT_LINE
-          - EXCESSIVE_AMOUNT_LOAN_REQUEST
-          - EXCESSIVE_DURATION_LOAN_REQUEST
-          - EXPOSURE_TOO_OLD
-          - FILL_INVOICE_BUYER_INFORMATION
-          - FILL_INVOICE_SELLER_INFORMATION
-          - FINANCIAL_PRODUCT_DEACTIVATED
-          - FINANCIAL_PRODUCT_NOT_IN_RELEASE
-          - FINANCIAL_STATEMENT_BAD_KPI
-          - FINANCIAL_STATEMENT_PARSING_ISSUE
-          - HIGH_BUSINESS_RISK_INDEX
-          - HIGH_LOAN_DEFAULT_INDEX
-          - HIGH_LYSTA_RISK_INDEX
-          - INDUSTRY_CODE_NOT_ELIGIBLE_BORROWER
-          - INDUSTRY_CODE_NOT_ELIGIBLE_COUNTERPARTY
-          - INSOLVENCY_EARLY_SIGNAL_DETECTED
-          - INSOLVENCY_PROCEDURE_EXISTS_BORROWER
-          - INSOLVENCY_PROCEDURE_EXISTS_BUYER
-          - INSOLVENCY_PROCEDURE_EXISTS_SELLER
-          - INSTALLMENT_PLAN_DETECTED_FOR_TAX
-          - INSTALLMENT_PLAN_DETECTED_FOR_URSSAF
-          - INSURANCE_QUOTE_EXPIRED
-          - INVOICE_ALREADY_FINANCED
-          - INVOICE_AUTO_LIQUIDATION
-          - INVOICE_BLACKLIST_WORDS
-          - INVOICE_COMPLIANCE_ISSUE_DETECTED
-          - INVOICE_DOES_NOT_MATCH_ELIGIBILITY_CRITERIA
-          - INVOICE_LME_NON_COMPLIANT
-          - INVOICE_MISSING_ACCOUNT_NUMBER
-          - INVOICE_MISSING_LEGAL_MENTION
-          - INVOICE_MULTIPLE_STAGE
-          - INVOICE_NON_ELIGIBLE_USE_CASE
-          - INVOICE_NOT_ELIGIBLE_TO_CREDIT_INSURANCE
-          - INVOICE_NOT_ISSUED_YET
-          - INVOICE_NOT_RELATED_TO_WCR
-          - INVOICE_OVERDUE
-          - INVOICE_PAYABLE_BORROWER_IS_ACCOUNT_HOLDER
-          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_LIVE_CONNECTION
-          - INVOICE_RECEIVABLE_ACCOUNT_MISSING_MANDATE
-          - INVOICE_RECEIVABLE_BORROWER_IS_NOT_ACCOUNT_HOLDER
-          - INVOICE_REPAYMENT_DATE_TOO_FAR_60D
-          - KPI_MISSING
-          - KPI_SCREENING_NOT_ELIGIBLE_BORROWER
-          - KYB_PENDING
-          - KYB_PENDING_USER_ACTION
-          - KYC_PENDING
-          - KYC_PENDING_USER_ACTION
-          - LATE_REPAYMENT_BORROWER
-          - LEGAL_FORM_NOT_ELIGIBLE_BORROWER
-          - LEGAL_FORM_NOT_ELIGIBLE_BUYER
-          - LEGAL_FORM_NOT_ELIGIBLE_COUNTERPARTY
-          - LINKED_BUSINESS_IS_BLOCKED
-          - LOAN_REQUEST_EXPIRED
-          - LOW_CASH_BALANCE
-          - LOW_FREE_CASH_FLOW
-          - MAX_AMOUNT_EXCEEDED
-          - MAX_AMOUNT_EXCEEDED_BORROWER
-          - MAX_AMOUNT_EXCEEDED_BUYER
-          - MAX_AMOUNT_EXCEEDED_SELLER
-          - MISSING_COUNTERPARTY_CONTACT_INFORMATION
-          - MISSING_PUBLIC_PROCUREMENT_DOCUMENT
-          - NEED_BANKING_INTEGRATION
-          - NOT_AN_INVOICE
-          - NOT_DIFFUSIBLE_BUYER
-          - NOT_DIFFUSIBLE_SELLER
-          - NOT_ENOUGH_DATA
-          - NOT_PRE_ELIGIBLE_SPV
-          - NOT_REGISTERED_BUYER
-          - NOT_REGISTERED_SELLER
-          - NO_TAX_PAYMENT_FOUND
-          - NO_URSSAF_PAYMENTS_FOUND
-          - NO_URSSAF_PAYMENT_FOUND
-          - OFFBOARDED
-          - ORANGE_FLAG_TRANSACTIONS
-          - OTHER_BUSINESS_FROM_DIRECTOR_HAS_INSOLVENCY_PROCEDURE
-          - OUTDATED_DATA
-          - OUTDATED_INVOICE
-          - OUTDATED_INVOICE_2WEEKS
-          - OUTDATED_INVOICE_3WEEKS
-          - OVERDRAFT_REQUIRED
-          - PLEASE_RECONNECT_BANK_ACCOUNTS
-          - POSTAL_CODE_NOT_ELIGIBLE_BORROWER
-          - POSTAL_CODE_NOT_ELIGIBLE_COUNTERPARTY
-          - PROACTIVE_RECOLLECTION
-          - PRUDENTIAL_EXPOSURE_EXCEEDED
-          - QONTO_INTEGRATION_GERMAN_USER_DOES_NOT_HAVE_4_MONTHS_OF_HISTORY
-          - QONTO_INTEGRATION_USER_DOES_NOT_HAVE_6_MONTHS_OF_HISTORY
-          - QONTO_INTEGRATION_USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
-          - RECENT_DEBT_ARREARS_KO
-          - RECENT_DEBT_ARREARS_PENDING_DATA_REQUEST
-          - RECENT_REVENUE_DROP
-          - RECENT_SEIZURE_DETECTED
-          - RECENT_TAX_ARREARS_PENDING_DATA_REQUEST
-          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS
-          - RECENT_UNPAID_PRIVILEGED_TRANSACTIONS_PENDING_DATA_REQUEST
-          - RECENT_URSSAF_ARREARS_PENDING_DATA_REQUEST
-          - RED_FLAG_TRANSACTIONS
-          - RELATED_COUNTERPARTY_HAS_FLAG
-          - RELATED_COUNTERPARTY_IS_LATE
-          - REMOVED_FROM_COMMERCIAL_REGISTER_BORROWER
-          - REMOVED_FROM_COMMERCIAL_REGISTER_BUSINESS
-          - REMOVED_FROM_COMMERCIAL_REGISTER_BUYER
-          - REMOVED_FROM_COMMERCIAL_REGISTER_SELLER
-          - REPAYMENT_CONCENTRATION_IS_TOO_HIGH
-          - REQUIRED_FINANCIAL_STATEMENT
-          - RISK_SCORE_DOWNGRADING
-          - SMALL_RECURRING_AMOUNT_DETECTED_FOR_URSSAF
-          - TOO_LONG
-          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT
-          - UNAUTHORIZED_LOAN_PAYMENT_ACCOUNT_BANK_IDENTIFIER
-          - UNAUTHORIZED_LOAN_PAYMENT_BENEFICIARY
-          - URSSAF_PAYMENTS_STOPPED
-          - USER_DOES_NOT_MEET_MINIMUM_MAX_AMOUNT_SIZE
-          - USER_DOES_NOT_MEET_MINIMUM_REQUIREMENT_FOR_CREDIT_LINE
-          - WAITING_FOR_THIRD_PARTY_PROVIDER
-          - WAIT_FOR_REPAYMENT
-          - null
-          type:
-          - string
-          - 'null'
-        deposits:
-          additionalProperties:
-            $ref: '#/components/schemas/LoanDepositedAmounts'
-          description: List of deposits made and/or pending on the loan. Deposits can be funded by borrower, loan beneficiary or guarantor and serves as safety measures in case of default.
-          type: object
-        earliest_to_repay_at:
-          description: Loan reimbursement earliest possible date
-          format: date-time
-          type: string
-        fees_estimated:
-          default: null
-          description: In cents (estimated loan duration * interest * amount)
-          type:
-          - integer
-          - 'null'
-        fees_ongoing:
-          default: null
-          description: Fees if you repay today. In cents (current duration * interest * amount)
-          type:
-          - integer
-          - 'null'
-        guarantor:
-          allOf:
-          - $ref: '#/components/schemas/LightBusiness'
-          default: null
-          description: Entity legally responsible to payback the loan
-        id:
-          format: uuid
-          type: string
-        invoice_ids:
-          description: Invoices already uploaded that the loan should finance
-          items:
-            format: uuid
-            type: string
-          type: array
-        loan_from:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          description: Bank account used to transfer the amount of the loan to the borrower
-        loan_from_references:
-          description: References in the transfer of the loan payment, on the account sending the money
-          items:
-            type: string
-          type: array
-        loan_to:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          description: Bank account receiving the money of the loan
-        loan_to_references:
-          description: References in the transfer of the loan payment, on the account receiving the money
-          items:
-            type: string
-          type: array
-        loan_type:
-          enum:
-          - CREDIT_CARD_FINANCING
-          - FUNDING_OBLIGATION_CONSOLIDATION
-          - INVENTORY_FINANCING
-          - INVOICE_BASED_FINANCING
-          - WALLET_FINANCING
-          type: string
-        metadata:
-          additionalProperties: {}
-          default: null
-          type:
-          - object
-          - 'null'
-        notification_emails:
-          items:
-            format: email
-            type: string
-          type: array
-        paid_at:
-          default: null
-          description: Loan disbursement date
-          format: date-time
-          type:
-          - string
-          - 'null'
-        paid_interests_amount:
-          description: Amount of interests that has been paid in cents.
-          type: integer
-        repaid_amount:
-          description: Sum of all amounts repaid by the borrower for both principal and interests, in cents
-          type: integer
-        repaid_nominal_amount:
-          description: Amount of the loan principal that has been repaid in cents.
-          type: integer
-        repaid_nominal_at:
-          default: null
-          format: date-time
-          type:
-          - string
-          - 'null'
-        repayment_from:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          default: null
-          description: Bank account repaying the loan
-        repayment_from_references:
-          description: References in the transfer of the loan repayment, on the account sending the money
-          items:
-            type: string
-          type: array
-        repayment_method:
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        repayment_to:
-          allOf:
-          - $ref: '#/components/schemas/APILightAccountDetails'
-          description: Bank account to send the loan repayment to
-        repayment_to_references:
-          description: References in the transfer of the loan repayment, on the account receiving the money
-          items:
-            type: string
-          type: array
-        status:
-          enum:
-          - CANCELED
-          - CLOSED
-          - DECLINED
-          - DELETED
-          - INITIATED
-          - ISSUE_DETECTED
-          - PENDING_VALIDATION
-          - SCHEDULED
-          - SUBMITTED
-          - TO_REPAY
-          - TO_REPAY_FEES
-          - TO_VALIDATE
-          - VALIDATED
-          type: string
-        submitted_at:
-          format: date-time
-          type: string
-        to_pay_at:
-          description: Loan disbursement estimated date
-          format: date-time
-          type: string
-        to_repay_at:
-          description: Loan reimbursement estimated date
-          format: date-time
-          type: string
-        transfer_contract_url:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - amount
-      - beneficiary
-      - borrower
-      - currency
-      - deposits
-      - earliest_to_repay_at
-      - id
-      - invoice_ids
-      - loan_from
-      - loan_from_references
-      - loan_to
-      - loan_to_references
-      - loan_type
-      - paid_interests_amount
-      - repaid_amount
-      - repaid_nominal_amount
-      - repayment_from_references
-      - repayment_method
-      - repayment_to
-      - repayment_to_references
-      - status
-      - submitted_at
-      - to_pay_at
-      - to_repay_at
-      type: object
-    TypedApiPage3:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/LoanAPI'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
-      type: object
-    APIPublicProcurementOwnershipActInformation:
-      properties:
-        act_date:
-          description: Date the public procurement ownership act was emitted.
-          format: date-time
-          type: string
-        contract_identifier:
-          description: Identifier of the public procurement ownership act contract
-          type: string
-        document_binary_base64:
-          default: null
-          description: Base64 encoded content of the document
-          type:
-          - string
-          - 'null'
-        document_name:
-          default: null
-          description: Name of the document with the file extension
-          type:
-          - string
-          - 'null'
-      required:
-      - act_date
-      - contract_identifier
-      type: object
-    APIPatchLoan:
-      properties:
-        amount:
-          default: null
-          description: 'Loan amount in cents. Maximum: 200,000 €.'
-          type:
-          - integer
-          - 'null'
-        lender_id:
-          default: null
-          description: Defacto ID for the entity lending the money
-        loan_to:
-          allOf:
-          - $ref: '#/components/schemas/AccountCreation'
-          default: null
-          description: Bank account receiving the money of the loan
-        loan_to_references:
-          default: null
-          description: References in the transfer of the loan payment, on the account receiving the money
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-        metadata:
-          additionalProperties: {}
-          default: null
-          type:
-          - object
-          - 'null'
-        repayment_method:
-          default: null
-          description: 'Payment method that should be used to repay this loan. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
-          enum:
-          - DIRECT_DEBIT
-          - SCT
-          - null
-          type:
-          - string
-          - 'null'
-        repayment_to_references:
-          description: References in the transfer of the loan repayment, on the account receiving the money
-          items:
-            type: string
-          type: array
-        to_pay_at:
-          default: null
-          description: Loan disbursement estimated date
-          format: date-time
-          type:
-          - string
-          - 'null'
-        to_repay_at:
-          default: null
-          description: Loan reimbursement estimated date
-          format: date-time
-          type:
-          - string
-          - 'null'
-        transfer_contract_url:
-          default: null
-          description: URL of the contract for loans that have been transferred to another lender
-          type:
-          - string
-          - 'null'
-      type: object
-    AccountSourceInformation:
-      properties:
-        datasource_unique_id:
-          default: null
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        name:
-          enum:
-          - AXONAUT_DEFACTO_API
-          - BRIDGE
-          - CEFIN_DEFACTO_API
-          - FINAPI
-          - IRMA_DEFACTO_API
-          - LEANO_DEFACTO_API
-          - LIBEO_DEFACTO_API
-          - PENNYLANE_DEFACTO_API
-          - PENNYLANE_REDSHIFT
-          - QONTO
-          - STEMSCAPE_DEFACTO_API
-          - SUPER_DEFACTO_API
-          type: string
-      required:
-      - id
-      - name
-      type: object
-    ApiLoanDocuments:
-      properties:
-        link:
-          type: string
-      required:
-      - link
-      type: object
-    LoanDepositedAmounts:
-      properties:
-        amount:
-          type: integer
-        deposit_id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        paid_amount:
-          type: integer
-      required:
-      - amount
-      - paid_amount
-      type: object
-    APILoanSetRepaymentTerms:
-      properties:
-        repayment_terms:
-          items:
-            $ref: '#/components/schemas/RepaymentTerms'
-          type: array
-      required:
-      - repayment_terms
-      type: object
-    LoanApiEvent:
-      properties:
-        entity_type:
-          enum:
-          - account
-          - account_detail_verification
-          - bill
-          - borrower
-          - borrower_financial_product
-          - business
-          - business_exposure
-          - business_financial_product
-          - contract
-          - counterparty
-          - country
-          - credit_card
-          - credit_line
-          - data_request
-          - deposit
-          - due_interest
-          - eligibility_request
-          - enrollment
-          - entity_eligibility
-          - financial_product
-          - flag
-          - installment
-          - invoice
-          - loan
-          - loan_log
-          - mandate
-          - max_exposure_deployment
-          - onboarding
-          - onboarding_financial_product
-          - payment
-          - people
-          - rac
-          - raw_data
-          - recollection_document
-          - revenue_share
-          - sandbox_invoice
-          - underwriting_check
-          type: string
-        payload:
-          additionalProperties: {}
-          type: object
-        status:
-          enum:
-          - CANCELED
-          - CLOSED
-          - DECLINED
-          - DELETED
-          - INITIATED
-          - ISSUE_DETECTED
-          - PENDING_VALIDATION
-          - SCHEDULED
-          - SUBMITTED
-          - TO_REPAY
-          - TO_REPAY_FEES
-          - TO_VALIDATE
-          - VALIDATED
-          type: string
-        timestamp:
-          format: date-time
-          type: string
-        transition_name:
-          default: null
-          type:
-          - string
-          - 'null'
-      required:
-      - entity_type
-      - status
-      type: object
-    CreditedAccountNumber:
-      properties:
-        account_number:
-          type: string
-        account_number_type:
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          type: string
-        bank_identifier_type:
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      - account_number_type
-      - bank_identifier
-      - bank_identifier_type
-      type: object
-    BusinessIdentifierRequired:
-      properties:
-        identifier:
-          type: string
-        identifier_type:
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
-      type: object
-    LightBusiness:
-      properties:
-        activity_description:
-          default: null
-          type:
-          - string
-          - 'null'
-        activity_type:
-          default: null
-          type:
-          - string
-          - 'null'
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          default: null
-        capital:
-          default: null
-          type:
-          - integer
-          - 'null'
-        creation_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        has_ongoing_insolvency_procedure:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        id:
-          default: null
-          format: uuid
-          type:
-          - string
-          - 'null'
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          default: null
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          - null
-          type:
-          - string
-          - 'null'
-        is_active:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        is_diffusible:
-          default: null
-          type:
-          - boolean
-          - 'null'
-        last_insolvency_procedure_closing_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        last_insolvency_procedure_open_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        last_insolvency_procedure_type:
-          default: null
-          type:
-          - string
-          - 'null'
-        legal_form:
-          default: null
-          description: Legal form of the business.
-          type:
-          - string
-          - 'null'
-        nace_code:
-          default: null
-          type:
-          - string
-          - 'null'
-        name:
-          default: null
-          description: Legal name of the business.
-          type:
-          - string
-          - 'null'
-        registration_body:
-          default: null
-          description: Name of the national organization where the business is registered. For example the RCS of Paris in France
-          type:
-          - string
-          - 'null'
-        registration_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        registry_radiation_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        share_capital:
-          default: null
-          description: The part of the capital of a company that comes from the issue of shares, in cents.
-          type:
-          - integer
-          - 'null'
-        termination_date:
-          default: null
-          format: date
-          type:
-          - string
-          - 'null'
-        vat_number:
-          default: null
-          description: VatNumber
-          type:
-          - string
-          - 'null'
-      required:
-      - identifier
-      type: object
-    Address:
-      properties:
-        address_line_1:
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        postal_code:
-          type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-      type: object
-    APIPublicProcurementSingleCopyInformation:
-      properties:
-        contract_identifier:
-          description: Identifier of the public procurement single copy contract
-          type: string
-        contract_publication_date:
-          default: null
-          description: Publication date of the public procurement single copy contract
-          format: date-time
-          type:
-          - string
-          - 'null'
-        contract_undertaking_date:
-          description: Date the public procurement contract was undertaken.
-          format: date-time
-          type: string
-        document_binary_base64:
-          default: null
-          description: Base64 encoded content of the document
-          type:
-          - string
-          - 'null'
-        document_name:
-          default: null
-          description: Name of the document with the file extension
-          type:
-          - string
-          - 'null'
-      required:
-      - contract_identifier
-      - contract_undertaking_date
-      type: object
-    APIAccountCreation:
-      properties:
-        account_holder:
-          allOf:
-          - $ref: '#/components/schemas/APIBusinessIdentifier'
-          default: null
-          description: The business owning the account.
-        account_number:
-          description: The account identifier. Only IBANs are supported at the moment.
-          type: string
-        account_number_type:
-          default: iban
-          description: The type of account number (e.g. IBAN).
-          enum:
-          - account_number
-          - iban
-          - internal_id
-          type: string
-        bank_identifier:
-          default: null
-          description: The identifier of the bank.
-          type:
-          - string
-          - 'null'
-        bank_identifier_type:
-          default: bic
-          description: The type of bank identifier (e.g. BIC).
-          enum:
-          - bic
-          - name
-          - routing_number
-          - undefined
-          type: string
-      required:
-      - account_number
-      type: object
-    RepaymentTerms:
-      properties:
-        direct_debit:
-          allOf:
-          - $ref: '#/components/schemas/DirectDebitRepaymentMethod'
-          default: null
-          description: SEPA Direct Debit account information. Required if repayment method is set to DIRECT_DEBIT - must be left to null otherwise.
-        loan_id:
-          format: uuid
-          type: string
-        reason:
-          default: null
-          description: reason for the repayment terms change
-          enum:
-          - LOAN_REPAYMENT_BY_PAY_BY_LINK
-          - null
-          type:
-          - string
-          - 'null'
-        repayment_date:
-          description: Loan reimbursement estimated date
-          format: date-time
-          type: string
-        repayment_method:
-          description: 'Payment method that should be used to repay this loan. Possible values: [''DIRECT_DEBIT'', ''SCT'']'
-          enum:
-          - DIRECT_DEBIT
-          - P2P
-          - SCT
-          type: string
-        sct:
-          allOf:
-          - $ref: '#/components/schemas/SCTRepaymentMethod'
-          default: null
-          description: SEPA Credit Transfer account information. Required if repayment method is set to SCT - must be left to null otherwise. Replacement of the SCT account number is limited to super users.
-      required:
-      - loan_id
-      - repayment_date
-      - repayment_method
-      type: object
     AmountWithCurrency:
       properties:
         amount:
@@ -2857,29 +2848,38 @@ components:
       - amount
       - currency
       type: object
-    APIBusinessIdentifier:
+    APISalePurchaseAgreementInformation:
       properties:
-        identifier:
-          description: Legal identifier of the business, such as its SIRET or SIREN in France. Must not contain spaces.
-          type: string
-        identifier_type:
-          description: Type of legal business identifier of the business, such as the SIRET in France.
-          enum:
-          - belgium_registration_number
-          - bsn
-          - cif
-          - hr_nummer
-          - kvk
-          - name
-          - nif
-          - siren
-          - siret
-          - steuernummer
-          - vat_number
-          type: string
-      required:
-      - identifier
-      - identifier_type
+        asset_description:
+          default: null
+          description: A human readable description of the asset sold
+          type:
+          - string
+          - 'null'
+        buyer:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        sale_date:
+          default: null
+          description: When the final sale is to occur
+          format: date-time
+          type:
+          - string
+          - 'null'
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        third_party:
+          allOf:
+          - $ref: '#/components/schemas/APICounterpartyCreation'
+          default: null
+        transaction_price:
+          allOf:
+          - $ref: '#/components/schemas/AmountWithCurrency'
+          default: null
+          description: Amount of the transaction in cents
       type: object
   securitySchemes:
     Bearer:

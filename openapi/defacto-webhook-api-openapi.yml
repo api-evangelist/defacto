@@ -169,6 +169,35 @@ components:
       - name
       - to_url
       type: object
+    TypedApiPage9:
+      properties:
+        count:
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/Webhook1'
+          type: array
+        next_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        page_size:
+          type: integer
+        previous_page:
+          default: null
+          type:
+          - string
+          - 'null'
+        total:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - count
+      - page_size
+      type: object
     Webhook1:
       properties:
         event_types:
@@ -224,35 +253,6 @@ components:
       - event_types
       - name
       - to_url
-      type: object
-    TypedApiPage9:
-      properties:
-        count:
-          type: integer
-        data:
-          items:
-            $ref: '#/components/schemas/Webhook1'
-          type: array
-        next_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        page_size:
-          type: integer
-        previous_page:
-          default: null
-          type:
-          - string
-          - 'null'
-        total:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - count
-      - page_size
       type: object
   securitySchemes:
     Bearer:

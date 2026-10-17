@@ -149,33 +149,6 @@ components:
       - event_payload
       - event_type
       type: object
-    ApiLoanEventPayload:
-      properties:
-        deposit_amount:
-          default: null
-          type:
-          - integer
-          - 'null'
-        fees_amount:
-          default: null
-          type:
-          - integer
-          - 'null'
-        loan_id:
-          format: uuid
-          type: string
-        metadata:
-          additionalProperties: {}
-          type: object
-        principal_amount:
-          default: null
-          type:
-          - integer
-          - 'null'
-      required:
-      - loan_id
-      - metadata
-      type: object
     TypedApiPage4:
       properties:
         count:
@@ -204,6 +177,33 @@ components:
       required:
       - count
       - page_size
+      type: object
+    ApiLoanEventPayload:
+      properties:
+        deposit_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+        fees_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+        loan_id:
+          format: uuid
+          type: string
+        metadata:
+          additionalProperties: {}
+          type: object
+        principal_amount:
+          default: null
+          type:
+          - integer
+          - 'null'
+      required:
+      - loan_id
+      - metadata
       type: object
   securitySchemes:
     Bearer:
