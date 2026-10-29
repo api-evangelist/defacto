@@ -64,11 +64,169 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Defacto is an ACPR-authorized French fintech providing instant, embedded financing for SMBs across Europe. Its REST API lets partners onboard borrowers, test eligibility, share business/bank data, create invoices, request and manage loans, handle repayments and recollection, issue credit cards, and subscribe to webhooks. Over EUR 1B financed for 12K+ SMBs via 15+ partners.
+Defacto is an ACPR-authorized French fintech providing instant, embedded financing for small and medium-sized businesses across Europe. Through a single REST API, partners (marketplaces, neobanks, B2B SaaS, e-invoicing platforms) can onboard borrowers, test eligibility and credit limits, share business and bank-transaction data, create invoices, request and manage loans, handle repayments and recollection, issue credit cards, bill fees, and subscribe to webhooks. Defacto has powered over EUR 1B in financing for 12K+ SMBs through 15+ partners, with products spanning receivables, payables, pay-later, cash-in-now, and wallet financing. This profile was enriched by the API Evangelist pipeline from Defacto's public developer portal (developers.getdefacto.com).
 
-- Website: https://www.getdefacto.com
-- Developer portal: https://developers.getdefacto.com/
-- API base: https://api.getdefacto.com (sandbox: https://api-sandbox.getdefacto.com)
-- Backed by: northzone
+**Areas:** Company · Fintech · Embedded Finance · Lending · Working Capital · Invoice Financing · Credit · B2B Payments · Small Business · France · Europe
 
-Enriched by the API Evangelist pipeline: reconstructed OpenAPI (77 operations), authentication, conventions, sandbox, errors, lifecycle, conformance, data model, webhooks (AsyncAPI), MCP candidate tools, agent skills, agentic-access, trust center, and domain security.
+## Defacto on APIs.io
+
+Everything profiled for Defacto is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/defacto/](https://apis.io/providers/defacto/)** — or go straight to one of the APIs or properties below.
+
+### APIs (18)
+
+- [Defacto Accounting API](https://apis.io/apis/defacto/defacto-accounting-api/) — The Accounting API from Defacto — 1 operation(s) for accounting.
+- [Defacto Billing API](https://apis.io/apis/defacto/defacto-billing-api/) — The Billing API from Defacto — 4 operation(s) for billing.
+- [Defacto Business and accounts API](https://apis.io/apis/defacto/defacto-business-and-accounts-api/) — The Business and accounts API from Defacto — 1 operation(s) for business and accounts.
+- [Defacto Counterparty API](https://apis.io/apis/defacto/defacto-counterparty-api/) — The Counterparty API from Defacto — 2 operation(s) for counterparty.
+- [Defacto Credit card API](https://apis.io/apis/defacto/defacto-credit-card-api/) — The Credit card API from Defacto — 6 operation(s) for credit card.
+- [Defacto Eligibility and credit limit API](https://apis.io/apis/defacto/defacto-eligibility-and-credit-limit-api/) — The Eligibility and credit limit API from Defacto — 6 operation(s) for eligibility and credit limit.
+- [Defacto Financial product API](https://apis.io/apis/defacto/defacto-financial-product-api/) — The Financial product API from Defacto — 1 operation(s) for financial product.
+- [Defacto Invoice API](https://apis.io/apis/defacto/defacto-invoice-api/) — The Invoice API from Defacto — 4 operation(s) for invoice.
+- [Defacto Loan API](https://apis.io/apis/defacto/defacto-loan-api/) — The Loan API from Defacto — 7 operation(s) for loan.
+- [Defacto Onboarding API](https://apis.io/apis/defacto/defacto-onboarding-api/) — The Onboarding API from Defacto — 9 operation(s) for onboarding.
+- [Defacto Payment API](https://apis.io/apis/defacto/defacto-payment-api/) — The Payment API from Defacto — 3 operation(s) for payment.
+- [Defacto Recollection API](https://apis.io/apis/defacto/defacto-recollection-api/) — The Recollection API from Defacto — 5 operation(s) for recollection.
+- [Defacto Repay API](https://apis.io/apis/defacto/defacto-repay-api/) — The Repay API from Defacto — 1 operation(s) for repay.
+- [Defacto Sharing business data API](https://apis.io/apis/defacto/defacto-sharing-business-data-api/) — The Sharing business data API from Defacto — 5 operation(s) for sharing business data.
+- [Defacto Subscription API](https://apis.io/apis/defacto/defacto-subscription-api/) — The Subscription API from Defacto — 1 operation(s) for subscription.
+- [Defacto Testing API](https://apis.io/apis/defacto/defacto-testing-api/) — The Testing API from Defacto — 5 operation(s) for testing.
+- [Defacto Translation API](https://apis.io/apis/defacto/defacto-translation-api/) — The Translation API from Defacto — 2 operation(s) for translation.
+- [Defacto Webhook API](https://apis.io/apis/defacto/defacto-webhook-api/) — The Webhook API from Defacto — 2 operation(s) for webhook.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (2)
+
+Event-driven and webhook contracts.
+
+- [Defacto Webhooks](https://apis.io/asyncapis/defacto/defacto-webhooks/)
+- [Defacto Webhooks](https://apis.io/asyncapis/defacto/defacto-webhooks-asyncapi/)
+
+#### Event channels (1)
+
+Individual events and webhooks the provider emits.
+
+- [subscriberCallback](https://apis.io/channels/defacto/subscribercallback/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [defacto](https://apis.io/servers/defacto/defacto/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Defacto Agentic Access](https://apis.io/agentic-access/defacto/defacto-agentic-access/)
+
+#### Collections (18)
+
+Postman and Open Collection request collections.
+
+- [Defacto Accounting API](https://apis.io/collections/defacto/open-defacto-accounting-api/)
+- [Defacto Accounting Billing API](https://apis.io/collections/defacto/open-defacto-billing-api/)
+- [Defacto Accounting Business and accounts API](https://apis.io/collections/defacto/open-defacto-business-and-accounts-api/)
+- [Defacto Accounting Counterparty API](https://apis.io/collections/defacto/open-defacto-counterparty-api/)
+- [Defacto Accounting Credit card API](https://apis.io/collections/defacto/open-defacto-credit-card-api/)
+- [Defacto Accounting Eligibility and credit limit API](https://apis.io/collections/defacto/open-defacto-eligibility-and-credit-limit-api/)
+- [Defacto Accounting Financial product API](https://apis.io/collections/defacto/open-defacto-financial-product-api/)
+- [Defacto Accounting Invoice API](https://apis.io/collections/defacto/open-defacto-invoice-api/)
+- [Defacto Accounting Loan API](https://apis.io/collections/defacto/open-defacto-loan-api/)
+- [Defacto Accounting Onboarding API](https://apis.io/collections/defacto/open-defacto-onboarding-api/)
+- [Defacto Accounting Payment API](https://apis.io/collections/defacto/open-defacto-payment-api/)
+- [Defacto Accounting Recollection API](https://apis.io/collections/defacto/open-defacto-recollection-api/)
+- [Defacto Accounting Repay API](https://apis.io/collections/defacto/open-defacto-repay-api/)
+- [Defacto Accounting Sharing business data API](https://apis.io/collections/defacto/open-defacto-sharing-business-data-api/)
+- [Defacto Accounting Subscription API](https://apis.io/collections/defacto/open-defacto-subscription-api/)
+- [Defacto Accounting Testing API](https://apis.io/collections/defacto/open-defacto-testing-api/)
+- [Defacto Accounting Translation API](https://apis.io/collections/defacto/open-defacto-translation-api/)
+- [Defacto Accounting Webhook API](https://apis.io/collections/defacto/open-defacto-webhook-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Defacto Overlay](https://apis.io/overlays/defacto/defacto-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Defacto Authentication](https://apis.io/security/defacto/defacto-authentication/)
+- [Defacto Domain Security](https://apis.io/security/defacto/defacto-domain-security/)
+- [Defacto Trust Center](https://apis.io/security/defacto/defacto-trust-center/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.getdefacto.com)
+- [Documentation](https://developers.getdefacto.com/)
+- [Getting started](https://developers.getdefacto.com/reference/make-your-first-loan)
+- [API reference](https://developers.getdefacto.com/reference)
+- [Sign up](https://app.getdefacto.com/onboarding/select-country)
+- [Support](https://help.getdefacto.com/fr/)
+- [Blog](https://www.getdefacto.com/blog)
+- [Compliance](https://www.getdefacto.com/security)
+- [Terms of service](https://www.getdefacto.com/legal-mentions)
+- [Privacy policy](https://www.getdefacto.com/privacy-policy)
+- [GitHub](https://github.com/d3facto)
+- [Status](https://status.getdefacto.com)
+
+## API Evangelist rating
+
+**Kin Score 45.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 55.7 |
+| Contract governance | 18.2 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 43.4 |
+
+**Agent readiness 30.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | verified |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 26.8** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/defacto/](https://apis.io/providers/defacto/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Defacto: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/defacto/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
